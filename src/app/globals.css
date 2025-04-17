@@ -1,26 +1,75 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --mint: #a8e6d5;
+    --mint-light: #d4f5eb;
+    --primary-text-color: #e5fff8;
+    --background: #effffb;
+    --mint-gradient: linear-gradient(to bottom, #83dbc4 40%, #58cdaf 100%);
+  }
+  body {
+    background-color: var(--background);
+    color: white;
+    font-family: --font-montserrat, sans-serif;
+    text-color: var(--primary-text-color);
   }
 }
+@layer components {
+  /* Component Specific Utilities */
+  /* Navbar starting */
+  .navbar-main {
+    @apply flex justify-between items-center px-8 pt-3;
+  }
+  .navbar-links {
+    @apply font-medium text-2xl tracking-widest hover:opacity-80 transition-opacity;
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /*  General Utilities*/
+  /* Gradient Text */
+  .gradient-text-1 {
+    @apply bg-gradient-to-r from-[#8FF7DC] to-[#58CDAF] bg-clip-text text-transparent;
+  }
+  .gradient-text-2 {
+    @apply bg-gradient-to-r from-[#E5FFF8] to-[#FFFFFF] bg-clip-text text-transparent;
+  }
+
+  /* Gradient based backround */
+  .hero-gradient-background {
+    @apply h-screen w-full bg-center bg-no-repeat relative;
+    background-image: var(--mint-gradient);
+  }
+
+  /* Background Image */
+  .image-background {
+    @apply absolute top-0 left-0 bg-no-repeat bg-contain bg-center;
+  }
+  .bg-image-1 {
+    background-image: url("/backgroundImages/heroSection/heroStrollerImage2.png");
+  }
+
+  /* Centering the absolute elements */
+  .center-absolute-x {
+    @apply absolute left-1/2 -translate-x-1/2;
+  }
+  .center-absolute-y {
+    @apply absolute top-1/2 -translate-y-1/2;
+  }
+
+  .arrow-section {
+    @apply flex justify-center items-center;
+  }
+  .cta-button {
+    @apply text-4xl bg-none flex items-center justify-center text-black rounded-full;
+    border: 3px solid transparent;
+
+    /* gradient only on the 3px border */
+    border-image-source: linear-gradient(
+      to right,
+      #8ff7dc 0%,
+      #5dd2b3 50%,
+      #8ff7dc 100%
+    );
+    border-image-slice: 1;
+  }
 }
