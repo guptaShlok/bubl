@@ -34,10 +34,10 @@ const Navbar = () => {
       </div>
       {/* Call to action buttons */}
       <div className="flex items-center space-x-10">
-        <button className="cta-button">
+        <button>
           <ShoppingCart className="h-10 w-10" />
         </button>
-        <button className="cta-button">
+        <button>
           <User className="h-10 w-10" />
         </button>
       </div>
