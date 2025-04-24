@@ -19,10 +19,16 @@
   /* Component Specific Utilities */
   /* Navbar starting */
   .navbar-main {
-    @apply flex justify-between items-center px-8 pt-3;
+    @apply relative z-20 bg-none px-2 py-3 md:px-4 md:py-6 flex items-center justify-between;
   }
-  .navbar-links {
-    @apply font-medium text-2xl tracking-widest hover:opacity-80 transition-opacity;
+  .nav-link {
+    @apply text-sm md:text-base lg:text-lg font-medium duration-200 text-white hover:opacity-70;
+  }
+
+  .mobile-menu {
+    @apply absolute top-full left-0 w-full shadow-md text-white
+           flex flex-col items-center space-y-4 p-6
+           transition-all duration-300 ease-in-out;
   }
 
   /*  General Utilities*/
@@ -36,15 +42,13 @@
 
   /* Gradient based backround */
   .hero-gradient-background {
-    @apply h-screen w-full bg-center bg-no-repeat relative;
-    background-image: var(--mint-gradient);
+    @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover relative;
+    background-image: url("/backgroundImages/heroSection/heroStrollerImage.png");
   }
 
   /* Background Image */
-  .image-background {
-    @apply absolute top-0 left-0 bg-no-repeat bg-contain bg-center;
-  }
-  .bg-image-1 {
+  .bg-image-overlay {
+    @apply absolute  w-full  h-1/2 md:h-5/6 bg-center md:bg-[position:right_bottom] md:-translate-x-[clamp(1em,10vw,10em)] bottom-0 bg-no-repeat bg-contain transition-[background-position] duration-300 ease-in-out;
     background-image: url("/backgroundImages/heroSection/heroStrollerImage2.png");
   }
 
