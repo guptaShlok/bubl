@@ -1,0 +1,125 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+const infoSlides = [
+  {
+    id: 1,
+    title: "Patented Air Purification Technology",
+    content:
+      "Babybubl utilizes a unique design to create a microenvironment around your child, achieving air quality up to 95% cleaner than the surrounding environment without the need for full encapsulation.",
+  },
+  {
+    id: 2,
+    title: "Advanced Sensor Technology",
+    content:
+      "Real-time monitoring of air quality with intelligent sensors that automatically adjust purification levels based on detected pollutants.",
+  },
+  {
+    id: 3,
+    title: "Multi-Stage Filtration System",
+    content:
+      "Our comprehensive filtration system captures particles of all sizes, from large allergens to microscopic pollutants and harmful gases.",
+  },
+  {
+    id: 4,
+    title: "Child-Safe Design",
+    content:
+      "Engineered with rounded edges, child-lock features, and non-toxic materials to ensure complete safety for your little ones.",
+  },
+  {
+    id: 5,
+    title: "Smart Home Integration",
+    content:
+      "Seamlessly connects with your smart home ecosystem for convenient control via app, voice commands, or automated schedules.",
+  },
+];
+
+export default function InfoSwiper() {
+  const [mounted, setMounted] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <div className="relative text-black rounded-xl p-8 ">
+      <Swiper
+        modules={[Navigation, Pagination]}
+        spaceBetween={20}
+        slidesPerView={1}
+        navigation={{
+          prevEl: ".info-prev",
+          nextEl: ".info-next",
+        }}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        loop={true}
+        className="w-full"
+      >
+        {infoSlides.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <div className="py-8 px-4 md:px-12 flex flex-col md:flex-row items-center">
+              <div className="w-full md:w-1/2 mb-8 md:mb-0">
+                <h3 className="text-5xl md:text-7xl font-bold scale-0 text-[#5dcfb6]">
+                  {slide.id}
+                </h3>
+              </div>
+              <div className="w-full md:w-1/2 md:pl-8">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                  {slide.title}
+                </h3>
+                <p className="text-gray-700 text-lg">{slide.content}</p>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <div className="flex items-center justify-between">
+        <div className="flex space-x-4">
+          <button className="info-prev p-2 rounded-full hover:bg-[#5dcfb6] hover:border-[#5dcfb6] hover:text-white transition-colors">
+            <ArrowLeftIcon className="h-7 w-7" />
+          </button>
+          <button className="info-next p-2 rounded-full hover:bg-[#5dcfb6] hover:border-[#5dcfb6] hover:text-white transition-colors">
+            <ArrowRightIcon className="h-7 w-7" />
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-7 w-full ">
+        <div className="relative w-full  mx-auto">
+          <div className="h-0.5 bg-gray-900 absolute top-1/2 left-0 right-0 -translate-y-1/2 z-0"></div>
+          <div className="flex justify-between relative z-10">
+            {infoSlides.map((_, index) => (
+              <div
+                key={index}
+                className={`w-4 h-4 rounded-full border-2 cursor-pointer transition-all ${
+                  index === activeIndex
+                    ? "bg-[#5dcfb6] border-[#5dcfb6]"
+                    : "bg-white border-gray-900"
+                }`}
+                onClick={() => {
+                  const swiper = document.querySelector(".swiper")?.swiper;
+                  if (swiper) {
+                    swiper.slideTo(index + 1);
+                  }
+                }}
+              ></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

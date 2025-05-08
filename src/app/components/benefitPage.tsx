@@ -1,12 +1,8 @@
 "use client";
 import React from "react";
-import EmblaCarousel from "@/app/components/carousel/EmblaCarousel";
-import { EmblaOptionsType } from "embla-carousel";
+import FeatureSwiper from "./swipers/feature-swiper";
 
 const Benefit = () => {
-  const OPTIONS: EmblaOptionsType = { align: "start", dragFree: true };
-  const SLIDE_COUNT = 5;
-  const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
   return (
     <main className="max-h-screen pt-[5vw] px-[7vw] w-full relative">
       {/* Heading section */}
@@ -18,10 +14,9 @@ const Benefit = () => {
         </h1>
       </div>
 
-      {/* Content grid */}
-      <div className="flex flex-col w-[100vh] text-black border justify-center items-center mx-auto md:flex-row md:justify-evenly md:items-center gap-4">
-        <EmblaCarousel slides={SLIDES} options={OPTIONS} />
-      </div>
+      <section className="py-8 relative md:translate-x-1/3">
+        <FeatureSwiper />
+      </section>
     </main>
   );
 };

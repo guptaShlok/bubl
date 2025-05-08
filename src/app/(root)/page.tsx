@@ -6,7 +6,7 @@ import MissionPhilosphy from "../components/missionPhilosphy";
 import IndianDescription from "../components/indianDescription";
 import ShopBubl from "../components/shopBubl";
 import Benefit from "../components/benefitPage";
-import StepCarousel from "../components/scienceBehindProduct";
+import ScienceBehindProduct from "../components/scienceBehindProduct";
 
 const Page = () => {
   return (
@@ -20,7 +20,7 @@ const Page = () => {
       <IndianDescription />
       <ShopBubl />
       <Benefit />
-      <StepCarousel />
+      <ScienceBehindProduct />
     </>
   );
 };
