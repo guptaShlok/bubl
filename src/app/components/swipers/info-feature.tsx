@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperClass } from "swiper";
 import { Navigation, Pagination } from "swiper/modules";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 
-// Import Swiper styles
+// Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -46,6 +47,7 @@ const infoSlides = [
 export default function InfoSwiper() {
   const [mounted, setMounted] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [swiperInst, setSwiperInst] = useState<SwiperClass | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -54,18 +56,15 @@ export default function InfoSwiper() {
   if (!mounted) return null;
 
   return (
-    <div className="relative text-black rounded-xl p-8 ">
+    <div className="relative text-black rounded-xl p-8">
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
         slidesPerView={1}
-        navigation={{
-          prevEl: ".info-prev",
-          nextEl: ".info-next",
-        }}
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         loop={true}
-        className="w-full"
+        onSwiper={(sw) => setSwiperInst(sw)}
+        onSlideChange={(sw) => setActiveIndex(sw.realIndex)}
+        className="swiper-container"
       >
         {infoSlides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -86,37 +85,43 @@ export default function InfoSwiper() {
         ))}
       </Swiper>
 
-      <div className="flex items-center justify-between">
-        <div className="flex space-x-4">
-          <button className="info-prev p-2 rounded-full hover:bg-[#5dcfb6] hover:border-[#5dcfb6] hover:text-white transition-colors">
-            <ArrowLeftIcon className="h-7 w-7" />
-          </button>
-          <button className="info-next p-2 rounded-full hover:bg-[#5dcfb6] hover:border-[#5dcfb6] hover:text-white transition-colors">
-            <ArrowRightIcon className="h-7 w-7" />
-          </button>
-        </div>
-      </div>
+      {/* arrows + timeline aligned */}
+      <div className="mt-8 w-full">
+        <div className="relative w-full mx-auto flex flex-col gap-10 -translate-y-1/2">
+          {/* arrows */}
+          <div className="flex space-x-4">
+            <button
+              onClick={() => swiperInst?.slidePrev()}
+              disabled={!swiperInst}
+              className="p-2 rounded-full hover:bg-[#5dcfb6] hover:text-white transition-colors"
+            >
+              <ArrowLeftIcon className="h-7 w-7" />
+            </button>
+            <button
+              onClick={() => swiperInst?.slideNext()}
+              disabled={!swiperInst}
+              className="p-2 rounded-full hover:bg-[#5dcfb6] hover:text-white transition-colors"
+            >
+              <ArrowRightIcon className="h-7 w-7" />
+            </button>
+          </div>
 
-      <div className="mt-7 w-full ">
-        <div className="relative w-full  mx-auto">
-          <div className="h-0.5 bg-gray-900 absolute top-1/2 left-0 right-0 -translate-y-1/2 z-0"></div>
-          <div className="flex justify-between relative z-10">
-            {infoSlides.map((_, index) => (
-              <div
-                key={index}
-                className={`w-4 h-4 rounded-full border-2 cursor-pointer transition-all ${
-                  index === activeIndex
-                    ? "bg-[#5dcfb6] border-[#5dcfb6]"
-                    : "bg-white border-gray-900"
-                }`}
-                onClick={() => {
-                  const swiper = document.querySelector(".swiper")?.swiper;
-                  if (swiper) {
-                    swiper.slideTo(index + 1);
-                  }
-                }}
-              ></div>
-            ))}
+          {/* timeline */}
+          <div className="relative flex-1 mx-8">
+            <div className="h-0.5 bg-gray-900 absolute inset-x-0 top-1/2 -translate-y-1/2 z-0" />
+            <div className="flex justify-between relative z-10">
+              {infoSlides.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => swiperInst?.slideToLoop(idx)}
+                  className={`w-4 h-4 rounded-full border-2 transition-all ${
+                    idx === activeIndex
+                      ? "bg-[#5dcfb6] border-[#5dcfb6]"
+                      : "bg-white border-gray-900"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
