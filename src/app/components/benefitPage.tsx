@@ -7,7 +7,7 @@ const Benefit = () => {
     <main className="max-h-screen pt-[5vw] px-[7vw] w-full relative">
       {/* Heading section */}
       <div className="mb-8 md:mb-12 h-fit flex justify-around relative">
-        <h1 className="w-full text-4xl md:text-[clamp(4rem,8vw,8rem)] text-center md:text-start font-semibold leading-tighter tracking-normal">
+        <h1 className="w-full text-4xl md:text-[clamp(4rem,8vw,8rem)] text-center md:text-start font-light leading-tighter tracking-normal">
           {/* note to add the abouve text class as an utlity one and update the hero section as well */}
 
           <span className="gradient-text-1">Benefits</span>
