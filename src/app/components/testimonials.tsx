@@ -47,7 +47,7 @@ export default function TestimonialSection() {
   if (!mounted) return <div className="h-[500px]"></div>;
 
   return (
-    <section className="relative py-16 px-4 md:px-8 lg:px-16 overflow-hidden bg-[#f8fcfa]">
+    <section className="relative py-16 px-4 md:px-8 lg:px-16 overflow-hidden ">
       {/* Heading section */}
       <div className="mb-8 md:mb-12 flex flex-col md:flex-row justify-around relative">
         <h1 className="w-full text-4xl md:text-[clamp(4rem,8vw,8rem)] text-center md:text-start font-bold leading-tighter tracking-normal">

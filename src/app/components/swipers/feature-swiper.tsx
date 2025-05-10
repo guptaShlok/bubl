@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import type { Swiper as SwiperType } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
@@ -40,12 +41,30 @@ const features = [
   },
 ];
 
+// Empty placeholder slides
+const emptySlides = [{ id: "06" }, { id: "07" }];
+
 export default function FeatureSwiper() {
   const [mounted, setMounted] = useState(false);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [swiper, setSwiper] = useState<SwiperType | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Function to handle manual navigation
+  const handleNavigation = (direction: "prev" | "next") => {
+    if (!swiper) return;
+
+    if (direction === "prev" && !isBeginning) {
+      swiper.slidePrev();
+    } else if (direction === "next" && !isEnd) {
+      swiper.slideNext();
+    }
+  };
 
   if (!mounted) return null;
 
@@ -56,15 +75,16 @@ export default function FeatureSwiper() {
         spaceBetween={20}
         slidesPerView={1}
         initialSlide={0}
-        centeredSlides={true}
+        centeredSlides={false}
+        slidesPerGroup={1} // Move one slide at a time
         breakpoints={{
           640: {
             slidesPerView: 2,
-            centeredSlides: true,
+            centeredSlides: false,
           },
           1024: {
             slidesPerView: 3,
-            centeredSlides: true,
+            centeredSlides: false,
           },
         }}
         pagination={{
@@ -72,22 +92,57 @@ export default function FeatureSwiper() {
           el: ".feature-pagination",
           bulletClass:
             "inline-block w-8 h-1 bg-gray-700 rounded-full mx-1 cursor-pointer transition-all",
-          bulletActiveClass: "!bg-[#5dcfb6]",
+          bulletActiveClass: "!bg-[#8ad3c3]",
         }}
-        navigation={{
-          prevEl: ".feature-prev",
-          nextEl: ".feature-next",
+        navigation={false} // Disable default navigation
+        onSwiper={setSwiper}
+        onSlideChange={(swiper: SwiperType) => {
+          setIsBeginning(swiper.isBeginning);
+          setIsEnd(swiper.isEnd);
+          setActiveIndex(swiper.activeIndex);
+        }}
+        onInit={(swiper: SwiperType) => {
+          setIsBeginning(swiper.isBeginning);
+          setIsEnd(swiper.isEnd);
+          setActiveIndex(swiper.activeIndex);
         }}
         className="w-full"
       >
+        {/* Regular feature slides */}
         {features.map((feature) => (
           <SwiperSlide key={feature.id}>
-            <div className="bg-[#5dcfb6] rounded-lg p-8 h-64 flex flex-row items-center text-white">
-              <h3 className="text-7xl font-bold mr-6">{feature.id}</h3>
-              <div className="flex-1">
-                <h4 className="text-xl font-medium mb-2">{feature.title}</h4>
-                <p className="text-white/80">{feature.description}</p>
+            <div className="feature-card bg-[#8ad3c3] h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden group cursor-pointer">
+              {/* Number */}
+              <div className="mb-4">
+                <h3 className="text-8xl font-bold">{feature.id}</h3>
               </div>
+
+              {/* Title */}
+              <div className="text-center">
+                <h4 className="text-2xl font-medium leading-tight">
+                  {feature.title}
+                </h4>
+              </div>
+
+              {/* Description overlay that appears on hover */}
+              <div className="absolute inset-0 bg-[#5dcfb6] flex flex-col items-start justify-center p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out">
+                <h3 className="text-8xl font-bold mb-4">{feature.id}</h3>
+                <h4 className="text-2xl font-medium mb-2 text-center">
+                  {feature.title}
+                </h4>
+                <p className="text-white/90 text-sm text-center max-w-xs">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+
+        {/* Empty slides */}
+        {emptySlides.map((emptySlide) => (
+          <SwiperSlide key={emptySlide.id}>
+            <div className="feature-card bg-none h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden">
+              {/* Empty slide with just the number */}
             </div>
           </SwiperSlide>
         ))}
@@ -95,10 +150,24 @@ export default function FeatureSwiper() {
 
       <div className="flex items-center justify-between mt-8">
         <div className="flex space-x-4">
-          <button className="feature-prev p-2  text-black rounded-full hover:bg-[#5dcfb6] hover:border-[#5dcfb6] hover:text-white transition-colors">
-            <ArrowLeftIcon className="h-7 w-7 " />
+          <button
+            onClick={() => handleNavigation("prev")}
+            className={`p-2 rounded-full transition-colors ${
+              isBeginning
+                ? "text-gray-400 cursor-not-allowed"
+                : "text-black hover:bg-[#5dcfb6] hover:text-white"
+            }`}
+          >
+            <ArrowLeftIcon className="h-7 w-7" />
           </button>
-          <button className="feature-next p-2  text-black rounded-full hover:bg-[#5dcfb6] hover:border-[#5dcfb6] hover:text-white transition-colors">
+          <button
+            onClick={() => handleNavigation("next")}
+            className={`p-2 rounded-full transition-colors ${
+              isEnd
+                ? "text-gray-400 cursor-not-allowed"
+                : "text-black hover:bg-[#5dcfb6] hover:text-white"
+            }`}
+          >
             <ArrowRightIcon className="h-7 w-7" />
           </button>
         </div>
