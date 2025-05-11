@@ -146,22 +146,45 @@ const Thinking = () => {
 
   return (
     <>
-      <main className="max-h-screen pt-[5vw] mb-[30vh] px-[7vw] w-full relative">
-        <div className="mb-8 md:mb-12 h-fit flex justify-around relative">
-          <h1 className="w-full text-4xl md:text-[clamp(4rem,8vw,8rem)] text-center md:text-start border border-black font-nornal leading-tighter tracking-normal">
-            {/* note to add the abouve text class as an utlity one and update the hero section as well */}
-            <span className="text-black">Still </span>
-            <span className="gradient-text-1">Thinking?</span>
-            <br />
-            <span className="text-black">Take </span>
-            <span className="gradient-text-1">Action</span>
-          </h1>
+      <main className="max-h-screen pt-[6vw] mb-[25vh] px-[6vw] w-full relative">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+          <div className="relative">
+            <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
+              <span className="text-black">Still Thinking? </span>
+              <br />
+              <div className="flex items-center justify-center md:justify-start relative">
+                <div className="text-center md:text-start">
+                  <span className="gradient-text-1"> Take Action</span>
+                </div>
 
-          <div className="absolute right-0 bottom-0 flex items-center justify-between w-[40vw] t-[20vh] translate-y-[12vw] text-black">
+                {/* Arrow positioned next to "Take Action" */}
+                <div className="hidden md:block ml-12 transform translate-y-1">
+                  <svg
+                    width="50"
+                    height="50"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 3L21 21M21 21H6M21 21V6"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h1>
+          </div>
+
+          {/* Buttons container - centered on mobile, positioned on desktop */}
+          <div className="flex flex-col sm:flex-row px-[6vw] items-center justify-center md:justify-end gap-4 sm:gap-6 mt-8 md:mt-0 md:absolute md:right-0 md:bottom-0 md:translate-y-[12vw] w-full md:w-auto">
             <Link
               ref={buttonRef1}
-              href="/about"
-              className="gsap-button inline-block px-22 py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-4xl relative overflow-hidden z-10"
+              href="/shop"
+              className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">Shop BabyBubl</span>
               <div
@@ -172,7 +195,7 @@ const Thinking = () => {
             <Link
               ref={buttonRef2}
               href="/contact"
-              className="gsap-button inline-block px-22 py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-4xl relative overflow-hidden z-10"
+              className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">Contact</span>
               <div

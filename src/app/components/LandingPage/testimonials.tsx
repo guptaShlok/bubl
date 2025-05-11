@@ -47,13 +47,37 @@ export default function TestimonialSection() {
   if (!mounted) return <div className="h-[500px]"></div>;
 
   return (
-    <section className="relative py-16 px-4 md:px-8 lg:px-16 overflow-hidden ">
+    <section className="relative pt-[6vw] px-[6vw] overflow-hidden ">
       {/* Heading section */}
-      <div className="mb-8 md:mb-12 flex flex-col md:flex-row justify-around relative">
-        <h1 className="w-full text-4xl md:text-[clamp(4rem,8vw,8rem)] text-center md:text-start font-bold leading-tighter tracking-normal">
+      <div className="mb-8 md:mb-10 flex flex-col md:flex-row md:justify-start justify-around relative">
+        <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
           <span className="text-black">Hear from our </span>
+
           <br />
-          <span className="gradient-text-1">Customers</span>
+          <div className="flex items-center justify-center md:justify-start relative">
+            <div className="text-center md:text-start">
+              <span className="gradient-text-1"> Customers</span>
+            </div>
+
+            {/* Arrow positioned next to "& Mission" */}
+            <div className="hidden md:block ml-12 transform translate-y-1">
+              <svg
+                width="50"
+                height="50"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3 3L21 21M21 21H6M21 21V6"
+                  stroke="black"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
         </h1>
       </div>
 

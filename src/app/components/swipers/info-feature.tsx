@@ -95,14 +95,14 @@ export default function InfoSwiper() {
               disabled={!swiperInst}
               className="p-2 rounded-full hover:bg-[#5dcfb6] hover:text-white transition-colors"
             >
-              <ArrowLeftIcon className="h-7 w-7" />
+              <ArrowLeftIcon className="h-9 w-9" />
             </button>
             <button
               onClick={() => swiperInst?.slideNext()}
               disabled={!swiperInst}
               className="p-2 rounded-full hover:bg-[#5dcfb6] hover:text-white transition-colors"
             >
-              <ArrowRightIcon className="h-7 w-7" />
+              <ArrowRightIcon className="h-9 w-9" />
             </button>
           </div>
 

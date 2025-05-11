@@ -1,11 +1,12 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import InfoSwiper from "../swipers/info-feature";
 
-const BubblApp = () => {
+const ScienceBehindProduct = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
 
@@ -75,21 +76,48 @@ const BubblApp = () => {
     };
   }, []);
   return (
-    <>
-      <main className="pt-[8vw] px-[7vw] w-full relative">
-        {/* Heading section */}
-        <div className="mb-8 md:mb-12 flex flex-col md:flex-row justify-around relative">
-          <h1 className="w-full text-4xl md:text-[clamp(4rem,8vw,8rem)] text-center md:text-start font-bold leading-tighter tracking-normal">
-            <span className="gradient-text-1">Bubl App</span>
-          </h1>
+    <main className="max-h-screen pt-[6vw] px-[6vw] w-full relative">
+      {/* Heading section */}
+      <div className="mb-8 md:mb-12 relative">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+          <div className="relative">
+            <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
+              <span className="gradient-text-1">Science Behind</span>
+              <br />
+              <div className="flex items-center justify-center md:justify-start relative">
+                <div className="text-center md:text-start">
+                  <span className="text-black">Our Product</span>
+                </div>
 
-          <div className="mt-6 md:mt-0 md:absolute bottom-0 right-0 text-black">
+                {/* Arrow positioned next to "& Mission" */}
+                <div className="hidden md:block ml-12 transform translate-y-1">
+                  <svg
+                    width="50"
+                    height="50"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 3L21 21M21 21H6M21 21V6"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h1>
+          </div>
+
+          <div className="self-center md:self-auto">
             <Link
               ref={buttonRef}
               href="/about"
-              className="gsap-button inline-block px-22 py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-4xl relative overflow-hidden z-10"
+              className="gsap-button inline-block px-12 md:px-22 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
             >
-              <span className="relative z-10">Explore</span>
+              <span className="relative z-10 font-semibold">Learn More</span>
               <div
                 ref={circleRef}
                 className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
@@ -97,36 +125,10 @@ const BubblApp = () => {
             </Link>
           </div>
         </div>
-
-        {/* Content block */}
-        <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8 pt-[2vw]">
-          <div className="w-full md:w-2/5 flex flex-col justify-center items-center md:items-start text-center md:text-left text-[clamp(0.8rem,1.5vw,2rem)] font-light text-black">
-            <p className="mt-4">
-              The Bubl lets you monitor and control your babybubl in real time.
-              Track
-              <span className="font-semibold">
-                air quality, temperqture, and pollution levels (PM2.5)
-              </span>{" "}
-              , recieve
-              <span className="font-semibold">smart alerts</span>, and adjust
-              settings for optimal protection- all form your phone.
-            </p>
-          </div>
-        </div>
-
-        {/* Full-width Image */}
-        <div className="w-full -mt-[5vw] md:-mt-[15vw]">
-          <Image
-            src="/backgroundImages/bublApp.png"
-            alt="Baby Bubl"
-            width={1300}
-            height={2000}
-            className="w-full h-auto object-cover rounded-2xl"
-          />
-        </div>
-      </main>
-    </>
+        <InfoSwiper />
+      </div>
+    </main>
   );
 };
 
-export default BubblApp;
+export default ScienceBehindProduct;

@@ -1,16 +1,16 @@
 import React from "react";
 
 import Navbar from "@/app/components/navbar";
-import HeroSection from "@/app/components/heroSection";
-import MissionPhilosphy from "../components/missionPhilosphy";
-import IndianDescription from "../components/indianDescription";
-import ShopBubl from "../components/shopBubl";
-import Benefit from "../components/benefitPage";
-import ScienceBehindProduct from "../components/scienceBehindProduct";
-import BubblApp from "../components/bublApp";
-import TestimonialSection from "../components/testimonials";
-import Thinking from "../components/stillThinking";
 import Footer from "../components/footer";
+import MissionPhilosophy from "../components/LandingPage/missionPhilosphy";
+import IndianDescription from "../components/LandingPage/indianDescription";
+import ShopBubl from "../components/LandingPage/shopBubl";
+import Benefit from "../components/LandingPage/benefitPage";
+import ScienceBehindProduct from "../components/LandingPage/scienceBehindProduct";
+import BubblApp from "../components/LandingPage/bublApp";
+import TestimonialSection from "../components/LandingPage/testimonials";
+import Thinking from "../components/LandingPage/stillThinking";
+import HeroSection from "../components/LandingPage/heroSection";
 
 const Page = () => {
   return (
@@ -20,7 +20,7 @@ const Page = () => {
         <Navbar />
         <HeroSection />
       </section>
-      <MissionPhilosphy />
+      <MissionPhilosophy />
       <IndianDescription />
       <ShopBubl />
       <Benefit />

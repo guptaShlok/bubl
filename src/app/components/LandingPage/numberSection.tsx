@@ -61,7 +61,7 @@ const NumberSection: React.FC = () => {
   return (
     <div
       ref={ref}
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-center p-8 md:px-16 md:pt-[4vw] rounded-2xl"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 text-center p-6 md:px-16 md:pt-[6vw] rounded-2xl"
     >
       {numberItems.map((item) => (
         <div key={item.id} className="flex flex-col items-center">
