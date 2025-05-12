@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const MissionVision = () => {
   return (
-    <main className="max-h-screen px-[6vw] -mt-[3vw] w-full relative bg-[#f0fbf8]">
+    <main className="max-h-screen px-[6vw] -mt-[3vw] w-full relative">
       {/* Heading section */}
       <div className=" h-fit flex relative">
         <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3]">
