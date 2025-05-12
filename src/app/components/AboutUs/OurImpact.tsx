@@ -4,37 +4,44 @@ import Image from "next/image";
 
 const OurImpact = () => {
   return (
-    <main className="max-h-screen px-[6vw] pt-[6vw] w-full relative text-black">
+    <main className="h-auto px-[6vw] pt-[8vh] w-full relative text-black">
       {/* Heading section */}
-      <div className="h-fit flex relative leading-[1.3] mb-8">
-        <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold">
-          <div className="flex items-center justify-center md:justify-start gap-8 w-full">
-            <span className="text-black"> Our </span>
-            <span className="gradient-text-1"> Impact</span>
-            {/* Arrow next to heading */}
-            <div className="hidden md:block ml-8 translate-y-1">
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="text-black"
-              >
-                <path
-                  d="M3 3L21 21M21 21H6M21 21V6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+      <div className="mb-2 md:mb-12 relative">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+          <div className="relative">
+            <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
+              <div className="flex items-center justify-center md:justify-start relative">
+                <div className="text-center md:text-start">
+                  <span className="text-black"> Our</span>
+                  <span className="gradient-text-1"> Impact</span>
+                </div>
+
+                {/* Arrow positioned next to "& Mission" */}
+                <div className="hidden md:block ml-12 transform translate-y-1">
+                  <svg
+                    width="50"
+                    height="50"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 3L21 21M21 21H6M21 21V6"
+                      stroke="black"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h1>
           </div>
-        </h1>
+        </div>
       </div>
-      <div className="mx-auto relative pt-[3vw] z-10">
-        {/* First section - Image left, Text right */}
+
+      {/* First section - Image left, Text right */}
+      <div className="mx-auto relative md:pt-[4vh] z-10">
         <div className="flex flex-col md:flex-row items-end gap-8 md:gap-15 mb-10">
           <div className="w-full md:w-1/2">
             <div className="rounded-2xl overflow-hidden">

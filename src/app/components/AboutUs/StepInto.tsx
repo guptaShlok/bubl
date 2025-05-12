@@ -146,7 +146,7 @@ const StepInto = () => {
 
   return (
     <>
-      <main className="max-h-screen pt-[36vh] mb-[25vh] px-[6vw] w-full relative">
+      <main className="max-h-screen pt-[6vh] mb-[10vh] md:mb-[20vh] px-[6vw] w-full relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
