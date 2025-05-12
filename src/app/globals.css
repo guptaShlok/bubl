@@ -85,6 +85,10 @@
     @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover relative;
     background-image: url("/backgroundImages/aboutUs/aboutUsLandingPage.png");
   }
+  .product-hero-gradient-background {
+    @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover relative;
+    background-image: url("/backgroundImages/productPage/productLandingPage.png");
+  }
 
   /* Background Image */
   .bg-image-overlay {
@@ -94,6 +98,10 @@
   .about-bg-image-overlay {
     @apply absolute  w-full  h-1/2 md:h-5/6 bg-center md:bg-[position:right_bottom] md:-translate-x-[clamp(1em,10vw,10em)] bottom-0 bg-no-repeat bg-contain transition-[background-position] duration-300 ease-in-out;
     background-image: url("/backgroundImages/aboutUs/aboutUsLandingPageOverlay.png");
+  }
+  .product-bg-image-overlay {
+    @apply absolute  w-full h-1/2 md:h-5/6 bg-center md:bg-[position:right_bottom] md:-translate-x-[clamp(1em,10vw,10em)] bottom-0 bg-no-repeat bg-contain transition-[background-position] duration-300 ease-in-out;
+    background-image: url("/backgroundImages/productPage/productLandingPageOverlay.png.png");
   }
 
   /* Centering the absolute elements */

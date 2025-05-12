@@ -4,7 +4,7 @@ import FeatureSwiper from "../swipers/feature-swiper";
 
 const Benefit = () => {
   return (
-    <main className="max-h-screen pt-[5vw] px-[7vw] w-full relative">
+    <main className="max-h-screen pt-[5vw] px-[7vw] w-full relative overflow-x-hidden">
       {/* Heading section */}
       <div className="mb-8 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
