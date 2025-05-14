@@ -78,7 +78,7 @@ const BublApp = () => {
     <>
       <main className="pt-[8vh] px-[6vw] w-full relative">
         {/* Heading section */}
-        <div className="mb-8 md:mb-12 relative">
+        <div className=" md:mb-8 mb-5 relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
             <div className="relative">
               <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
@@ -125,24 +125,35 @@ const BublApp = () => {
           </div>
         </div>
 
-        {/* Content block */}
-        <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8 pt-[2vw]">
-          <div className="w-full md:w-2/5 flex flex-col justify-center items-center md:items-start text-center md:text-left text-[clamp(0.8rem,1.5vw,2rem)] font-light text-black">
-            <p className="mt-4">
-              The Bubl lets you monitor and control your babybubl in real time.
-              Track
-              <span className="font-semibold">
-                air quality, temperqture, and pollution levels (PM2.5)
-              </span>{" "}
-              , recieve
-              <span className="font-semibold">smart alerts</span>, and adjust
-              settings for optimal protection- all form your phone.
-            </p>
+        <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8">
+          <div className="w-full md:w-3/5 flex flex-col justify-center items-center md:items-start text-center md:text-left text-black">
+            <ul className="list-disc list-inside mt-0 md:space-y-4 space-y-1 text-start text-xl md:text-3xl font-normal">
+              <li>
+                <span className="font-semibold">Control Babybubl remotely</span>{" "}
+                &#8208; Turn it on/off and adjust fan speed
+              </li>
+              <li>
+                <span className="font-semibold">Live air quality updates</span>{" "}
+                &#8208; See AQI and temperature in real-time
+              </li>
+              <li>
+                <span className="font-semibold">Smart alerts</span> &#8208; Get
+                notified when air quality drops or filters need changing
+              </li>
+              <li>
+                <span className="font-semibold">Usage insights</span>{" "}
+                &#8208;Track device performance over time
+              </li>
+              <li>
+                <span className="font-semibold">Filter status monitoring</span>{" "}
+                &#8208; Know exactly when to replace your filter
+              </li>
+            </ul>
           </div>
         </div>
 
         {/* Full-width Image */}
-        <div className="w-full -mt-[5vw] md:-mt-[15vw]">
+        <div className="w-full -mt-[5vw] md:-mt-[40vh]">
           <Image
             src="/backgroundImages/bublApp.png"
             alt="Baby Bubl"

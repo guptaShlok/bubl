@@ -4,18 +4,30 @@ import Navbar from "@/app/components/navbar";
 // import HeroSection from "@/app/components/AboutUs/HeroSection";
 
 import Footer from "@/app/components/footer";
-import ProductPage from "@/app/components/ProductPage/HeroSection";
+import HeroSection from "@/app/components/ProductPage/HeroSection";
+import MeetBabyBubl from "@/app/components/ProductPage/MeetBabyBubl";
+import KeyFeatures from "@/app/components/ProductPage/KeyFeatures";
+import HowItWorks from "@/app/components/ProductPage/HowItWorks";
+import WhatIncluded from "@/app/components/ProductPage/WhatIncluded";
+import BublApp from "@/app/components/ProductPage/BublApp";
+import TestimonialSection from "@/app/components/LandingPage/testimonials";
+import OtherProducts from "@/app/components/ProductPage/OtherProducts";
 
 const Page = () => {
   return (
     <>
       <section className="product-hero-gradient-background w-full">
-        <div className="product-bg-image-overlay"></div>
+        {/* <div className="product-bg-image-overlay"></div> */}
         <Navbar />
-        <ProductPage />
-        {/* <HeroSection /> */}
+        <HeroSection />
       </section>
-
+      <MeetBabyBubl />
+      <KeyFeatures />
+      <HowItWorks />
+      <WhatIncluded />
+      <BublApp />
+      <TestimonialSection />
+      <OtherProducts />
       <Footer />
     </>
   );

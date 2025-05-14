@@ -7,7 +7,7 @@ import IndianDescription from "../components/LandingPage/indianDescription";
 import ShopBubl from "../components/LandingPage/shopBubl";
 import Benefit from "../components/LandingPage/benefitPage";
 import ScienceBehindProduct from "../components/LandingPage/scienceBehindProduct";
-import BubblApp from "../components/LandingPage/bublApp";
+import BublApp from "../components/LandingPage/bublApp";
 import TestimonialSection from "../components/LandingPage/testimonials";
 import Thinking from "../components/LandingPage/stillThinking";
 import HeroSection from "../components/LandingPage/heroSection";
@@ -25,7 +25,7 @@ const Page = () => {
       <ShopBubl />
       <Benefit />
       <ScienceBehindProduct />
-      <BubblApp />
+      <BublApp />
       <TestimonialSection />
       <Thinking />
       <Footer />

@@ -75,7 +75,7 @@ const ShopBubl = () => {
   }, []);
   return (
     <>
-      <main className="pt-[6vw] px-[6vw] w-full relative">
+      <main className="pt-[8vh] px-[6vw] w-full relative">
         {/* Heading section */}
         <div className="mb-8 md:mb-12 relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -89,7 +89,7 @@ const ShopBubl = () => {
                   </div>
 
                   {/* Arrow positioned next to "& Mission" */}
-                  <div className="hidden md:block ml-12 transform translate-y-1">
+                  <div className="hidden md:block ml-12 transform translate-y-0 md:translate-y-1">
                     <svg
                       width="50"
                       height="50"
@@ -114,7 +114,7 @@ const ShopBubl = () => {
               <Link
                 ref={buttonRef}
                 href="/about"
-                className="gsap-button inline-block px-12 md:px-22 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-2xl md:text-4xl relative overflow-hidden z-10"
+                className="gsap-button inline-block px-12 md:px-22 py-3 md:pt-6 border-2 border-[#1ee3af] rounded-full text-black text-2xl md:text-4xl relative overflow-hidden z-10"
               >
                 <span className="relative z-10 font-semibold">
                   Shop BabyBubl

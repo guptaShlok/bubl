@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
-const Thinking = () => {
+const OtherProducts = () => {
   // Create separate refs for each button and circle
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
@@ -150,11 +150,11 @@ const Thinking = () => {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
-              <span className="text-black">Still Thinking? </span>
+              <span className="text-black">Explore Other </span>
               <br />
               <div className="flex items-center justify-center md:justify-start relative">
                 <div className="text-center md:text-start">
-                  <span className="gradient-text-1"> Take Action</span>
+                  <span className="gradient-text-1"> Products</span>
                 </div>
 
                 {/* Arrow positioned next to "Take Action" */}
@@ -186,7 +186,7 @@ const Thinking = () => {
               href="/shop"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
-              <span className="relative z-10">Shop BabyBubl</span>
+              <span className="relative z-10">Accessories</span>
               <div
                 ref={circleRef1}
                 className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
@@ -197,7 +197,7 @@ const Thinking = () => {
               href="/contact"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
-              <span className="relative z-10">Contact</span>
+              <span className="relative z-10">BabyBubl App</span>
               <div
                 ref={circleRef2}
                 className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
@@ -210,4 +210,4 @@ const Thinking = () => {
   );
 };
 
-export default Thinking;
+export default OtherProducts;

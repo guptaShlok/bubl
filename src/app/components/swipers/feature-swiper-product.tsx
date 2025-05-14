@@ -36,37 +36,38 @@ import "swiper/css/pagination";
 const features = [
   {
     id: "01",
-    title: "Up to 95% Cleaner Air",
+    title: "360° Clean Air Flow",
     description:
-      "Advanced filtration technology removes up to 95% of airborne particles.",
+      "Wraparound HEPA filtration to reduce PM2.5, dust, pollen & allergens.",
   },
   {
     id: "02",
-    title: "Smart Airflow Design",
-    description: "Optimized airflow pattern ensures maximum efficiency.",
+    title: "Smart AQI Sensors",
+    description: "Monitors and adjusts based on real-time air quality.",
   },
   {
     id: "03",
-    title: "HEPA Filtration",
-    description:
-      "Medical-grade HEPA filter captures particles as small as 0.3 microns.",
+    title: "Lightweight & Comfortable",
+    description: "Ergonomically designed for infant safety and ease.",
   },
   {
     id: "04",
-    title: "Ultra-Quiet Operation",
-    description: "Whisper-quiet technology for undisturbed sleep.",
+    title: "Silent Night Mode",
+    description:
+      "Auto-dims and quiets operation during nighttime for uninterrupted sleep.",
   },
   {
     id: "05",
-    title: "Energy Efficient",
-    description: "Low power consumption for continuous operation.",
+    title: "App-Controlled Convenience",
+    description:
+      "Full control and monitoring via a dedicated mobile app, anytime, anywhere.",
   },
 ];
 
 // Empty placeholder slides
-const emptySlides = [{ id: "06" }, { id: "07" }];
+const emptySlides = [{ id: "06" }, { id: "07" }, { id: "08" }];
 
-export default function FeatureSwiper() {
+export default function FeatureSwiperProduct() {
   const [mounted, setMounted] = useState(false);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -95,7 +96,7 @@ export default function FeatureSwiper() {
     <div className="relative">
       <Swiper
         modules={[Navigation, Pagination]}
-        spaceBetween={20}
+        spaceBetween={200}
         slidesPerView={1}
         initialSlide={0}
         centeredSlides={false}
@@ -106,7 +107,7 @@ export default function FeatureSwiper() {
             centeredSlides: false,
           },
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 4,
             centeredSlides: false,
           },
         }}
@@ -134,16 +135,17 @@ export default function FeatureSwiper() {
         {/* Regular feature slides */}
         {features.map((feature) => (
           <SwiperSlide key={feature.id}>
-            <div className="feature-card bg-[#5dcfb6] h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden group cursor-pointer">
+            <div className="feature-card bg-[#5dcfb6] h-[500px] w-[400px] rounded-lg p-6 flex flex-col justify-between text-white relative overflow-hidden group cursor-pointer">
               {/* Number */}
               <div className="mb-4">
-                <h3 className="text-8xl font-bold">{feature.id}</h3>
+                <h3 className="text-8xl hidden font-bold">{feature.id}</h3>
+                <h3 className="text-3xl font-bold">{feature.title}</h3>
               </div>
 
               {/* Title */}
               <div className="text-center">
-                <h4 className="text-2xl font-medium leading-tight">
-                  {feature.title}
+                <h4 className="text-3xl text-start font-medium leading-tight">
+                  {feature.description}
                 </h4>
               </div>
             </div>
@@ -154,10 +156,13 @@ export default function FeatureSwiper() {
         {!isMobile &&
           emptySlides.map((emptySlide) => (
             <SwiperSlide key={emptySlide.id}>
-              <div className="hidden bg-white scale-0 ">
+              <div className="feature-card scale-0 bg-[#8ad3c3] h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden">
                 {/* Empty slide with just the number */}
                 <div className="mb-4">
-                  <h3 className="">{emptySlide.id}</h3>
+                  <h3 className="text-8xl scale-0 font-bold">
+                    {emptySlide.id}
+                  </h3>
+                  <h3 className="text-8xl font-bold">{emptySlide.id}</h3>
                 </div>
               </div>
             </SwiperSlide>

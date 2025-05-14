@@ -56,7 +56,7 @@ export default function InfoSwiper() {
   if (!mounted) return null;
 
   return (
-    <div className="relative text-black rounded-xl p-8">
+    <div className="relative text-black rounded-xl md:p-8 p-4">
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={20}
@@ -69,13 +69,13 @@ export default function InfoSwiper() {
         {infoSlides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div className="py-8 px-4 md:px-12 flex flex-col md:flex-row items-center">
-              <div className="w-full md:w-1/2 mb-8 md:mb-0">
+              <div className="w-full md:w-1/2 mb-0">
                 <h3 className="text-5xl md:text-7xl font-bold scale-0 text-[#5dcfb6]">
                   {slide.id}
                 </h3>
               </div>
               <div className="w-full md:w-1/2 md:pl-8">
-                <h3 className="text-2xl md:text-3xl font-bold mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold mb-2 md:mb-4">
                   {slide.title}
                 </h3>
                 <p className="text-gray-700 text-lg">{slide.content}</p>
@@ -86,8 +86,8 @@ export default function InfoSwiper() {
       </Swiper>
 
       {/* arrows + timeline aligned */}
-      <div className="mt-8 w-full">
-        <div className="relative w-full mx-auto flex flex-col gap-10 -translate-y-1/2">
+      <div className="mt-2 w-full">
+        <div className="relative w-full mx-auto flex flex-col gap-10 md:-translate-y-1/2">
           {/* arrows */}
           <div className="flex space-x-4">
             <button

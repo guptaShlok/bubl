@@ -47,7 +47,7 @@ export default function TestimonialSection() {
   if (!mounted) return <div className="h-[500px]"></div>;
 
   return (
-    <section className="relative pt-[6vw] px-[6vw] overflow-hidden ">
+    <section className="relative pt-[8vh] px-[6vw] overflow-hidden ">
       {/* Heading section */}
       <div className="mb-8 md:mb-10 flex flex-col md:flex-row md:justify-start justify-around relative">
         <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">

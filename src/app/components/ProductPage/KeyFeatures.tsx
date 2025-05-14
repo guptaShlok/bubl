@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import FeatureSwiper from "../swipers/feature-swiper";
+import FeatureSwiperProduct from "../swipers/feature-swiper-product";
 
-const Benefit = () => {
+const KeyFeatures = () => {
   return (
     <main className="max-h-screen pt-[8vh] px-[6vw] w-full relative overflow-x-hidden">
       {/* Heading section */}
@@ -12,7 +12,8 @@ const Benefit = () => {
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
               <div className="flex items-center justify-center md:justify-start relative">
                 <div className="text-center md:text-start">
-                  <span className="gradient-text-1"> Benefits</span>
+                  <span className="text-black"> Key</span>
+                  <span className="gradient-text-1"> Features</span>
                 </div>
 
                 {/* Arrow positioned next to "& Mission" */}
@@ -39,11 +40,11 @@ const Benefit = () => {
         </div>
       </div>
 
-      <section className="py-8 relative md:translate-x-1/3">
-        <FeatureSwiper />
+      <section className=" relative md:translate-x-1/4">
+        <FeatureSwiperProduct />
       </section>
     </main>
   );
 };
 
-export default Benefit;
+export default KeyFeatures;

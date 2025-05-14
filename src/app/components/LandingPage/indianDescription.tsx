@@ -7,10 +7,10 @@ const IndianDescription = () => {
   return (
     <>
       {"India's Shield against India's Polluted Air"}
-      <main className="max-h-screen pt-[6vw] px-[6vw] w-full relative">
+      <main className="max-h-screen pt-[8vh] px-[6vw] w-full relative">
         {/* Heading section */}
-        <div className=" h-fit flexß relative">
-          <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
+        <div className=" h-fit flex relative">
+          <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal md:mb-0">
             <span className="gradient-text-1 ">Shield</span>
             <span className="text-black font-semi-bold"> against </span>
             <span className="gradient-text-1">India&#39;s</span>
@@ -81,24 +81,25 @@ const IndianDescription = () => {
       {"Data about india"}
       <NumberSection />
 
-      <main className="max-h-screen pt-[6vw] px-[6vw] w-full relative">
-        <div className="flex flex-col-reverse md:flex-row justify-center items-center md:items-center gap-4 md:mt-6 mt-3 mx-auto">
+      <main className="h-auto pt-[5vh] px-[6vw] w-full relative">
+        <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-6 md:gap-8 md:mt-6 mt-3 mx-auto">
           {/* Image block */}
-          <div className="w-full md:w-2/3 rounded-2xl shrink-0 flex justify-center md:justify-start overflow-hidden pr-0 md:pr-2">
+          <div className="w-full md:w-2/5 rounded-2xl shrink-0 flex justify-center md:justify-start overflow-hidden pr-0 md:pr-4">
             <Image
               src="/backgroundImages/indianDesc/joggingCrowd.png"
               alt="people jogging in India"
               width={900}
               height={900}
-              className="w-[700px] h-[500px] object-cover rounded-2xl"
+              className="w-full md:w-[900px] h-[400px] object-cover rounded-2xl"
             />
           </div>
 
           {/* Content block */}
-          <div className="w-full flex flex-col justify-between  text-center md:text-left text-[clamp(0.8rem,1.6vw,2rem)] font-light text-black">
-            <p className="mt-4">
+          <div className="w-full md:w-3/5 h-full flex flex-col justify-center items-center md:items-start text-center md:text-left">
+            <p className="mt-4 w-full text-[clamp(0.8rem,1.5vw,2rem)] font-light text-black">
               Air quality in India can&#39;t be controlled — but your baby&#39;s
               breathing space can be.
+              <br />
               <br />
               Babybubl creates a protective dome of clean air using HEPA
               filtration and real-time monitoring, making it{" "}

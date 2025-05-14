@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 
-export default function ProductPage() {
+export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
 
-  // refs for header, buttons, and circles
+  // refs for buttons and circles
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
   const buttonRef2 = useRef<HTMLAnchorElement>(null);
@@ -58,7 +58,7 @@ export default function ProductPage() {
       .to(
         button,
         {
-          color: "white",
+          color: "#8ad3c3",
           borderColor: "#1ee3af",
           duration: 0.1,
         },
@@ -125,7 +125,7 @@ export default function ProductPage() {
       .to(
         button,
         {
-          color: "white",
+          color: "#8ad3c3",
           borderColor: "#1ee3af",
           duration: 0.1,
         },
@@ -155,20 +155,36 @@ export default function ProductPage() {
   if (!mounted) return null;
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-auto overflow-hidden">
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8 relative">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          {/* Product Info */}
-          <div className="flex-1 z-10 order-2 md:order-2 translate-x-1/12 translate-y-1/5">
-            <h1 className="text-9xl font-semibold mb-6">BabyBubl</h1>
+      <main className=" mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          {/* Product Image - Left Side */}
+          <div className="w-full md:w-1/2 lg:w-1/2 order-2 md:order-1 flex justify-center md:justify-start items-center z-10 mb-12 md:mb-0">
+            <div className="relative w-full h-[350px] sm:h-[450px] md:h-[950px] md:-translate-y-1/3 md:translate-x-1/6">
+              <Image
+                src="/backgroundImages/ProductPage/productLandingPageOverlay.png"
+                alt="BabyBubl Air Purification System"
+                width={1000}
+                height={1000}
+                className="object-contain md:object-cover md:scale-80 lg:scale-105 md:translate-y-1/4"
+                priority
+              />
+            </div>
+          </div>
 
-            <p className="text-2xl mb-8 max-w-xl">
+          {/* Product Info - Right Side */}
+          <div className="w-full md:w-1/2 lg:w-2/5 z-10 order-1 md:order-2 text-white md:-translate-y-1/6 md:-translate-x-1/4">
+            <h1 className="text-4xl md:text-9xl font-semibold mb-6">
+              BabyBubl
+            </h1>
+
+            <p className="text-xl md:text-2xl mb-2  md:mb-6 max-w-xl">
               A compact air purification system to protect your baby from air
               pollution, viruses, and allergens — anytime, anywhere.
             </p>
 
-            <div className="mb-6 text-xl">
+            <div className="mb-3 md:mb-6 text-lg md:text-xl">
               <p className="mb-2">
                 <span className="font-semibold">Measurements (MM)</span>: L:
                 365, W: 470, H:190
@@ -179,46 +195,35 @@ export default function ProductPage() {
               </p>
             </div>
 
-            <p className="text-3xl font-semibold mb-8">MRP : INR 69,900</p>
+            <p className="text-2xl md:text-3xl font-semibold mb-8">
+              MRP : INR 69,900
+            </p>
 
             {/* CTA Buttons */}
-            <div className="flex gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
               <Link
                 ref={buttonRef1}
                 href="/shop"
-                className="inline-block px-16 py-4 border-2 border-white rounded-full text-white text-xl relative overflow-hidden z-10 font-semibold"
+                className="inline-block px-10 sm:px-12 md:px-16 py-3 sm:py-4 border-2 border-white bg-[#8ad3c3] rounded-full text-white text-lg md:text-xl relative overflow-hidden z-40 font-semibold"
               >
                 <span className="relative z-10">Add to Cart</span>
                 <div
                   ref={circleRef1}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-white rounded-full pointer-events-none"
                 />
               </Link>
 
               <Link
                 ref={buttonRef2}
                 href="/amazon"
-                className="inline-block px-18 py-4 border-2 border-white rounded-full text-white text-xl relative overflow-hidden z-10 font-semibold"
+                className="inline-block px-10 sm:px-12 md:px-16 py-3 sm:py-4 border-2 bg-[#8ad3c3] border-white rounded-full text-white text-lg md:text-xl relative overflow-hidden z-10 font-semibold"
               >
                 <span className="relative z-10">Buy on Amazon</span>
                 <div
                   ref={circleRef2}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-white rounded-full pointer-events-none"
                 />
               </Link>
-            </div>
-          </div>
-
-          {/* Product Image */}
-          <div className="flex-1 order-1 md:order-1 flex justify-center md:translate-y-1/4 md:scale-125 lg:scale-150 z-30 mb-8 md:mb-0">
-            <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[600px]">
-              <Image
-                src="/backgroundImages/productPage/productLandingPageOverlay.png"
-                alt="BabyBubl Air Purification System"
-                fill
-                className="object-contain"
-                priority
-              />
             </div>
           </div>
         </div>
