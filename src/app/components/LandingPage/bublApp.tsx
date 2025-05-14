@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import AppStoreLinks from "../AppDownload";
 
 const BublApp = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
@@ -150,6 +151,9 @@ const BublApp = () => {
             height={2000}
             className="w-full h-auto object-cover rounded-2xl"
           />
+        </div>
+        <div className="md:absolute md:right-0 md:bottom-0 md:h-[15vh] md:w-[250px] md:-translate-x-2/5 md:-translate-y-3/4 md:scale-125 ">
+          <AppStoreLinks />
         </div>
       </main>
     </>

@@ -36,19 +36,21 @@ import "swiper/css/pagination";
 const features = [
   {
     id: "01",
-    title: "360° Clean Air Flow",
+    title: "Real-Time Monitoring",
     description:
-      "Wraparound HEPA filtration to reduce PM2.5, dust, pollen & allergens.",
+      "Continuously tracks PM2.5 levels and temperature around your baby for immediate insights into their breathing environment.",
   },
   {
     id: "02",
-    title: "Smart AQI Sensors",
-    description: "Monitors and adjusts based on real-time air quality.",
+    title: "Spot Measurements",
+    description:
+      "Let parents take instant, localized air quality readings for accurate, on-the-go assessments.",
   },
   {
     id: "03",
-    title: "Lightweight & Comfortable",
-    description: "Ergonomically designed for infant safety and ease.",
+    title: "Smart Alerts & Maintenance Reminders",
+    description:
+      "Notifies you when to change filters or charge the device, ensuring consistent protection and performance.",
   },
   {
     id: "04",
@@ -56,18 +58,12 @@ const features = [
     description:
       "Auto-dims and quiets operation during nighttime for uninterrupted sleep.",
   },
-  {
-    id: "05",
-    title: "App-Controlled Convenience",
-    description:
-      "Full control and monitoring via a dedicated mobile app, anytime, anywhere.",
-  },
 ];
 
 // Empty placeholder slides
 const emptySlides = [{ id: "06" }, { id: "07" }, { id: "08" }];
 
-export default function FeatureSwiperProduct() {
+export default function FeatureSwiperMeetBubl() {
   const [mounted, setMounted] = useState(false);
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
@@ -161,10 +157,10 @@ export default function FeatureSwiperProduct() {
               <div className="feature-card scale-0 bg-[#8ad3c3] h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden">
                 {/* Empty slide with just the number */}
                 <div className="mb-4">
-                  <h3 className="text-8xl scale-0 font-bold">
+                  <h3 className="text-8xl scale-0 font-semibold">
                     {emptySlide.id}
                   </h3>
-                  <h3 className="text-8xl font-bold">{emptySlide.id}</h3>
+                  <h3 className="text-8xl font-semibold">{emptySlide.id}</h3>
                 </div>
               </div>
             </SwiperSlide>
