@@ -89,6 +89,10 @@
     @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover relative;
     background-image: url("/backgroundImages/productPage/productLandingPage.png");
   }
+  .science-hero-gradient-background {
+    @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover z-10 relative;
+    background-image: url("/backgroundImages/science/scienceLandingPage.png");
+  }
 
   /* Background Image */
   .bg-image-overlay {
