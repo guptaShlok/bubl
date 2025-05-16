@@ -131,7 +131,7 @@ const ScienceBehindProduct = () => {
           exceedViewport={true}
           scale={1}
           opacity={1}
-          className=" absolute translate-y-1/3 left-0 pointer-events-none"
+          className=" absolute translate-y-2/3 left-0 pointer-events-none"
           // Mobile-specific props
           mobile={{
             horizontalPosition: "right", // Centered on mobile
