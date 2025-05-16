@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import InfoSwiper from "../swipers/info-feature";
+import ImageOverlay from "../ImageOverlay";
 
 const ScienceBehindProduct = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
@@ -90,10 +91,10 @@ const ScienceBehindProduct = () => {
                 </div>
 
                 {/* Arrow positioned next to "& Mission" */}
-                <div className="hidden md:block ml-12 transform translate-y-1">
+                <div className="hidden md:block ml-22 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -114,17 +115,31 @@ const ScienceBehindProduct = () => {
           <div className="self-center md:self-auto">
             <Link
               ref={buttonRef}
-              href="/about"
+              href="/bubl-science"
               className="gsap-button inline-block px-12 md:px-22 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
             >
               <span className="relative z-10 font-semibold">Learn More</span>
               <div
                 ref={circleRef}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className=" gradient-background-1 absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>
         </div>
+        <ImageOverlay
+          imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+          exceedViewport={true}
+          scale={1}
+          opacity={1}
+          className=" absolute translate-y-1/3 left-0 pointer-events-none"
+          // Mobile-specific props
+          mobile={{
+            horizontalPosition: "right", // Centered on mobile
+            verticalPosition: "top", // At the top on mobile
+            width: "100%", // Full width on mobile
+            height: "50vh", // Half viewport height on mobile
+          }}
+        />
         <InfoSwiper />
       </div>
     </main>

@@ -64,7 +64,7 @@ export default function InfoSwiper() {
         loop={true}
         onSwiper={(sw) => setSwiperInst(sw)}
         onSlideChange={(sw) => setActiveIndex(sw.realIndex)}
-        className="swiper-container"
+        className="swiper-container "
       >
         {infoSlides.map((slide) => (
           <SwiperSlide key={slide.id}>
@@ -86,7 +86,7 @@ export default function InfoSwiper() {
       </Swiper>
 
       {/* arrows + timeline aligned */}
-      <div className="mt-2 w-full">
+      <div className="mt-2 md:mt-8 z-40 w-full">
         <div className="relative w-full mx-auto flex flex-col gap-10 md:-translate-y-1/2">
           {/* arrows */}
           <div className="flex space-x-4">
@@ -107,7 +107,7 @@ export default function InfoSwiper() {
           </div>
 
           {/* timeline */}
-          <div className="relative flex-1 mx-8">
+          <div className="relative flex-1">
             <div className="h-0.5 bg-gray-900 absolute inset-x-0 top-1/2 -translate-y-1/2 z-0" />
             <div className="flex justify-between relative z-10">
               {infoSlides.map((_, idx) => (

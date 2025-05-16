@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import ImageOverlay from "../ImageOverlay";
 
 const MissionPhilosophy = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
@@ -75,7 +76,30 @@ const MissionPhilosophy = () => {
   }, []);
 
   return (
-    <main className="max-h-screen pt-[6vw] px-[6vw] w-full relative">
+    <main className="max-h-screen pt-[12vh] px-[6vw] w-full relative">
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        horizontalPosition="right"
+        width="50%"
+        height="110vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+      />
       {/* Heading section */}
       <div className="mb-8 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -91,10 +115,10 @@ const MissionPhilosophy = () => {
                 </div>
 
                 {/* Arrow positioned next to "& Mission" */}
-                <div className="hidden md:block ml-12 transform translate-y-1">
+                <div className="hidden md:block ml-22 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +145,7 @@ const MissionPhilosophy = () => {
               <span className="relative z-10 font-semibold">About Us</span>
               <div
                 ref={circleRef}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className=" gradient-background-1 absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>
@@ -129,7 +153,7 @@ const MissionPhilosophy = () => {
       </div>
 
       {/* Content grid */}
-      <div className="flex flex-col items-center md:flex-row md:justify-evenly md:items-start gap-4 md:gap-6 mx-auto">
+      <div className="flex flex-col items-center md:flex-row md:justify-between md:items-start gap-4 md:gap-6 mx-auto">
         {/* First image */}
         <div className="hidden md:block md:w-1/4 rounded-2xl overflow-hidden">
           <Image
@@ -137,18 +161,16 @@ const MissionPhilosophy = () => {
             alt="Baby feet"
             width={320}
             height={320}
-            className="w-full h-auto object-cover"
+            className="w-auto h-[320px] z-20 object-cover"
           />
         </div>
 
         {/* Content block */}
-        <div className="w-full md:w-1/4 md:mt-6 flex flex-col items-center md:items-stretch text-center md:text-left text-[clamp(0.8rem,1.5vw,2rem)] font-light text-black">
+        <div className="w-full md:w-1/4 md:mt-6 flex flex-col items-center md:items-stretch text-left text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
           <p>
             <span>Every baby deserves a safe, pure environment.</span>
-            <span className="font-semibold"> At Bubl,</span> we{" "}
-            <span className="font-semibold">
-              combine science and innovation
-            </span>{" "}
+            <span className="font-medium"> At Bubl,</span> we{" "}
+            <span className="font-medium">combine science and innovation</span>{" "}
             to{" "}
             <span className="font-medium">
               protect infants from air pollution,
@@ -158,13 +180,13 @@ const MissionPhilosophy = () => {
         </div>
 
         {/* Second image */}
-        <div className="w-full md:w-1/2 rounded-2xl overflow-hidden">
+        <div className="w-full md:w-1/2 rounded-2xl z-10 overflow-hidden">
           <Image
             src="/backgroundImages/philosphy/babyhands.png"
             alt="Baby hand holding parent's finger"
             width={730}
             height={320}
-            className="w-full h-auto object-cover"
+            className="w-auto md:h-[320px] h-full object-cover"
           />
         </div>
       </div>

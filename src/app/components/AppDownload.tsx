@@ -2,14 +2,13 @@ import Link from "next/link";
 import Image from "next/image";
 
 const googlePlayUrl =
-  "https://play.google.com/store/apps/details?id=com.bubl.bubl";
-const appStoreUrl =
-  "https://play.google.com/store/apps/details?id=com.bubl.bubl";
+  "https://play.google.com/store/apps/details?id=com.livableorb.livableorb&pcampaignid=web_share";
+const appStoreUrl = "https://apps.apple.com/in/app/bubl/id1560677171";
 
 export default function AppStoreLinks() {
   return (
     <div
-      className={`flex md:flex-wrap w-full justify-start items-center gap-4`}
+      className={`flex md:flex-wrap w-full justify-start relative items-center gap-4`}
     >
       {/* Google Play Button */}
       <Link

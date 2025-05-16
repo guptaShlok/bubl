@@ -1,11 +1,23 @@
 "use client";
 import React from "react";
 import FeatureSwiper from "../swipers/feature-swiper";
+import ImageOverlay from "../ImageOverlay";
 
 const Benefit = () => {
   return (
-    <main className="max-h-screen pt-[8vh] px-[6vw] w-full relative overflow-x-hidden">
+    <main className="max-h-screen pt-[12vh] px-[6vw] w-full relative">
       {/* Heading section */}
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="67%"
+        height="160vh" /* still oversized */
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" absolute translate-y-1/12 left-0 pointer-events-none"
+      />
       <div className="mb-0 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
@@ -14,12 +26,10 @@ const Benefit = () => {
                 <div className="text-center md:text-start">
                   <span className="gradient-text-1"> Benefits</span>
                 </div>
-
-                {/* Arrow positioned next to "& Mission" */}
-                <div className="hidden md:block ml-12 transform translate-y-1">
+                <div className="hidden md:block ml-22 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +49,7 @@ const Benefit = () => {
         </div>
       </div>
 
-      <section className="py-8 relative md:translate-x-1/3">
+      <section className="py-8 relative">
         <FeatureSwiper />
       </section>
     </main>

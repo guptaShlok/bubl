@@ -146,7 +146,7 @@ const Thinking = () => {
 
   return (
     <>
-      <main className="max-h-screen pt-[8vh] mb-[10vh] md:mb-[25vh] px-[6vw] w-full relative">
+      <main className="max-h-screen pt-[12vh] mb-[10vh] md:mb-[25vh] px-[6vw] w-full relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
@@ -158,10 +158,10 @@ const Thinking = () => {
                 </div>
 
                 {/* Arrow positioned next to "Take Action" */}
-                <div className="hidden md:block ml-12 transform translate-y-1">
+                <div className="hidden md:block ml-22 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -183,24 +183,24 @@ const Thinking = () => {
           <div className="flex flex-col sm:flex-row px-[6vw] items-center justify-center md:justify-end gap-4 sm:gap-6 mt-8 md:mt-0 md:absolute md:right-0 md:bottom-0 md:translate-y-[12vw] w-full md:w-auto">
             <Link
               ref={buttonRef1}
-              href="/shop"
+              href="/product-babybubl"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">Shop BabyBubl</span>
               <div
                 ref={circleRef1}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute gradient-background-1 left-1/2 bottom-0 w-full h-full -translate-x-1/2 rounded-full pointer-events-none"
               ></div>
             </Link>
             <Link
               ref={buttonRef2}
-              href="/contact"
+              href="/bubl-science"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
-              <span className="relative z-10">Contact</span>
+              <span className="relative z-10">Learn More</span>
               <div
                 ref={circleRef2}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2  gradient-background-1 rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>

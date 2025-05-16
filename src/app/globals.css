@@ -76,6 +76,12 @@
     @apply bg-gradient-to-r from-[#E5FFF8] to-[#FFFFFF] bg-clip-text text-transparent;
   }
 
+  .gradient-background-1 {
+    @apply bg-gradient-to-r from-[#83DBC4] to-[#58CDAF];
+  }
+  .vertical-gradient-background-1 {
+    @apply bg-gradient-to-b from-[#83DBC4] to-[#58CDAF];
+  }
   /* Gradient based backround */
   .hero-gradient-background {
     @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover relative;
@@ -86,7 +92,7 @@
     background-image: url("/backgroundImages/aboutUs/aboutUsLandingPage.png");
   }
   .product-hero-gradient-background {
-    @apply h-[100vh] w-screen bg-center bg-no-repeat bg-cover relative;
+    @apply h-[100vh] w-screen bg-center z-40 bg-no-repeat bg-cover relative;
     background-image: url("/backgroundImages/productPage/productLandingPage.png");
   }
   .science-hero-gradient-background {

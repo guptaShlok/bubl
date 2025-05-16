@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ImageOverlay from "../ImageOverlay";
 
 interface Testimonial {
   id: string;
@@ -14,24 +15,24 @@ const testimonials: Testimonial[] = [
   {
     id: "1",
     quote:
-      "Delhi's air scared me as a new mom. With Babybubl, I finally feel like my baby's safe - even outdoors.",
-    author: "Richa S.",
-    location: "New Delhi",
+      "As a doctor in Uttarakhand, I’ve seen how pollution impacts infants. Baby Bubl offers parents peace of mind by creating a safe, clean space for babies on the go. I recommend it to every new parent",
+    author: "Dr. Sparsh (Medical Officer)",
+    location: "Uttarakhand",
     highlighted: false,
   },
   {
     id: "2",
     quote:
-      "Delhi's air scared me as a new mom. With Babybubl, I finally feel like my baby's safe - even outdoors.",
-    author: "Richa S.",
+      "I use Baby Bubl for my daughter. In Delhi’s harsh air, it’s essential. It filters pollutants while keeping airflow natural. As a dentist and father, I call it a real breakthrough.",
+    author: "Dr. Rajkumar Singh",
     location: "New Delhi",
     highlighted: true,
   },
   {
     id: "3",
     quote:
-      "Delhi's air scared me as a new mom. With Babybubl, I finally feel like my baby's safe - even outdoors.",
-    author: "Richa S.",
+      "With two kids in Delhi, air quality is always a concern. Baby Bubl has made outdoor time worry-free—no more sneezing or coughing. It’s a must-have for new moms.",
+    author: "Soni",
     location: "New Delhi",
     highlighted: false,
   },
@@ -47,7 +48,20 @@ export default function TestimonialSection() {
   if (!mounted) return <div className="h-[500px]"></div>;
 
   return (
-    <section className="relative pt-[8vh] px-[6vw] overflow-hidden ">
+    <main className="max-h-screen pt-[12vh] mb-[20vh] md:mb-0 px-[6vw] w-full relative">
+      {/* Heading section */}
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="67%"
+        height="160vh" /* still oversized */
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" absolute -translate-y-1/6 left-0 pointer-events-none"
+      />
+
       {/* Heading section */}
       <div className="mb-8 md:mb-10 flex flex-col md:flex-row md:justify-start justify-around relative">
         <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
@@ -60,10 +74,10 @@ export default function TestimonialSection() {
             </div>
 
             {/* Arrow positioned next to "& Mission" */}
-            <div className="hidden md:block ml-12 transform translate-y-1">
+            <div className="hidden md:block ml-22 transform translate-y-1">
               <svg
-                width="50"
-                height="50"
+                width="80"
+                height="80"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -87,7 +101,7 @@ export default function TestimonialSection() {
             <div
               key={testimonial.id}
               className={`
-                  bg-[#8ad3c3] rounded-lg p-6 md:p-8 flex flex-col justify-between text-white
+                  vertical-gradient-background-1 rounded-lg p-6 md:p-8 flex flex-col justify-between text-white
                   h-full min-h-[200px] md:min-h-[400px] transition-all duration-300
                 `}
             >
@@ -105,6 +119,20 @@ export default function TestimonialSection() {
           );
         })}
       </div>
-    </section>
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" absolute -translate-y-1/3 left-0 pointer-events-none"
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "100%", // Full width on mobile
+          height: "50vh", // Half viewport height on mobile
+        }}
+      />
+    </main>
   );
 }

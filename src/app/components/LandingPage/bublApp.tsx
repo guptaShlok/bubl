@@ -77,7 +77,7 @@ const BublApp = () => {
   }, []);
   return (
     <>
-      <main className="pt-[8vh] px-[6vw] w-full relative">
+      <main className="pt-[8vh] px-[6vw] overflow-x-hidden w-full relative">
         {/* Heading section */}
         <div className="mb-8 md:mb-12 relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -89,10 +89,10 @@ const BublApp = () => {
                   </div>
 
                   {/* Arrow positioned next to "& Mission" */}
-                  <div className="hidden md:block ml-12 transform translate-y-1">
+                  <div className="hidden md:block ml-22 transform translate-y-1">
                     <svg
-                      width="50"
-                      height="50"
+                      width="80"
+                      height="80"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -113,13 +113,13 @@ const BublApp = () => {
             <div className="self-center md:self-auto">
               <Link
                 ref={buttonRef}
-                href="/about"
+                href="/bubl-app"
                 className="gsap-button inline-block px-12 md:px-22 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
               >
-                <span className="relative z-10 font-semibold"> Explore</span>
+                <span className="relative z-10 font-semibold">Explore</span>
                 <div
                   ref={circleRef}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                  className=" gradient-background-1 absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 rounded-full pointer-events-none"
                 ></div>
               </Link>
             </div>
@@ -127,8 +127,8 @@ const BublApp = () => {
         </div>
 
         {/* Content block */}
-        <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8 pt-[2vw]">
-          <div className="w-full md:w-2/5 flex flex-col justify-center items-center md:items-start text-center md:text-left text-[clamp(0.8rem,1.5vw,2rem)] font-light text-black">
+        <div className="flex flex-col overflow-x-hidden justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8 ">
+          <div className="w-full md:w-2/5 flex flex-col justify-center items-center md:items-start text-left text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
             <p className="mt-4">
               The Bubl lets you monitor and control your babybubl in real time.
               Track
@@ -143,16 +143,16 @@ const BublApp = () => {
         </div>
 
         {/* Full-width Image */}
-        <div className="w-full -mt-[5vw] md:-mt-[15vw]">
+        <div className="md:w-[95vw] z-10 relative w-full -mt-[3vh] md:-mt-[25vh]">
           <Image
             src="/backgroundImages/bublApp.png"
             alt="Baby Bubl"
             width={1300}
             height={2000}
-            className="w-full h-auto object-cover rounded-2xl"
+            className="w-full h-auto object-coverrounded-2xl"
           />
         </div>
-        <div className="md:absolute md:right-0 md:bottom-0 md:h-[15vh] md:w-[250px] md:-translate-x-2/5 md:-translate-y-3/4 md:scale-125 ">
+        <div className="md:absolute md:right-0 md:bottom-0 md:h-[22vh] md:w-[200px] md:-translate-x-2/3 md:-translate-y-1/5 md:scale-125 ">
           <AppStoreLinks />
         </div>
       </main>

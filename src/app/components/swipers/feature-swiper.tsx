@@ -58,7 +58,7 @@ const features = [
   },
   {
     id: "05",
-    title: "Energy Efficient",
+    title: "For Bed and on the Go.",
     description: "Low power consumption for continuous operation.",
   },
 ];
@@ -106,7 +106,7 @@ export default function FeatureSwiper() {
             centeredSlides: false,
           },
           1024: {
-            slidesPerView: 3,
+            slidesPerView: 3.5,
             centeredSlides: false,
           },
         }}
@@ -134,15 +134,15 @@ export default function FeatureSwiper() {
         {/* Regular feature slides */}
         {features.map((feature) => (
           <SwiperSlide key={feature.id}>
-            <div className="feature-card bg-[#5dcfb6] h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden group cursor-pointer">
+            <div className="feature-card vertical-gradient-background-1 h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden group cursor-pointer">
               {/* Number */}
-              <div className="mb-4">
+              <div className="mb-10">
                 <h3 className="text-8xl font-bold">{feature.id}</h3>
               </div>
 
               {/* Title */}
               <div className="text-center">
-                <h4 className="text-2xl font-medium leading-tight">
+                <h4 className="text-2xl w-2/3 text-left font-medium leading-tight">
                   {feature.title}
                 </h4>
               </div>
