@@ -124,7 +124,6 @@ const HowItWorks = () => {
           </div>
         </div>
       </div>
-
       {/* Text section */}
       <div className="flex flex-col items-center md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
         <div className="w-full md:w-3/5 flex flex-col text-start text-[clamp(1rem,1.5vw,2rem)] font-normal text-black">

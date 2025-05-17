@@ -58,8 +58,9 @@ const features = [
   },
   {
     id: "05",
-    title: "For Bed and on the Go.",
-    description: "Low power consumption for continuous operation.",
+    title: "App-Controlled Convenience",
+    description:
+      "Full control and monitoring via a dedicated mobile app, anytime, anywhere.",
   },
 ];
 

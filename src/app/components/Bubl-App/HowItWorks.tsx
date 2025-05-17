@@ -4,6 +4,7 @@ import Image from "next/image";
 import ImageOverlay from "../ImageOverlay";
 
 const HowItWorks = () => {
+  //TODO add a video over here
   return (
     <main className="max-h-screen pt-[8vh] md:pt-[0vh] px-[6vw] mb-[3vh] md:mb-[30vh]  w-full relative">
       {/* Heading section */}

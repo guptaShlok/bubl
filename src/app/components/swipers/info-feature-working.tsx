@@ -16,31 +16,31 @@ const infoSlides = [
     id: 1,
     title: "Patented Air Purification Technology",
     content:
-      "Polluted air is drawn in through the stroller's canopy ventilation window.",
+      "Babybubl utilizes a unique design to create a microenvironment around your child, achieving air quality up to 95% cleaner than the surrounding environment without the need for full encapsulation.",
   },
   {
     id: 2,
     title: "Advanced Sensor Technology",
     content:
-      "Polluted air is drawn in through the stroller's canopy ventilation window.",
+      "Real-time monitoring of air quality with intelligent sensors that automatically adjust purification levels based on detected pollutants.",
   },
   {
     id: 3,
     title: "Multi-Stage Filtration System",
     content:
-      "Polluted air is drawn in through the stroller's canopy ventilation window.",
+      "Our comprehensive filtration system captures particles of all sizes, from large allergens to microscopic pollutants and harmful gases.",
   },
   {
     id: 4,
     title: "Child-Safe Design",
     content:
-      "Polluted air is drawn in through the stroller's canopy ventilation window.",
+      "Engineered with rounded edges, child-lock features, and non-toxic materials to ensure complete safety for your little ones.",
   },
   {
     id: 5,
-    title: "Smart Home Integration",
+    title: "Silent Operation",
     content:
-      "Polluted air is drawn in through the stroller's canopy ventilation window.",
+      "Engineered with low-noise technology, it runs quietly to maintain a peaceful environment for the baby — ideal for naps during strolls or travel.",
   },
 ];
 

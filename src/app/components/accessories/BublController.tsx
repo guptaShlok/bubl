@@ -1,12 +1,26 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+
 import Link from "next/link";
 import gsap from "gsap";
 import ImageOverlay from "../ImageOverlay";
+import MediaCarousel, { MediaItem } from "../MediaCarousel";
 
 export default function BUblController() {
+  const media: MediaItem[] = [
+    {
+      type: "image",
+      src: "/backgroundImages/accessories/BublController.png",
+      thumbnailSrc: "/backgroundImages/accessories/BublController.png",
+      alt: "Hepa Filters",
+    },
+    {
+      type: "video",
+      src: "/backgroundImages/accessories/BublController.mp4",
+      thumbnailSrc: "/backgroundImages/accessories/BublControllerThumb.png",
+    },
+  ];
   const [mounted, setMounted] = useState(false);
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
@@ -120,14 +134,7 @@ export default function BUblController() {
         {/* Image */}
         <div className="w-full md:w-3/5">
           <div className="relative w-full flex justify-center">
-            <Image
-              src="/backgroundImages/accessories/BublController.png"
-              alt="Bubl Controller"
-              width={1800}
-              height={1200}
-              className=" w-1/2 object-contain"
-              priority
-            />
+            <MediaCarousel items={media} />
           </div>
         </div>
 

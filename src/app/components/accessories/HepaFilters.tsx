@@ -1,12 +1,26 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import ImageOverlay from "../ImageOverlay";
+import MediaCarousel, { MediaItem } from "../MediaCarousel";
 
 export default function HepaFiltersPage() {
+  const media: MediaItem[] = [
+    {
+      type: "image",
+      src: "/backgroundImages/accessories/HepaFilters.png",
+      thumbnailSrc: "/backgroundImages/accessories/HepaFilters.png",
+      alt: "Hepa Filters",
+    },
+    {
+      type: "video",
+      src: "/backgroundImages/accessories/changingFilters.mp4",
+      thumbnailSrc: "/backgroundImages/accessories/changingFilters.png",
+    },
+  ];
+
   const [mounted, setMounted] = useState(false);
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
@@ -59,7 +73,7 @@ export default function HepaFiltersPage() {
   }, [mounted]);
 
   if (!mounted) return null;
-
+  //TODO add a carousel init and make the video play
   return (
     <main className="px-[6vw] pt-[6vh] text-black">
       <ImageOverlay
@@ -126,14 +140,7 @@ export default function HepaFiltersPage() {
           {/* Image */}
           <div className="w-full md:w-2/5 flex justify-center">
             <div className="relative w-full">
-              <Image
-                src="/backgroundImages/accessories/HepaFilters.png"
-                alt="HEPA Replacement Filters"
-                width={1600}
-                height={1600}
-                className="w-full h-full object-cover"
-                priority
-              />
+              <MediaCarousel items={media} />
             </div>
           </div>
 

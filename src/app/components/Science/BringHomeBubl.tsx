@@ -190,7 +190,7 @@ const BringHomeBubl = () => {
               <span className="relative z-10">Shop BabyBubl</span>
               <div
                 ref={circleRef1}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1 rounded-full pointer-events-none"
               ></div>
             </Link>
             <Link
@@ -201,7 +201,7 @@ const BringHomeBubl = () => {
               <span className="relative z-10">About Us</span>
               <div
                 ref={circleRef2}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1 rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>
