@@ -10,8 +10,8 @@ import KeyFeatures from "@/app/components/ProductPage/KeyFeatures";
 import HowItWorks from "@/app/components/ProductPage/HowItWorks";
 import WhatIncluded from "@/app/components/ProductPage/WhatIncluded";
 import BublApp from "@/app/components/ProductPage/BublApp";
-import TestimonialSection from "@/app/components/LandingPage/testimonials";
 import OtherProducts from "@/app/components/ProductPage/OtherProducts";
+import ProductTestimonials from "@/app/components/ProductPage/ProdcutTestimonials";
 
 const Page = () => {
   return (
@@ -26,7 +26,7 @@ const Page = () => {
       <HowItWorks />
       <WhatIncluded />
       <BublApp />
-      <TestimonialSection />
+      <ProductTestimonials />
       <OtherProducts />
       <Footer />
     </>

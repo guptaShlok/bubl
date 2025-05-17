@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import ImageOverlay from "../ImageOverlay";
 
 const OtherProducts = () => {
   // Create separate refs for each button and circle
@@ -183,27 +184,51 @@ const OtherProducts = () => {
           <div className="flex flex-col sm:flex-row px-[6vw] items-center justify-center md:justify-end gap-4 sm:gap-6 mt-8 md:mt-0 md:absolute md:right-0 md:bottom-0 md:translate-y-[12vw] w-full md:w-auto">
             <Link
               ref={buttonRef1}
-              href="/shop"
+              href="/bubl-accessories"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">Accessories</span>
               <div
                 ref={circleRef1}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 gradient-background-1 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
               ></div>
             </Link>
             <Link
               ref={buttonRef2}
-              href="/contact"
+              href="/bubl-app"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">BabyBubl App</span>
               <div
                 ref={circleRef2}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 gradient-background-1 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>
+          <ImageOverlay
+            imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+            horizontalPosition="right"
+            width="50%"
+            height="110vh" // Exceeds viewport height
+            exceedViewport={true}
+            scale={1}
+            opacity={1}
+            className=" translate-y-1/3"
+            // Mobile-specific props
+            mobile={{
+              horizontalPosition: "right", // Centered on mobile
+              verticalPosition: "top", // At the top on mobile
+              width: "80%", // Full width on mobile
+              height: "80vh", // Half viewport height on mobile
+            }}
+            // Tablet-specific props
+            tablet={{
+              horizontalPosition: "center",
+              width: "90%",
+              height: "80vh",
+              scale: 1,
+            }}
+          />
         </div>
       </main>
     </>

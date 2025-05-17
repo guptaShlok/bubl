@@ -28,7 +28,7 @@ export default function Navbar() {
         <Link href="/about" className="nav-link">
           ABOUT US
         </Link>
-        <Link href="/product" className="nav-link">
+        <Link href="/product-bubl" className="nav-link">
           PRODUCT
         </Link>
         <Link href="/science" className="nav-link">

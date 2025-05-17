@@ -96,7 +96,7 @@ export default function FeatureSwiperProduct() {
     <div className="relative">
       <Swiper
         modules={[Navigation, Pagination]}
-        spaceBetween={200}
+        spaceBetween={50}
         slidesPerView={1}
         initialSlide={0}
         centeredSlides={false}
@@ -107,7 +107,7 @@ export default function FeatureSwiperProduct() {
             centeredSlides: false,
           },
           1024: {
-            slidesPerView: 4,
+            slidesPerView: 3.5,
             centeredSlides: false,
           },
         }}
@@ -181,7 +181,7 @@ export default function FeatureSwiperProduct() {
                 : "text-black hover:bg-[#5dcfb6] hover:text-white"
             }`}
           >
-            <ArrowLeftIcon className="h-7 w-7" />
+            <ArrowLeftIcon className="h-9 w-9" />
           </button>
           <button
             onClick={() => handleNavigation("next")}
@@ -191,7 +191,7 @@ export default function FeatureSwiperProduct() {
                 : "text-black hover:bg-[#5dcfb6] hover:text-white"
             }`}
           >
-            <ArrowRightIcon className="h-7 w-7" />
+            <ArrowRightIcon className="h-9 w-9" />
           </button>
         </div>
         <div className="feature-pagination flex items-center justify-center flex-wrap min-h-[20px] w-full sm:w-auto"></div>

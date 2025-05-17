@@ -76,10 +76,10 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <main className="max-h-screen pt-[8vh] px-[6vw] mb-[3vh] md:mb-[30vh]  w-full relative">
+    <main className="max-h-screen -pt-[10vh] -mt-[3vh] px-[6vw] mb-[3vh  w-full relative">
       {/* Heading section */}
       <div className="mb-8 md:mb-12 relative">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
               <br />
@@ -92,8 +92,8 @@ const HowItWorks = () => {
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -114,15 +114,15 @@ const HowItWorks = () => {
           <div className="self-center md:self-auto translate-y-[0] z-40 md:translate-y-[22vh]">
             <Link
               ref={buttonRef}
-              href="/about"
-              className="gsap-button inline-block px-12 md:px-12 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
+              href="/bubl-science"
+              className="gsap-button inline-block px-12 md:translate-y-[15vh] md:px-12 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
             >
               <span className="relative z-10 font-semibold">
                 Explore Science
               </span>
               <div
                 ref={circleRef}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className=" gradient-background-1 absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>
@@ -156,7 +156,7 @@ const HowItWorks = () => {
             alt="Baby hand holding parent's finger"
             width={1330}
             height={1020}
-            className="w-[100vw] object-contain"
+            className="w-[100vw] h-[40vh] object-cover"
           />
         </div>
       </div>

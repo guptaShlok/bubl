@@ -143,7 +143,7 @@ const BublApp = () => {
         </div>
 
         {/* Full-width Image */}
-        <div className="md:w-[95vw] z-10 relative w-full -mt-[3vh] md:-mt-[25vh]">
+        <div className="md:w-[95vw] -z-10 relative w-full -mt-[3vh] md:-mt-[25vh]">
           <Image
             src="/backgroundImages/bublApp.png"
             alt="Baby Bubl"
@@ -152,7 +152,7 @@ const BublApp = () => {
             className="w-full h-auto object-coverrounded-2xl"
           />
         </div>
-        <div className="md:absolute md:right-0 md:bottom-0 md:h-[22vh] md:w-[200px] md:-translate-x-2/3 md:-translate-y-1/5 md:scale-125 ">
+        <div className="md:absolute relative md:right-0 md:bottom-0 md:h-[22vh] md:w-[200px] md:-translate-x-2/3 md:-translate-y-1/5 md:scale-125 ">
           <AppStoreLinks />
         </div>
       </main>

@@ -8,7 +8,7 @@ const appStoreUrl = "https://apps.apple.com/in/app/bubl/id1560677171";
 export default function AppStoreLinks() {
   return (
     <div
-      className={`flex md:flex-wrap w-full justify-start relative items-center gap-4`}
+      className={`flex md:flex-wrap w-full z-20 justify-start relative items-center gap-4`}
     >
       {/* Google Play Button */}
       <Link

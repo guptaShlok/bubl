@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import AppStoreLinks from "../AppDownload";
 
 const BublApp = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
@@ -76,7 +77,7 @@ const BublApp = () => {
   }, []);
   return (
     <>
-      <main className="pt-[8vh] px-[6vw] w-full relative">
+      <main className="max-h-screen pt-[8vh] md:mb-[70vh] px-[6vw] w-full relative">
         {/* Heading section */}
         <div className=" md:mb-8 mb-5 relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -90,8 +91,8 @@ const BublApp = () => {
                   {/* Arrow positioned next to "& Mission" */}
                   <div className="hidden md:block ml-12 transform translate-y-1">
                     <svg
-                      width="50"
-                      height="50"
+                      width="80"
+                      height="80"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -112,13 +113,13 @@ const BublApp = () => {
             <div className="self-center md:self-auto">
               <Link
                 ref={buttonRef}
-                href="/about"
+                href="/bubl-app"
                 className="gsap-button inline-block px-12 md:px-22 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
               >
-                <span className="relative z-10 font-semibold"> Explore</span>
+                <span className="relative z-10 font-semibold">Explore</span>
                 <div
                   ref={circleRef}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                  className=" gradient-background-1 absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 rounded-full pointer-events-none"
                 ></div>
               </Link>
             </div>
@@ -153,14 +154,17 @@ const BublApp = () => {
         </div>
 
         {/* Full-width Image */}
-        <div className="w-full -mt-[5vw] md:-mt-[40vh]">
+        <div className="w-[95vw] -translate-x-1/12 mt-[5vw] md:-mt-[30vh]">
           <Image
-            src="/backgroundImages/bublApp.png"
+            src="/backgroundImages/productPage/bublApp.png"
             alt="Baby Bubl"
             width={1300}
             height={2000}
             className="w-full h-auto object-cover rounded-2xl"
           />
+        </div>
+        <div className="md:absolute relative z-40 -translate-y-[20vh] md:right-0 md:bottom-0 md:h-[30vh] md:w-[200px] md:-translate-x-2/3 md:translate-y-[75vh] md:scale-120  ">
+          <AppStoreLinks />
         </div>
       </main>
     </>

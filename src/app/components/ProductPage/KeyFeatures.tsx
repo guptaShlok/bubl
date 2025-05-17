@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
 import FeatureSwiperProduct from "../swipers/feature-swiper-product";
+import ImageOverlay from "../ImageOverlay";
 
 const KeyFeatures = () => {
   return (
-    <main className="max-h-screen pt-[8vh] px-[6vw] w-full relative overflow-x-hidden">
+    <main className="max-h-screen pt-[12vh] px-[6vw] w-full relative">
       {/* Heading section */}
       <div className="mb-0 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -19,8 +20,8 @@ const KeyFeatures = () => {
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,8 +40,19 @@ const KeyFeatures = () => {
           </div>
         </div>
       </div>
-
-      <section className=" relative md:translate-x-1/4">
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="67%"
+        height="160vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className="translate-y-1/6"
+        // Mobile-specific props
+      />
+      <section className=" relative ">
         <FeatureSwiperProduct />
       </section>
     </main>
