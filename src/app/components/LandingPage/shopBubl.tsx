@@ -148,11 +148,11 @@ const ShopBubl = () => {
           <div className="w-full md:w-1/3 flex flex-col justify-center items-center md:items-start text-left text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
             <p className="mt-4">
               Babybubl is a{" "}
-              <span className="font-medium">
+              <span className="font-semibold">
                 tech-forward air purification system
               </span>{" "}
               designed to{" "}
-              <span className="font-medium">
+              <span className="font-semibold">
                 protect infants from airborne pollutants.
               </span>
               With a sleek, stroller-compatible design, it ensures your baby

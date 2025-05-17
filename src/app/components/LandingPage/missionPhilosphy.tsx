@@ -169,10 +169,12 @@ const MissionPhilosophy = () => {
         <div className="w-full md:w-1/4 md:mt-6 flex flex-col items-center md:items-stretch text-left text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
           <p>
             <span>Every baby deserves a safe, pure environment.</span>
-            <span className="font-medium"> At Bubl,</span> we{" "}
-            <span className="font-medium">combine science and innovation</span>{" "}
+            <span className="font-semibold"> At Bubl,</span> we{" "}
+            <span className="font-semibold">
+              combine science and innovation
+            </span>{" "}
             to{" "}
-            <span className="font-medium">
+            <span className="font-semibold">
               protect infants from air pollution,
             </span>{" "}
             ensuring peace of mind for parents.

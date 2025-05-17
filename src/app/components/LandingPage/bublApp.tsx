@@ -131,7 +131,7 @@ const BublApp = () => {
           <div className="w-full md:w-2/5 flex flex-col justify-center items-center md:items-start text-left text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
             <p className="mt-4">
               The Bubl lets you monitor and control your babybubl in real time.
-              Track
+              Track{" "}
               <span className="font-semibold">
                 air quality, temperqture, and pollution levels (PM2.5)
               </span>{" "}

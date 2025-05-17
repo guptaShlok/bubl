@@ -65,9 +65,12 @@ const IndianDescription = () => {
               <span>
                 India&#39;s air pollution isn&#39;t just seasonal — it&#39;s a
                 silent,
-                <span className="font-medium"> everyday threat,</span> we{" "}
+                <span className="font-semibold"> everyday threat,</span> we{" "}
                 <span> And the ones breathing the most are the ones</span>
-                <span className="font-medium"> most at risk: our babies.</span>
+                <span className="font-semibold">
+                  {" "}
+                  most at risk: our babies.
+                </span>
                 With 158.8 million children under the age of 6, the need for
                 clean air solutions is urgent and undeniable.
               </span>
@@ -137,7 +140,7 @@ const IndianDescription = () => {
               <br />
               Babybubl creates a protective dome of clean air using HEPA
               filtration and real-time monitoring, making it{" "}
-              <span className="font-medium">India-ready, baby-safe.</span>
+              <span className="font-semibold">India-ready, baby-safe.</span>
             </p>
           </div>
         </div>
