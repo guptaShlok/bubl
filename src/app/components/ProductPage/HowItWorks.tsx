@@ -83,9 +83,9 @@ const HowItWorks = () => {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
-              <div className="flex items-center justify-center md:justify-start relative">
+              <div className="flex items-center justify-center md:justify-start gap-4 relative">
                 <span className="text-black">How it </span>
-                <span className="gradient-text-1">Works?</span>
+                <span className="gradient-text-1"> Works?</span>
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
                     width="80"
@@ -142,12 +142,12 @@ const HowItWorks = () => {
 
       {/* Video section */}
       <div className="relative w-full h-auto mt-4">
-        <div className="relative w-full h-auto md:h-[50vh] aspect-video">
+        <div className="relative z-10 w-full flex justify-end h-auto md:h-[50vh] aspect-video">
           <video
             ref={videoRef}
             src="/backgroundImages/ProductPage/BublInAction.mp4"
             // poster="/backgroundImages/ProductPage/HowItWorks.png"
-            className="w-full h-full object-contain rounded-2xl object-right "
+            className="w-[50vw] h-full object-contain rounded-2xl object-right "
             playsInline
             loop
             autoPlay

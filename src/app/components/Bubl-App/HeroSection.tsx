@@ -155,7 +155,7 @@ export default function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <div className="h-[100vh] overflow-hidden">
+    <div className="h-[100vh] relative top-1/6 overflow-hidden">
       {/* Main Content */}
       <main className=" mx-auto px-6 lg:px-8 py-12 lg:py-16 relative">
         <div className="flex flex-col md:flex-row  md:items-start items-end justify-between">

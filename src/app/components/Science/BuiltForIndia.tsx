@@ -44,8 +44,8 @@ export default function BuiltForIndia() {
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,9 +90,9 @@ export default function BuiltForIndia() {
       />
       <div className=" mx-auto md:pt-[4vh]">
         {/* Two‑column image + summary */}
-        <div className="flex flex-col-reverse lg:flex-row items-center">
+        <div className="flex flex-col-reverse lg:flex-row items-center ">
           <div className="w-full md:w-1/2 mt-4">
-            <h2 className="text-2xl md:text-3xl w-4/5 md:ml-10 font-normal mb-4">
+            <h2 className="text-2xl md:text-3xl w-4/5 md:ml-10 font-normal text-left mb-4">
               <p className="font-semibold">
                 Your Baby&#39;s Shield Against Pollution.
               </p>{" "}

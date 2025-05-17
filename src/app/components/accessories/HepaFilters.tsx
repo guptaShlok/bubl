@@ -10,8 +10,6 @@ export default function HepaFiltersPage() {
   const [mounted, setMounted] = useState(false);
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
-  const buttonRef2 = useRef<HTMLAnchorElement>(null);
-  const circleRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -57,17 +55,6 @@ export default function HepaFiltersPage() {
         circleRef1.current
       );
       return () => clean1();
-    }
-  }, [mounted]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    if (buttonRef2.current && circleRef2.current) {
-      const clean2 = setupButtonAnimation(
-        buttonRef2.current,
-        circleRef2.current
-      );
-      return () => clean2();
     }
   }, [mounted]);
 
@@ -158,15 +145,15 @@ export default function HepaFiltersPage() {
             </h2>
 
             <ul className="list-disc pl-5 mb-6 text- space-y-1 md:text-xl">
-              <li className="font-medium">HEPA technology filters</li>
-              <li className="font-medium">
+              <li className="font-semibold">HEPA technology filters</li>
+              <li className="font-semibold">
                 Extraordinary efficient in trapping harmful particles, and even
                 viruses.
               </li>
-              <li className="font-medium">
+              <li className="font-semibold">
                 Changed every 3&#8208;4 months depending on how polluted it is.
               </li>
-              <li className="font-medium">
+              <li className="font-semibold">
                 After use, discard in regular household waste.
               </li>
             </ul>
@@ -179,24 +166,12 @@ export default function HepaFiltersPage() {
               <Link
                 ref={buttonRef1}
                 href="/bubl-cart"
-                className="relative inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
+                className="relative z-20 inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden text-center"
               >
                 <span className="relative z-10">Add to Cart</span>
                 <div
                   ref={circleRef1}
                   className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1 rounded-full pointer-events-none"
-                />
-              </Link>
-
-              <Link
-                ref={buttonRef2}
-                href="https://www.amazon.in/Portable-Purifying-System-Baby-Child/dp/B0F1KSKQJW/ref=sr_1_5?crid=156GPY8G273V5&dib=eyJ2IjoiMSJ9.LynSEYWymlxxzvVw9W6JQw.VIMfvayzCggVNAD_Gpo1ZYLmmW6iNmy1sxS3rLaOEpI&dib_tag=se&keywords=baby%20bubl&qid=1746081563&sprefix=baby%20bub%2Caps%2C324&sr=8-5&fbclid=fbclid"
-                className="relative inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
-              >
-                <span className="relative z-10">Buy on Amazon</span>
-                <div
-                  ref={circleRef2}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1  rounded-full pointer-events-none"
                 />
               </Link>
             </div>

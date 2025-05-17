@@ -142,7 +142,7 @@ const BublApp = () => {
         />
         <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8">
           <div className="w-full md:w-3/5 flex flex-col justify-center items-center md:items-start text-center md:text-left text-black">
-            <ul className="list-disc list-inside mt-0 md:space-y-4 space-y-1 text-start text-lg md:text-2xl font-normal">
+            <ul className="list-disc mt-0 md:space-y-4 space-y-1 text-start text-lg md:text-2xl font-normal">
               <li>
                 <span className="font-semibold">Control Babybubl remotely</span>{" "}
                 &#8208; Turn it on/off and adjust fan speed
@@ -168,7 +168,7 @@ const BublApp = () => {
         </div>
 
         {/* Full-width Image */}
-        <div className="w-[95vw] -translate-x-1/12 mt-[5vw] md:-mt-[30vh]">
+        <div className="w-[95vw] relative z-10 -translate-x-1/12 mt-[5vw] md:-mt-[30vh]">
           <Image
             src="/backgroundImages/productPage/bublApp.png"
             alt="Baby Bubl"

@@ -10,8 +10,6 @@ export default function BUblController() {
   const [mounted, setMounted] = useState(false);
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
-  const buttonRef2 = useRef<HTMLAnchorElement>(null);
-  const circleRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -51,15 +49,6 @@ export default function BUblController() {
       clean1 = setupButton(buttonRef1.current, circleRef1.current);
     }
     return () => clean1?.();
-  }, [mounted]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    let clean2: (() => void) | undefined;
-    if (buttonRef2.current && circleRef2.current) {
-      clean2 = setupButton(buttonRef2.current, circleRef2.current);
-    }
-    return () => clean2?.();
   }, [mounted]);
 
   if (!mounted) return null;
@@ -154,22 +143,24 @@ export default function BUblController() {
 
           <ul className="list-disc pl-5 mb-6 space-y-4 text-lg md:text-2xl font-normal">
             <li>
-              <span className="font-medium">A Bubl Controller</span> is included
-              in your babybubl.
+              <span className="font-semibold">A Bubl Controller</span> is
+              included in your babybubl.
             </li>
             <li>
-              <span className="font-medium">Controls your babybubl device</span>
+              <span className="font-semibold">
+                Controls your babybubl device
+              </span>
               . Turn it on/off, change fan speeds, and put the unit in Bluetooth
               pairing mode.
             </li>
             <li>
-              <span className="font-medium">
+              <span className="font-semibold">
                 Will keep your babybubl running
               </span>{" "}
               for 9–18 hours.
             </li>
             <li>
-              <span className="font-medium">Remove the Controller</span> from
+              <span className="font-semibold">Remove the Controller</span> from
               the babybubl when charging, using the USB&#8208;C port and
               accompanying cable.
             </li>
@@ -191,18 +182,6 @@ export default function BUblController() {
                 className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1 rounded-full pointer-events-none"
               />
             </Link>
-
-            <Link
-              ref={buttonRef2}
-              href="https://www.amazon.in/Portable-Purifying-System-Baby-Child/dp/B0F1KSKQJW/ref=sr_1_5?crid=156GPY8G273V5&dib=eyJ2IjoiMSJ9.LynSEYWymlxxzvVw9W6JQw.VIMfvayzCggVNAD_Gpo1ZYLmmW6iNmy1sxS3rLaOEpI&dib_tag=se&keywords=baby%20bubl&qid=1746081563&sprefix=baby%20bub%2Caps%2C324&sr=8-5&fbclid=fbclid"
-              className="relative inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
-            >
-              <span className="relative z-10">Buy on Amazon</span>
-              <div
-                ref={circleRef2}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1  rounded-full pointer-events-none"
-              />
-            </Link>
           </div>
         </div>
       </div>
@@ -211,14 +190,14 @@ export default function BUblController() {
       <section className="mt-3 space-y-6 font-normal text-lg md:text-2xl">
         <p>
           Through the buttons, you can{" "}
-          <span className="font-medium">adjust the fan speed</span>, put the
-          unit in <span className="font-medium">Bluetooth pairing mode</span>,
+          <span className="font-semibold">adjust the fan speed</span>, put the
+          unit in <span className="font-semibold">Bluetooth pairing mode</span>,
           and it will also communicate with you through the embedded multicolor
           LED lights.
         </p>
         <p>
           The battery that powers your babybubl is a typical{" "}
-          <span className="font-medium">5000 mAh Li&#8208;ion</span> battery
+          <span className="font-semibold">5000 mAh Li&#8208;ion</span> battery
           which will keep it running for up to 18 hours, depending on which fan
           speed you use. With the highest fan speed, it will keep you running
           for approximately 9 hours.
@@ -232,21 +211,21 @@ export default function BUblController() {
 
         <div className="grid text-base md:text-2xl grid-cols-1 md:grid-cols-2 gap-6 pt-4 ">
           <div>
-            <p className="font-medium mb-1">
+            <p className="font-semibold mb-1">
               Measurements (MM):
               <span className=" font-normal"> L: 175, W: 70, H: 16</span>
             </p>
-            <p className="font-medium mb-1 mt-3">
+            <p className="font-semibold mb-1 mt-3">
               Weight:
               <span className=" font-normal"> 185g</span>
             </p>
           </div>
           <div>
-            <p className="font-medium mb-1">
+            <p className="font-semibold mb-1">
               Casing Material:
               <span className=" font-normal"> High Heat PC / ABS</span>
             </p>
-            <p className="font-medium mb-1 mt-3">
+            <p className="font-semibold mb-1 mt-3">
               Battery Classification:
               <span className=" font-normal"> Li-Polymer ion</span>
             </p>

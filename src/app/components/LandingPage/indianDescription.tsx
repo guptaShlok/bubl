@@ -121,18 +121,18 @@ const IndianDescription = () => {
       <main className="h-auto pt-[5vh] md:pt-[5vh] px-[6vw] w-full relative">
         <div className="flex flex-col-reverse md:flex-row justify-between items-center gap-6 md:gap-8 md:mt-6 mt-3 mx-auto">
           {/* Image block */}
-          <div className="w-full md:w-2/5 rounded-2xl shrink-0 flex justify-center md:justify-start overflow-hidden pr-0 md:pr-4">
+          <div className="w-full md:w-3/5 rounded-2xl shrink-0 flex justify-center md:justify-start overflow-hidden pr-0 md:pr-4">
             <Image
               src="/backgroundImages/indianDesc/joggingCrowd.png"
               alt="people jogging in India"
               width={900}
               height={900}
-              className="w-full md:w-[900px] h-[400px] object-cover rounded-2xl z-10"
+              className="w-full md:w-[900px] h-[300px] object-cover rounded-2xl z-10"
             />
           </div>
 
           {/* Content block */}
-          <div className="w-full md:w-3/5 h-full text-left flex flex-col justify-center items-center md:items-start">
+          <div className="w-full md:w-full h-full text-left flex flex-col justify-center items-center md:items-start">
             <p className="mt-4 w-full text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
               Air quality in India can&#39;t be controlled — but your baby&#39;s
               breathing space can be.

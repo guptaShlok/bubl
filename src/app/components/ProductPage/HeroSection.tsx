@@ -155,7 +155,7 @@ export default function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <div className="h-auto overflow-hidden">
+    <div className="h-auto relative top-1/6 overflow-hidden">
       {/* Main Content */}
       <main className=" mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative">
         <div className="flex flex-col md:flex-row items-center justify-between">
@@ -215,7 +215,7 @@ export default function HeroSection() {
 
               <Link
                 ref={buttonRef2}
-                href="/amazon"
+                href="https://www.amazon.in/Portable-Purifying-System-Baby-Child/dp/B0F1KSKQJW/ref=sr_1_5?crid=156GPY8G273V5&dib=eyJ2IjoiMSJ9.LynSEYWymlxxzvVw9W6JQw.VIMfvayzCggVNAD_Gpo1ZYLmmW6iNmy1sxS3rLaOEpI&dib_tag=se&keywords=baby%20bubl&qid=1746081563&sprefix=baby%20bub%2Caps%2C324&sr=8-5&fbclid=fbclid"
                 className="inline-block px-10 sm:px-12 md:px-[3vw] py-3 sm:py-4 border-2 bg-[#8ad3c3] border-white rounded-full text-white text-lg md:text-xl relative overflow-hidden z-10 font-semibold"
               >
                 <span className="relative z-10">Buy on Amazon</span>

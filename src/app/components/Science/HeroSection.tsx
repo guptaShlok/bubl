@@ -2,7 +2,7 @@
 
 export default function HeroSection() {
   return (
-    <div className="h-auto overflow-hidden">
+    <div className="h-auto relative top-1/6 overflow-hidden">
       {/* Main Content */}
       <main className=" mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 relative">
         <div className="flex flex-col md:flex-row items-center">

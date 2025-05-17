@@ -2,31 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
-
-// Custom hook to detect mobile screen
-const useMobileDetect = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    // Initial check
-    checkMobile();
-
-    // Add event listener for window resize
-    window.addEventListener("resize", checkMobile);
-
-    // Cleanup
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  return isMobile;
-};
 
 // Import Swiper styles
 import "swiper/css";
@@ -65,15 +43,11 @@ const features = [
 ];
 
 // Empty placeholder slides
-const emptySlides = [{ id: "06" }, { id: "07" }, { id: "08" }];
 
 export default function FeatureSwiperProduct() {
   const [mounted, setMounted] = useState(false);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
 
   const [swiper, setSwiper] = useState<SwiperType | null>(null);
-  const isMobile = useMobileDetect();
 
   useEffect(() => {
     setMounted(true);
@@ -83,9 +57,9 @@ export default function FeatureSwiperProduct() {
   const handleNavigation = (direction: "prev" | "next") => {
     if (!swiper) return;
 
-    if (direction === "prev" && !isBeginning) {
+    if (direction === "prev") {
       swiper.slidePrev();
-    } else if (direction === "next" && !isEnd) {
+    } else if (direction === "next") {
       swiper.slideNext();
     }
   };
@@ -95,19 +69,24 @@ export default function FeatureSwiperProduct() {
   return (
     <div className="relative">
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
+        loop={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
         initialSlide={0}
         centeredSlides={false}
-        slidesPerGroup={1} // Move one slide at a time
+        slidesPerGroup={1}
         breakpoints={{
           640: {
             slidesPerView: 2,
             centeredSlides: false,
           },
           1024: {
-            slidesPerView: 3.5,
+            slidesPerView: 3,
             centeredSlides: false,
           },
         }}
@@ -118,18 +97,8 @@ export default function FeatureSwiperProduct() {
             "inline-block w-8 h-1 bg-gray-700 rounded-full mx-1 cursor-pointer transition-all",
           bulletActiveClass: "!bg-[#8ad3c3]",
         }}
-        navigation={false} // Disable default navigation
+        navigation={false}
         onSwiper={setSwiper}
-        onSlideChange={(swiper: SwiperType) => {
-          setIsBeginning(swiper.isBeginning);
-          setIsEnd(swiper.isEnd);
-          // setActiveIndex(swiper.activeIndex)
-        }}
-        onInit={(swiper: SwiperType) => {
-          setIsBeginning(swiper.isBeginning);
-          setIsEnd(swiper.isEnd);
-          // setActiveIndex(swiper.activeIndex)
-        }}
         className="w-full"
       >
         {/* Regular feature slides */}
@@ -153,43 +122,19 @@ export default function FeatureSwiperProduct() {
             </div>
           </SwiperSlide>
         ))}
-
-        {/* Empty slides - only show on non-mobile */}
-        {!isMobile &&
-          emptySlides.map((emptySlide) => (
-            <SwiperSlide key={emptySlide.id}>
-              <div className="feature-card scale-0 bg-[#8ad3c3] h-[400px] rounded-lg p-6 flex flex-col items-start justify-center text-white relative overflow-hidden">
-                {/* Empty slide with just the number */}
-                <div className="mb-4">
-                  <h3 className="text-8xl scale-0 font-bold">
-                    {emptySlide.id}
-                  </h3>
-                  <h3 className="text-8xl font-bold">{emptySlide.id}</h3>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
       </Swiper>
 
       <div className="flex items-center justify-between mt-8">
         <div className="flex space-x-4">
           <button
             onClick={() => handleNavigation("prev")}
-            className={`p-2 rounded-full transition-colors ${
-              isBeginning
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-black hover:bg-[#5dcfb6] hover:text-white"
-            }`}
+            className={`p-2 rounded-full transition-colors text-black  hover:bg-[#5dcfb6] hover:text-white`}
           >
             <ArrowLeftIcon className="h-9 w-9" />
           </button>
           <button
             onClick={() => handleNavigation("next")}
-            className={`p-2 rounded-full transition-colors ${
-              isEnd
-                ? "text-gray-400 cursor-not-allowed"
-                : "text-black hover:bg-[#5dcfb6] hover:text-white"
-            }`}
+            className={`p-2 rounded-full transition-colors text-black  hover:bg-[#5dcfb6] hover:text-white`}
           >
             <ArrowRightIcon className="h-9 w-9" />
           </button>

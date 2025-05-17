@@ -5,7 +5,7 @@ import ImageOverlay from "../ImageOverlay";
 
 const KeyFeatures = () => {
   return (
-    <main className="max-h-screen pt-[8vh] md:pt-[12vh] px-[6vw] w-full relative">
+    <main className="max-h-screen z-10 pt-[8vh] md:pt-[12vh] px-[6vw] w-full relative">
       {/* Heading section */}
       <div className="mb-0 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">

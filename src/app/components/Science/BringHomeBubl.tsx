@@ -161,8 +161,8 @@ const BringHomeBubl = () => {
                 {/* Arrow positioned next to "Take Action" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
