@@ -5,9 +5,9 @@ import ImageOverlay from "../ImageOverlay";
 
 const WhatIncluded = () => {
   return (
-    <main className="h-auto px-[6vw] pt-[8vh] w-full relative text-black">
+    <main className="h-auto px-[6vw] pt-[8vh] md:pt-[14vh] w-full relative text-black">
       {/* Heading section */}
-      <div className="mb-2 md:mb-12 relative">
+      <div className="mb-2 md:mb-8 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
@@ -16,7 +16,20 @@ const WhatIncluded = () => {
                   <span className="text-black"> What&#39;s</span>
                   <span className="gradient-text-1"> Included</span>
                 </div>
-
+                <ImageOverlay
+                  imageSrc="/circularOverlay.png"
+                  exceedViewport={true}
+                  scale={1}
+                  opacity={1}
+                  className=" -translate-y-1/12"
+                  // Mobile-specific props
+                  mobile={{
+                    horizontalPosition: "center", // Centered on mobile
+                    verticalPosition: "top", // At the top on mobile
+                    width: "100%", // Full width on mobile
+                    height: "100vh", // Half viewport height on mobile
+                  }}
+                />
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
@@ -78,7 +91,7 @@ const WhatIncluded = () => {
             </div>
           </div>
           <div className="w-full md:w-1/2 pb-6">
-            <ul className="list-disc tracking-normal list-inside md:text-2xl text-xl text-gray-800 space-y-1">
+            <ul className="list-disc tracking-normal list-inside md:text-2xl text-lg text-gray-800 space-y-1">
               <li>
                 {" "}
                 <span className=" font-semibold">1x Babybubl Device </span>

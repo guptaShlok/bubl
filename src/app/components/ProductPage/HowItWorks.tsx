@@ -76,7 +76,7 @@ const HowItWorks = () => {
   }, []);
 
   return (
-    <main className="max-h-screen -pt-[10vh] -mt-[3vh] px-[6vw] mb-[3vh  w-full relative">
+    <main className="max-h-screen pt-[8vh] md:-pt-[10vh] -mt-[3vh] px-[6vw] mb-[3vh]  w-full relative">
       {/* Heading section */}
       <div className="mb-8 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between">
@@ -132,7 +132,7 @@ const HowItWorks = () => {
       {/* Content grid */}
       <div className="flex flex-col items-center md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
         {/* Content block */}
-        <div className="w-full md:w-3/5 md:mt-0 mt-0 flex flex-col items-center md:items-stretch text-start md:text-left text-[clamp(0.8rem,1.5vw,2rem)] font-normal text-black">
+        <div className="w-full md:w-3/5 md:mt-0 mt-0 flex flex-col items-center md:items-stretch text-start md:text-left text-[clamp(1rem,1.5vw,2rem)] font-normal text-black">
           <p>
             <span>
               Babybubl creates a gentle, invisible air bubble around your child

@@ -161,7 +161,7 @@ export default function HeroSection() {
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Product Image - Left Side */}
           <div className="w-full md:w-1/2 lg:w-1/2 order-2 md:order-1 flex justify-center md:justify-start items-center z-10 mb-12 md:mb-0">
-            <div className="relative w-full h-[350px] sm:h-[450px] md:h-[950px] md:-translate-y-1/3 md:translate-x-1/6">
+            <div className="relative w-full h-[350px] sm:h-[450px] md:h-[950px] md:-translate-y-1/4 md:translate-x-1/6">
               <Image
                 src="/backgroundImages/ProductPage/productLandingPageOverlay.png"
                 alt="BabyBubl Air Purification System"
@@ -179,12 +179,12 @@ export default function HeroSection() {
               BabyBubl
             </h1>
 
-            <p className="text-xl md:text-2xl mb-2  md:mb-6 max-w-xl">
+            <p className="text-xl md:text-2xl mb-2  md:mb-6 max-w-2xl">
               A compact air purification system to protect your baby from air
               pollution, viruses, and allergens — anytime, anywhere.
             </p>
 
-            <div className="mb-3 md:mb-6 text-lg md:text-xl">
+            <div className="mb-3 md:mb-6 text-lg md:text-2xl">
               <p className="mb-2">
                 <span className="font-semibold">Measurements (MM)</span>: L:
                 365, W: 470, H:190
@@ -204,7 +204,7 @@ export default function HeroSection() {
               <Link
                 ref={buttonRef1}
                 href="/shop"
-                className="inline-block px-10 sm:px-12 md:px-16 py-3 sm:py-4 border-2 border-white bg-[#8ad3c3] rounded-full text-white text-lg md:text-xl relative overflow-hidden z-40 font-semibold"
+                className="inline-block px-10 sm:px-12 md:px-[3vw] py-3 sm:py-4 border-2 border-white bg-[#8ad3c3] rounded-full text-white text-lg md:text-xl relative overflow-hidden z-40 font-semibold"
               >
                 <span className="relative z-10">Add to Cart</span>
                 <div
@@ -216,7 +216,7 @@ export default function HeroSection() {
               <Link
                 ref={buttonRef2}
                 href="/amazon"
-                className="inline-block px-10 sm:px-12 md:px-16 py-3 sm:py-4 border-2 bg-[#8ad3c3] border-white rounded-full text-white text-lg md:text-xl relative overflow-hidden z-10 font-semibold"
+                className="inline-block px-10 sm:px-12 md:px-[3vw] py-3 sm:py-4 border-2 bg-[#8ad3c3] border-white rounded-full text-white text-lg md:text-xl relative overflow-hidden z-10 font-semibold"
               >
                 <span className="relative z-10">Buy on Amazon</span>
                 <div

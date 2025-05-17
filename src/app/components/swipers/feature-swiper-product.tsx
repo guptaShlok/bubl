@@ -135,7 +135,7 @@ export default function FeatureSwiperProduct() {
         {/* Regular feature slides */}
         {features.map((feature) => (
           <SwiperSlide key={feature.id}>
-            <div className="feature-card bg-[#5dcfb6] h-[500px] w-[400px] rounded-lg p-6 flex flex-col justify-between text-white relative overflow-hidden group cursor-pointer">
+            <div className="feature-card bg-[#5dcfb6] h-[400px] max-w-[500px] rounded-lg p-6 flex flex-col justify-between text-white relative overflow-hidden group cursor-pointer">
               {/* Number */}
               <div className="mb-4">
                 <h3 className="text-8xl hidden font-semibold">{feature.id}</h3>

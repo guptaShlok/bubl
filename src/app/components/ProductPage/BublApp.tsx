@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import AppStoreLinks from "../AppDownload";
+import ImageOverlay from "../ImageOverlay";
 
 const BublApp = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
@@ -125,10 +126,23 @@ const BublApp = () => {
             </div>
           </div>
         </div>
-
+        <ImageOverlay
+          imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+          exceedViewport={true}
+          scale={1}
+          opacity={1}
+          className=" absolute -translate-y-2/4 left-0 pointer-events-none"
+          // Mobile-specific props
+          mobile={{
+            horizontalPosition: "right", // Centered on mobile
+            verticalPosition: "top", // At the top on mobile
+            width: "100%", // Full width on mobile
+            height: "50vh", // Half viewport height on mobile
+          }}
+        />
         <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8">
           <div className="w-full md:w-3/5 flex flex-col justify-center items-center md:items-start text-center md:text-left text-black">
-            <ul className="list-disc list-inside mt-0 md:space-y-4 space-y-1 text-start text-xl md:text-3xl font-normal">
+            <ul className="list-disc list-inside mt-0 md:space-y-4 space-y-1 text-start text-lg md:text-2xl font-normal">
               <li>
                 <span className="font-semibold">Control Babybubl remotely</span>{" "}
                 &#8208; Turn it on/off and adjust fan speed

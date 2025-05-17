@@ -147,7 +147,7 @@ const OtherProducts = () => {
 
   return (
     <>
-      <main className="max-h-screen pt-[8vh] mb-[10vh] md:mb-[25vh] px-[6vw] w-full relative">
+      <main className="max-h-screen pt-[8vh] mb-[8vh] md:mb-[25vh] px-[6vw] w-full relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
@@ -179,7 +179,20 @@ const OtherProducts = () => {
               </div>
             </h1>
           </div>
-
+          <ImageOverlay
+            imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+            exceedViewport={true}
+            scale={1}
+            opacity={1}
+            className=" absolute -translate-y-2/4 left-0 pointer-events-none"
+            // Mobile-specific props
+            mobile={{
+              horizontalPosition: "right", // Centered on mobile
+              verticalPosition: "top", // At the top on mobile
+              width: "100%", // Full width on mobile
+              height: "50vh", // Half viewport height on mobile
+            }}
+          />
           {/* Buttons container - centered on mobile, positioned on desktop */}
           <div className="flex flex-col sm:flex-row px-[6vw] items-center justify-center md:justify-end gap-4 sm:gap-6 mt-8 md:mt-0 md:absolute md:right-0 md:bottom-0 md:translate-y-[12vw] w-full md:w-auto">
             <Link

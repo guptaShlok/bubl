@@ -80,14 +80,15 @@ const MeetBabyBubl = () => {
           <div>
             <p className="text-black font-normal">
               Babybubl is the
-              <span className="font-medium">
+              <span className="font-semibold">
+                {" "}
                 first-of-its-kind wearable air purification system
               </span>{" "}
               designed specifically for infants. With
-              <span className="font-medium">
+              <span className="font-semibold">
                 {" "}
                 cutting-edge filtration, real-time air quality monitoring, and
-                whisper-quiet protection,
+                whisper-quiet protection,{" "}
               </span>
               babybubl ensures your little one breathes clean air wherever life
               takes you.

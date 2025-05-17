@@ -47,9 +47,9 @@ export default function ProductTestimonials() {
   if (!mounted) return <div className="h-[500px]"></div>;
 
   return (
-    <main className="max-h-screen pt-[12vh] mb-[20vh] md:mb-0 px-[6vw] w-full relative">
+    <main className="max-h-screen pt-[12vh] md:pt-[0vh] mb-[20vh] md:mb-0 px-[6vw] w-full relative">
       {/* Heading section */}
-      <div className="mb-8 md:mb-10 flex flex-col md:flex-row md:justify-start justify-around relative">
+      <div className=" md:mb-10 flex flex-col md:flex-row md:justify-start justify-around relative">
         <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
           <span className="text-black">Hear from our </span>
 
