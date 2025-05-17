@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import ImageOverlay from "../ImageOverlay";
 
 const OurImpact = () => {
   return (
@@ -67,7 +68,20 @@ const OurImpact = () => {
             </p>
           </div>
         </div>
-
+        <ImageOverlay
+          imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+          exceedViewport={true}
+          scale={1}
+          opacity={1}
+          className=" absolute translate-y-2/4 left-0 pointer-events-none"
+          // Mobile-specific props
+          mobile={{
+            horizontalPosition: "right", // Centered on mobile
+            verticalPosition: "bottom", // At the top on mobile
+            width: "80%", // Full width on mobile
+            height: "100vh", // Half viewport height on mobile
+          }}
+        />
         {/* Second section - Text left, Image right */}
         <div className="flex flex-col-reverse md:flex-row items-end gap-8 md:gap-15 mb-10">
           <div className="w-full md:w-1/2">

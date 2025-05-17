@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import ImageOverlay from "../ImageOverlay";
 
 const OurStory = () => {
   return (
@@ -38,6 +39,30 @@ const OurStory = () => {
           </div>
         </div>
       </div>
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        horizontalPosition="right"
+        width="50%"
+        height="110vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" -translate-y-1/3"
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+      />
       {/* Content section */}
       <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:mt-6 mt-3 mx-auto">
         {/* Content block */}
@@ -63,7 +88,7 @@ const OurStory = () => {
         </div>
 
         {/* Image block */}
-        <div className="w-full md:w-1/2 rounded-2xl flex justify-center overflow-hidden pr-0 md:pr-2">
+        <div className="w-full relative z-10 md:w-1/2 rounded-2xl flex justify-center overflow-hidden pr-0 md:pr-2">
           <Image
             src="/backgroundImages/AboutUs/OurStory.png"
             alt="People jogging in India"

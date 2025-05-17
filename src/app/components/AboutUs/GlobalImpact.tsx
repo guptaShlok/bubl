@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
+import ImageOverlay from "../ImageOverlay";
 
 const GlobalImpact = () => {
   return (
@@ -14,7 +15,20 @@ const GlobalImpact = () => {
                 <div className="text-center md:text-start">
                   <span className="gradient-text-1"> Global Partners</span>
                 </div>
-
+                <ImageOverlay
+                  imageSrc="/circularOverlay.png"
+                  exceedViewport={true}
+                  scale={1}
+                  opacity={1}
+                  className=" -translate-y-1/12"
+                  // Mobile-specific props
+                  mobile={{
+                    horizontalPosition: "center", // Centered on mobile
+                    verticalPosition: "top", // At the top on mobile
+                    width: "100%", // Full width on mobile
+                    height: "100vh", // Half viewport height on mobile
+                  }}
+                />
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
@@ -38,9 +52,33 @@ const GlobalImpact = () => {
           </div>
         </div>
       </div>
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="85%"
+        height="200vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        mobile={{
+          horizontalPosition: "left", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "100%", // Full width on mobile
+          height: "200vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+        // Mobile-specific props
+      />
       {/* Two-up images: row on md+, column on mobile */}
       <div className="flex flex-col md:flex-row justify-center items-center mt-[6vw] gap-3.5 md:gap-[14vw]">
-        <div className="w-full md:w-1/4 rounded-2xl overflow-hidden">
+        <div className="w-full md:w-1/4 rounded-2xl relative z-10 overflow-hidden">
           <Image
             src="/backgroundImages/aboutUs/globalPartners/client1.png"
             alt="Mission"
@@ -49,7 +87,7 @@ const GlobalImpact = () => {
             className="w-full h-auto object-cover rounded-2xl"
           />
         </div>
-        <div className="w-full md:w-1/4 rounded-2xl overflow-hidden">
+        <div className="w-full md:w-1/4 rounded-2xl relative z-10 overflow-hidden">
           <Image
             src="/backgroundImages/aboutUs/globalPartners/client2.png"
             alt="Vision"

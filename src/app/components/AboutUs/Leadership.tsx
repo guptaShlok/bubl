@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import React from "react";
+import ImageOverlay from "../ImageOverlay";
 
 const Leadership = () => {
   return (
@@ -48,7 +49,7 @@ const Leadership = () => {
             {/* Image */}
             <div className="w-full md:max-w-[500px] mb-2 md:mb-0">
               <div className="relative p-1 rounded-3xl max-w-[500px]">
-                <div className="rounded-2xl overflow-hidden ">
+                <div className="rounded-2xl relative z-10 overflow-hidden ">
                   <Image
                     src="/backgroundImages/aboutUs/team/Conny.png"
                     alt="Conny Karlsson"
@@ -59,6 +60,30 @@ const Leadership = () => {
                 </div>
               </div>
             </div>
+            <ImageOverlay
+              imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+              horizontalPosition="left"
+              verticalPosition="top"
+              exceedViewport={true}
+              scale={1}
+              opacity={1}
+              className=" -translate-y-1/6"
+              mobile={{
+                horizontalPosition: "left", // Centered on mobile
+                verticalPosition: "top", // At the top on mobile
+                width: "100%", // Full width on mobile
+                height: "80vh", // Half viewport height on mobile
+              }}
+              // Tablet-specific props
+              tablet={{
+                horizontalPosition: "center",
+                width: "90%",
+                height: "80vh",
+                scale: 1,
+              }}
+              // Mobile-specific props
+            />
+
             {/* Content */}
             <div className="w-full pl-[3vw] text-center md:text-left text-black">
               <h2 className="text-5xl md:text-6xl lg:text-9xl font-semibold mb-4 leading-[1.3]">
@@ -74,7 +99,30 @@ const Leadership = () => {
               </p>
             </div>
           </div>
-
+          <ImageOverlay
+            imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+            horizontalPosition="right"
+            width="50%"
+            height="110vh" // Exceeds viewport height
+            exceedViewport={true}
+            scale={1}
+            opacity={1}
+            className=" -translate-y-1/6"
+            // Mobile-specific props
+            mobile={{
+              horizontalPosition: "right", // Centered on mobile
+              verticalPosition: "top", // At the top on mobile
+              width: "80%", // Full width on mobile
+              height: "80vh", // Half viewport height on mobile
+            }}
+            // Tablet-specific props
+            tablet={{
+              horizontalPosition: "center",
+              width: "90%",
+              height: "80vh",
+              scale: 1,
+            }}
+          />
           {/* Rajeev Singh Rathore */}
           <div className="flex flex-col mt-12 md:flex-row-reverse items-center">
             {/* Image */}

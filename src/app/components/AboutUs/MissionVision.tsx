@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import ImageOverlay from "../ImageOverlay";
 
 const MissionVision = () => {
   return (
@@ -37,10 +38,34 @@ const MissionVision = () => {
           </div>
         </div>
       </div>
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="85%"
+        height="200vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        mobile={{
+          horizontalPosition: "left", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+        // Mobile-specific props
+      />
       {/* Content section */}
       <div className="flex flex-col md:flex-row gap-8 md:gap-12 pt-0 md:pt-12">
         {/* Image */}
-        <div className="w-full md:w-2/3 rounded-2xl overflow-hidden">
+        <div className="w-full md:w-2/3 rounded-2xl relative z-10 overflow-hidden">
           <Image
             src="/backgroundImages/AboutUs/missionAndVision.png"
             alt="Baby in stroller with air purification"

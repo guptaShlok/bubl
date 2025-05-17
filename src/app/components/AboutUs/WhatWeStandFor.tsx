@@ -1,24 +1,41 @@
+import ImageOverlay from "../ImageOverlay";
+
 const WhatWeStandFor = () => {
   const values = [
     {
       id: "01",
       title: "Innovation with Intention",
-      description: "Thoughtful design solving real problems.",
+      description:
+        "We apply thoughtful, cutting - edge design to solve real problems.",
     },
     {
       id: "02",
       title: "Trust & Transparency",
-      description: "Science-backed for parents.",
+      description: "Backed by science, built for parents.",
     },
     {
       id: "03",
       title: "Everyday Wellness",
-      description: "Protection that fits your daily life.",
+      description: "Protection that fits seamlessly into your daily life.",
     },
   ];
   return (
     <>
       <main className="h-auto px-[6vw] pt-[8vh] w-full relative">
+        <ImageOverlay
+          imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+          exceedViewport={true}
+          scale={1}
+          opacity={1}
+          className=" absolute -translate-y-1/4 left-0 pointer-events-none"
+          // Mobile-specific props
+          mobile={{
+            horizontalPosition: "right", // Centered on mobile
+            verticalPosition: "bottom", // At the top on mobile
+            width: "80%", // Full width on mobile
+            height: "100vh", // Half viewport height on mobile
+          }}
+        />
         <div className="mb-8 md:mb-12 relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
             <div className="relative">
@@ -57,7 +74,7 @@ const WhatWeStandFor = () => {
             {values.map((value) => (
               <div
                 key={value.id}
-                className="bg-[#8ad3c3] rounded-2xl h-[300px] sm:h-[350px] md:h-[400px] w-full relative pt-10 text-white"
+                className="vertical-gradient-background-1 rounded-2xl h-[350px] md:h-[500px] w-full relative pt-10 text-white"
               >
                 {/* Number in top right */}
                 <div className="absolute top-4 sm:top-8 right-6 sm:right-10 text-6xl sm:text-7xl md:text-8xl font-normal">
@@ -65,11 +82,11 @@ const WhatWeStandFor = () => {
                 </div>
 
                 {/* Content centered vertically, aligned left */}
-                <div className="h-full flex flex-col justify-end pb-6 sm:pb-8 text-left px-6 sm:px-8">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-2 sm:mb-4">
+                <div className="h-full flex  flex-col justify-end pb-6 sm:pb-8 text-left px-6 sm:px-8">
+                  <h3 className="text-2xl sm:text-3xl md:w-3/4  md:text-4xl font-semibold mb-2 sm:mb-4">
                     {value.title}
                   </h3>
-                  <p className="text-lg sm:text-xl md:text-2xl">
+                  <p className="text-lg sm:text-xl md:w-5/6  md:text-2xl">
                     {value.description}
                   </p>
                 </div>
