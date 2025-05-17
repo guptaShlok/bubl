@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import ImageOverlay from "../ImageOverlay";
 
 const HowItWorks = () => {
   return (
-    <main className="max-h-screen pt-[8vh] px-[6vw] mb-[3vh] md:mb-[30vh]  w-full relative">
+    <main className="max-h-screen pt-[8vh] md:pt-[0vh] px-[6vw] mb-[3vh] md:mb-[30vh]  w-full relative">
       {/* Heading section */}
       <div className="mb-0 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -20,8 +21,8 @@ const HowItWorks = () => {
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +41,20 @@ const HowItWorks = () => {
           </div>
         </div>
       </div>
-
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" absolute -translate-y-1/4 left-0 pointer-events-none"
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "bottom", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "100vh", // Half viewport height on mobile
+        }}
+      />
       {/* Content grid */}
       <div className="flex flex-col items-center pt-[2vh] justify-start md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
         {/* Content block */}

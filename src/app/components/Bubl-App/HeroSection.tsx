@@ -174,7 +174,7 @@ export default function HeroSection() {
           </div>
 
           {/* Product Info - Right Side */}
-          <div className="w-full text-center md:text-start md:w-1/2 lg:w-3/5 z-10 md:translate-x-1/12 order-1 md:order-2 text-black">
+          <div className="w-full text-center md:text-start md:w-1/2 lg:w-3/5 z-10 md:translate-x-1/12 order-1 md:order-2 text-white">
             <h1 className="text-4xl md:text-9xl font-semibold md:mb-6">
               BabyBubl
             </h1>

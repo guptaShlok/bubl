@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
+import ImageOverlay from "../ImageOverlay";
 
 export default function HepaFiltersPage() {
   const [mounted, setMounted] = useState(false);
@@ -74,6 +75,29 @@ export default function HepaFiltersPage() {
 
   return (
     <main className="px-[6vw] pt-[6vh] text-black">
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        horizontalPosition="right"
+        width="50%"
+        height="110vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+      />
       {/* Header */}
       <div className="mb-4 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -154,7 +178,7 @@ export default function HepaFiltersPage() {
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-5">
               <Link
                 ref={buttonRef1}
-                href="/cart"
+                href="/bubl-cart"
                 className="relative inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
               >
                 <span className="relative z-10">Add to Cart</span>
@@ -166,7 +190,7 @@ export default function HepaFiltersPage() {
 
               <Link
                 ref={buttonRef2}
-                href="https://amazon.com"
+                href="https://www.amazon.in/Portable-Purifying-System-Baby-Child/dp/B0F1KSKQJW/ref=sr_1_5?crid=156GPY8G273V5&dib=eyJ2IjoiMSJ9.LynSEYWymlxxzvVw9W6JQw.VIMfvayzCggVNAD_Gpo1ZYLmmW6iNmy1sxS3rLaOEpI&dib_tag=se&keywords=baby%20bubl&qid=1746081563&sprefix=baby%20bub%2Caps%2C324&sr=8-5&fbclid=fbclid"
                 className="relative inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
               >
                 <span className="relative z-10">Buy on Amazon</span>
@@ -180,7 +204,7 @@ export default function HepaFiltersPage() {
         </div>
 
         {/* Full‑width detailed description */}
-        <section className="mt-12 space-y-4 text-lg font-normal tracking-wide md:text-2xl">
+        <section className="mt-12 w-full space-y-4 text-lg font-normal tracking-wide md:text-2xl">
           <p>
             HEPA filters are a key component in most air purifiers due to their{" "}
             <span className="font-semibold">

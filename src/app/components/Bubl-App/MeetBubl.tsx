@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import ImageOverlay from "../ImageOverlay";
 
 const MeetBubl = () => {
   return (
@@ -19,8 +20,8 @@ const MeetBubl = () => {
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +40,29 @@ const MeetBubl = () => {
           </div>
         </div>
       </div>
-
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        horizontalPosition="right"
+        width="50%"
+        height="110vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+      />
       {/* First section - Image left, Text right */}
       <div className="mx-auto relative md:pt-[4vh] z-10">
         <div className="flex flex-col md:flex-row items-end gap-8 md:gap-15">

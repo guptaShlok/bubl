@@ -7,7 +7,7 @@ import Footer from "@/app/components/footer";
 import HeroSection from "@/app/components/accessories/HeroSection";
 import HepaFiltersPage from "@/app/components/accessories/HepaFilters";
 import BUblController from "@/app/components/accessories/BublController";
-import OtherProducts from "@/app/components/ProductPage/OtherProducts";
+import OtherProducts from "@/app/components/accessories/OtherProducts";
 
 const Page = () => {
   return (

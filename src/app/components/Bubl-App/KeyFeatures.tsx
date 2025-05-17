@@ -1,10 +1,36 @@
 "use client";
 import React from "react";
 import FeatureSwiperMeetBubl from "../swipers/feature-swiper-meet-bubl";
+import ImageOverlay from "../ImageOverlay";
 
 const KeyFeatures = () => {
   return (
-    <main className="max-h-screen pt-[8vh] px-[6vw] w-full relative overflow-x-hidden">
+    <main className="max-h-screen overflow-x-clip pt-[8vh] px-[6vw] w-full relative">
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="85%"
+        height="200vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" translate-y-1/12"
+        mobile={{
+          horizontalPosition: "left", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+        // Mobile-specific props
+      />
       {/* Heading section */}
       <div className="mb-0 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -19,8 +45,8 @@ const KeyFeatures = () => {
                 {/* Arrow positioned next to "& Mission" */}
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
-                    width="50"
-                    height="50"
+                    width="80"
+                    height="80"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

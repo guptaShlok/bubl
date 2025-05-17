@@ -92,7 +92,7 @@ export default function FeatureSwiperMeetBubl() {
     <div className="relative">
       <Swiper
         modules={[Navigation, Pagination]}
-        spaceBetween={200}
+        spaceBetween={10}
         slidesPerView={1}
         initialSlide={0}
         centeredSlides={false}
@@ -131,7 +131,7 @@ export default function FeatureSwiperMeetBubl() {
         {/* Regular feature slides */}
         {features.map((feature) => (
           <SwiperSlide key={feature.id}>
-            <div className="feature-card bg-[#5dcfb6] h-[500px] w-[400px] rounded-lg p-6 flex flex-col justify-between text-white relative overflow-hidden group cursor-pointer">
+            <div className="feature-card bg-[#5dcfb6] h-[500px] max-w-[450px] rounded-lg p-6 flex flex-col justify-between text-white relative overflow-hidden group cursor-pointer">
               {/* Number */}
               <div className="mb-4">
                 <h3 className="text-8xl hidden font-semibold">{feature.id}</h3>
@@ -142,7 +142,7 @@ export default function FeatureSwiperMeetBubl() {
 
               {/* Title */}
               <div className="text-center">
-                <h4 className="text-3xl text-start font-normal leading-tight">
+                <h4 className="text-2xl text-start font-normal leading-tight">
                   {feature.description}
                 </h4>
               </div>

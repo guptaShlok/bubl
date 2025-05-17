@@ -2,8 +2,9 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import ImageOverlay from "../ImageOverlay";
 
-const BringHomeBubl = () => {
+const OtherProducts = () => {
   // Create separate refs for each button and circle
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
@@ -143,19 +144,18 @@ const BringHomeBubl = () => {
       };
     }
   }, []);
-  //TODO update the routes in this section and the description
+
   return (
     <>
-      <main className="max-h-screen pt-[8vh] mb-[10vh] md:mb-[25vh] px-[6vw] w-full relative">
+      <main className="max-h-screen pt-[8vh] mb-[8vh] md:mb-[25vh] px-[6vw] w-full relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
             <h1 className="text-4xl md:text-[clamp(3rem,7vw,8rem)] text-center md:text-start font-semibold leading-[1.3] tracking-normal mb-6 md:mb-0">
-              <span className="text-black">Bring Home a </span>
-              <span className="gradient-text-1"> Breath</span>
+              <span className="text-black">Explore Other </span>
               <br />
               <div className="flex items-center justify-center md:justify-start relative">
                 <div className="text-center md:text-start">
-                  <span className="gradient-text-1"> Of Fresh Air</span>
+                  <span className="gradient-text-1"> Products</span>
                 </div>
 
                 {/* Arrow positioned next to "Take Action" */}
@@ -179,36 +179,73 @@ const BringHomeBubl = () => {
               </div>
             </h1>
           </div>
-
+          <ImageOverlay
+            imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+            exceedViewport={true}
+            scale={1}
+            opacity={1}
+            className=" absolute -translate-y-2/4 left-0 pointer-events-none"
+            // Mobile-specific props
+            mobile={{
+              horizontalPosition: "right", // Centered on mobile
+              verticalPosition: "top", // At the top on mobile
+              width: "100%", // Full width on mobile
+              height: "50vh", // Half viewport height on mobile
+            }}
+          />
           {/* Buttons container - centered on mobile, positioned on desktop */}
           <div className="flex flex-col sm:flex-row px-[6vw] items-center justify-center md:justify-end gap-4 sm:gap-6 mt-8 md:mt-0 md:absolute md:right-0 md:bottom-0 md:translate-y-[12vw] w-full md:w-auto">
             <Link
               ref={buttonRef1}
-              href="/shop"
+              href="/product-babybubl"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
-              <span className="relative z-10">Shop BabyBubl</span>
+              <span className="relative z-10">BabyBubl</span>
               <div
                 ref={circleRef1}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 gradient-background-1 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
               ></div>
             </Link>
             <Link
               ref={buttonRef2}
-              href="/about-bubl"
+              href="/bubl-app"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
-              <span className="relative z-10">About Us</span>
+              <span className="relative z-10">BabyBubl App</span>
               <div
                 ref={circleRef2}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                className="absolute left-1/2 gradient-background-1 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
               ></div>
             </Link>
           </div>
+          <ImageOverlay
+            imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+            horizontalPosition="right"
+            width="50%"
+            height="110vh" // Exceeds viewport height
+            exceedViewport={true}
+            scale={1}
+            opacity={1}
+            className=" translate-y-2/3"
+            // Mobile-specific props
+            mobile={{
+              horizontalPosition: "right", // Centered on mobile
+              verticalPosition: "top", // At the top on mobile
+              width: "80%", // Full width on mobile
+              height: "80vh", // Half viewport height on mobile
+            }}
+            // Tablet-specific props
+            tablet={{
+              horizontalPosition: "center",
+              width: "90%",
+              height: "80vh",
+              scale: 1,
+            }}
+          />
         </div>
       </main>
     </>
   );
 };
 
-export default BringHomeBubl;
+export default OtherProducts;

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
+import ImageOverlay from "../ImageOverlay";
 
 export default function BUblController() {
   const [mounted, setMounted] = useState(false);
@@ -65,6 +66,31 @@ export default function BUblController() {
 
   return (
     <main className="px-[6vw] pt-[6vh] text-black">
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        width="55%"
+        height="120vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" translate-y-1/12"
+        mobile={{
+          horizontalPosition: "left", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+        // Mobile-specific props
+      />
       {/* Header */}
       <div className="mb-4 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">

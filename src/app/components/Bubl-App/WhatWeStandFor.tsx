@@ -1,3 +1,5 @@
+import ImageOverlay from "../ImageOverlay";
+
 const WhatWeStandFor = () => {
   const values = [
     {
@@ -16,7 +18,30 @@ const WhatWeStandFor = () => {
   ];
   return (
     <>
-      <main className="h-auto px-[6vw] pt-[8vh] w-full relative">
+      <main className="h-auto px-[6vw] pt-[8vh] w-full relative ">
+        <ImageOverlay
+          imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+          horizontalPosition="left"
+          verticalPosition="top"
+          exceedViewport={false}
+          scale={0}
+          opacity={1}
+          className=" translate-y-1/12"
+          mobile={{
+            horizontalPosition: "left", // Centered on mobile
+            verticalPosition: "top", // At the top on mobile
+            width: "80%", // Full width on mobile
+            height: "80vh", // Half viewport height on mobile
+          }}
+          // Tablet-specific props
+          tablet={{
+            horizontalPosition: "center",
+            width: "90%",
+            height: "80vh",
+            scale: 1,
+          }}
+          // Mobile-specific props
+        />
         <div className="mb-8 md:mb-12 relative">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
             <div className="relative">
@@ -30,8 +55,8 @@ const WhatWeStandFor = () => {
                   {/* Arrow positioned next to "& Mission" */}
                   <div className="hidden md:block ml-12 transform translate-y-1">
                     <svg
-                      width="50"
-                      height="50"
+                      width="80"
+                      height="80"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +80,7 @@ const WhatWeStandFor = () => {
             {values.map((value) => (
               <div
                 key={value.id}
-                className="bg-[#8ad3c3] rounded-2xl h-[300px] md:h-[500px] w-full relative pt-10 text-white"
+                className="vertical-gradient-background-1 z-10 rounded-2xl h-[300px] md:h-[500px] w-full relative pt-10 text-white"
               >
                 {/* Number in top right */}
                 <div className="absolute top-4 sm:top-8 right-6 sm:right-10 text-6xl sm:text-7xl md:text-8xl font-normal">

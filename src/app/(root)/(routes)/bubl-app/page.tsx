@@ -5,12 +5,12 @@ import Navbar from "@/app/components/navbar";
 
 import Footer from "@/app/components/footer";
 
-import OtherProducts from "@/app/components/ProductPage/OtherProducts";
 import HeroSection from "@/app/components/Bubl-App/HeroSection";
 import MeetBubl from "@/app/components/Bubl-App/MeetBubl";
 import KeyFeatures from "@/app/components/Bubl-App/KeyFeatures";
 import HowItWorks from "@/app/components/Bubl-App/HowItWorks";
 import WhatWeStandFor from "@/app/components/Bubl-App/WhatWeStandFor";
+import OtherProducts from "@/app/components/Bubl-App/OtherProducts";
 
 const Page = () => {
   return (
