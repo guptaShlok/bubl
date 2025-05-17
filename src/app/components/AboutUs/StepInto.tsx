@@ -197,7 +197,7 @@ const StepInto = () => {
           <div className="flex flex-col sm:flex-row px-[6vw] items-center justify-center md:justify-end gap-4 sm:gap-6 mt-8 md:mt-0 md:absolute md:right-0 md:bottom-0 md:translate-y-[15vh] w-full md:w-auto">
             <Link
               ref={buttonRef1}
-              href="/shop"
+              href="/product-babybubl"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">Shop BabyBubl</span>
@@ -208,7 +208,7 @@ const StepInto = () => {
             </Link>
             <Link
               ref={buttonRef2}
-              href="/contact"
+              href="/bubl-science"
               className="gsap-button inline-block px-6 py-3 sm:px-8 sm:py-4 md:px-12 md:py-6 border-2 border-[#1ee3af] rounded-full text-black text-xl sm:text-2xl md:text-3xl relative overflow-hidden z-10 font-semibold"
             >
               <span className="relative z-10">Learn More</span>

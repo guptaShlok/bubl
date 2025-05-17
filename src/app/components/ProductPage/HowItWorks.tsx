@@ -141,8 +141,8 @@ const HowItWorks = () => {
       </div>
 
       {/* Video section */}
-      <div className="relative w-full h-auto mt-8">
-        <div className="relative w-full h-[50vh] aspect-video">
+      <div className="relative w-full h-auto mt-4">
+        <div className="relative w-full h-auto md:h-[50vh] aspect-video">
           <video
             ref={videoRef}
             src="/backgroundImages/ProductPage/BublInAction.mp4"

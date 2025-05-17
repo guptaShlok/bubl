@@ -1,10 +1,34 @@
 "use client";
 
 import Image from "next/image";
+import ImageOverlay from "../ImageOverlay";
 
 export default function BuiltForIndia() {
   return (
-    <main className="px-[6vw] pt-[6vh] text-black">
+    <main className="px-[6vw] pt-[8vh] text-black">
+      <ImageOverlay
+        imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+        horizontalPosition="left"
+        verticalPosition="top"
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" -translate-y-1/3"
+        mobile={{
+          horizontalPosition: "left", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+        // Mobile-specific props
+      />
       {/* Header */}
       <div className="md:mb-4 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
@@ -40,7 +64,30 @@ export default function BuiltForIndia() {
           </div>
         </div>
       </div>
-
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        horizontalPosition="right"
+        width="50%"
+        height="110vh" // Exceeds viewport height
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className=" translate-y-1/3"
+        // Mobile-specific props
+        mobile={{
+          horizontalPosition: "right", // Centered on mobile
+          verticalPosition: "top", // At the top on mobile
+          width: "80%", // Full width on mobile
+          height: "80vh", // Half viewport height on mobile
+        }}
+        // Tablet-specific props
+        tablet={{
+          horizontalPosition: "center",
+          width: "90%",
+          height: "80vh",
+          scale: 1,
+        }}
+      />
       <div className=" mx-auto md:pt-[4vh]">
         {/* Two‑column image + summary */}
         <div className="flex flex-col-reverse lg:flex-row items-center">

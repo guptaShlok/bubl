@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import InfoSwiperWorking from "../swipers/info-feature-working";
+import ImageOverlay from "../ImageOverlay";
 
 const WorkingOfBabyBubl = () => {
   const buttonRef = useRef<HTMLAnchorElement>(null);
@@ -111,6 +112,30 @@ const WorkingOfBabyBubl = () => {
             </h1>
           </div>
         </div>
+        <ImageOverlay
+          imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
+          horizontalPosition="left"
+          verticalPosition="top"
+          width="85%"
+          height="200vh" // Exceeds viewport height
+          exceedViewport={true}
+          scale={1}
+          opacity={1}
+          mobile={{
+            horizontalPosition: "left", // Centered on mobile
+            verticalPosition: "top", // At the top on mobile
+            width: "80%", // Full width on mobile
+            height: "80vh", // Half viewport height on mobile
+          }}
+          // Tablet-specific props
+          tablet={{
+            horizontalPosition: "center",
+            width: "90%",
+            height: "80vh",
+            scale: 1,
+          }}
+          // Mobile-specific props
+        />
         <InfoSwiperWorking />
       </div>
     </main>

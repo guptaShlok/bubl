@@ -31,7 +31,7 @@ export default function HeroSection() {
       opacity: 0,
       y: "50%",
     });
-
+    //TODO Updatae the cart logic and the amazon link
     // Create a timeline for the hover animation
     const tl = gsap.timeline({ paused: true });
 

@@ -1,3 +1,5 @@
+import ImageOverlay from "../ImageOverlay";
+
 const TriedTested = () => {
   const values = [
     {
@@ -29,8 +31,8 @@ const TriedTested = () => {
                   {/* Arrow positioned next to "& Mission" */}
                   <div className="hidden md:block ml-12 transform translate-y-1">
                     <svg
-                      width="50"
-                      height="50"
+                      width="80"
+                      height="80"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -49,12 +51,26 @@ const TriedTested = () => {
             </div>
           </div>
         </div>
+        <ImageOverlay
+          imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+          exceedViewport={true}
+          scale={1}
+          opacity={1}
+          className=" absolute -translate-y-1/4 left-0 pointer-events-none"
+          // Mobile-specific props
+          mobile={{
+            horizontalPosition: "right", // Centered on mobile
+            verticalPosition: "bottom", // At the top on mobile
+            width: "80%", // Full width on mobile
+            height: "100vh", // Half viewport height on mobile
+          }}
+        />
         <div className="w-full md:pt-12 pt-0">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-22 gap-8 mx-auto px-2">
             {values.map((value) => (
               <div
                 key={value.id}
-                className="bg-[#8ad3c3] rounded-2xl h-[400px] md:h-[450px] w-full relative pt-10 text-white"
+                className="vertical-gradient-background-1 rounded-2xl h-[400px] md:h-[450px] w-full relative pt-10 text-white"
               >
                 {/* Number in top right */}
                 <div className="absolute top-4 sm:top-8 right-6 sm:right-10 text-6xl sm:text-7xl md:text-8xl font-normal">
