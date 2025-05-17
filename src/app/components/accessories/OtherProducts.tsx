@@ -184,7 +184,7 @@ const OtherProducts = () => {
             exceedViewport={true}
             scale={1}
             opacity={1}
-            className=" absolute -translate-y-2/4 left-0 pointer-events-none"
+            className=" absolute -translate-y-1/4 left-0 pointer-events-none"
             // Mobile-specific props
             mobile={{
               horizontalPosition: "right", // Centered on mobile
@@ -226,7 +226,7 @@ const OtherProducts = () => {
             exceedViewport={true}
             scale={1}
             opacity={1}
-            className=" translate-y-2/3"
+            className=" translate-y-3/6"
             // Mobile-specific props
             mobile={{
               horizontalPosition: "right", // Centered on mobile
