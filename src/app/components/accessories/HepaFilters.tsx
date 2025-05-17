@@ -184,7 +184,7 @@ export default function HepaFiltersPage() {
                 <span className="relative z-10">Add to Cart</span>
                 <div
                   ref={circleRef1}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1 rounded-full pointer-events-none"
                 />
               </Link>
 
@@ -196,7 +196,7 @@ export default function HepaFiltersPage() {
                 <span className="relative z-10">Buy on Amazon</span>
                 <div
                   ref={circleRef2}
-                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3]  rounded-full pointer-events-none"
+                  className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1  rounded-full pointer-events-none"
                 />
               </Link>
             </div>

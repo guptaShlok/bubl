@@ -8,10 +8,10 @@ import ImageOverlay from "../ImageOverlay";
 
 export default function BUblController() {
   const [mounted, setMounted] = useState(false);
-  const btn1 = useRef<HTMLAnchorElement>(null);
-  const circle1 = useRef<HTMLDivElement>(null);
-  const btn2 = useRef<HTMLAnchorElement>(null);
-  const circle2 = useRef<HTMLDivElement>(null);
+  const buttonRef1 = useRef<HTMLAnchorElement>(null);
+  const circleRef1 = useRef<HTMLDivElement>(null);
+  const buttonRef2 = useRef<HTMLAnchorElement>(null);
+  const circleRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -47,8 +47,8 @@ export default function BUblController() {
   useEffect(() => {
     if (!mounted) return;
     let clean1: (() => void) | undefined;
-    if (btn1.current && circle1.current) {
-      clean1 = setupButton(btn1.current, circle1.current);
+    if (buttonRef1.current && circleRef1.current) {
+      clean1 = setupButton(buttonRef1.current, circleRef1.current);
     }
     return () => clean1?.();
   }, [mounted]);
@@ -56,8 +56,8 @@ export default function BUblController() {
   useEffect(() => {
     if (!mounted) return;
     let clean2: (() => void) | undefined;
-    if (btn2.current && circle2.current) {
-      clean2 = setupButton(btn2.current, circle2.current);
+    if (buttonRef2.current && circleRef2.current) {
+      clean2 = setupButton(buttonRef2.current, circleRef2.current);
     }
     return () => clean2?.();
   }, [mounted]);
@@ -179,28 +179,28 @@ export default function BUblController() {
             Price: <span className=" font-semibold"> INR 5999</span>
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 mb-12">
+          <div className="flex flex-col relative z-20  sm:flex-row gap-4 sm:gap-6 mb-5">
             <Link
-              ref={btn1}
-              href="/cart"
-              className="relative inline-block px-10 py-4 md:py-5 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
+              ref={buttonRef1}
+              href="/bubl-cart"
+              className="relative z-20 inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden text-center"
             >
               <span className="relative z-10">Add to Cart</span>
               <div
-                ref={circle1}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                ref={circleRef1}
+                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1 rounded-full pointer-events-none"
               />
             </Link>
 
             <Link
-              ref={btn2}
-              href="https://amazon.com"
-              className="relative inline-block px-10 py-4 md:py-5 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
+              ref={buttonRef2}
+              href="https://www.amazon.in/Portable-Purifying-System-Baby-Child/dp/B0F1KSKQJW/ref=sr_1_5?crid=156GPY8G273V5&dib=eyJ2IjoiMSJ9.LynSEYWymlxxzvVw9W6JQw.VIMfvayzCggVNAD_Gpo1ZYLmmW6iNmy1sxS3rLaOEpI&dib_tag=se&keywords=baby%20bubl&qid=1746081563&sprefix=baby%20bub%2Caps%2C324&sr=8-5&fbclid=fbclid"
+              className="relative inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden z-10 text-center"
             >
               <span className="relative z-10">Buy on Amazon</span>
               <div
-                ref={circle2}
-                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 bg-[#8ad3c3] rounded-full pointer-events-none"
+                ref={circleRef2}
+                className="absolute left-1/2 bottom-0 w-full h-full -translate-x-1/2 gradient-background-1  rounded-full pointer-events-none"
               />
             </Link>
           </div>
