@@ -1,13 +1,11 @@
 import React from "react";
 
-import Navbar from "@/app/components/navbar";
-// import HeroSection from "@/app/components/AboutUs/HeroSection";
-
-import Footer from "@/app/components/footer";
-import HeroSection from "@/app/components/accessories/HeroSection";
-import HepaFiltersPage from "@/app/components/accessories/HepaFilters";
-import BUblController from "@/app/components/accessories/BublController";
-import OtherProducts from "@/app/components/accessories/OtherProducts";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import HeroSection from "@/components/accessories/HeroSection";
+import HepaFiltersPage from "@/components/accessories/HepaFilters";
+import BUblController from "@/components/accessories/BublController";
+import OtherProducts from "@/components/accessories/OtherProducts";
 
 const Page = () => {
   return (

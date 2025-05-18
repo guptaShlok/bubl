@@ -1,16 +1,13 @@
 import React from "react";
 
-import Navbar from "@/app/components/navbar";
-// import HeroSection from "@/app/components/AboutUs/HeroSection";
-
-import Footer from "@/app/components/footer";
-
-import HeroSection from "@/app/components/Bubl-App/HeroSection";
-import MeetBubl from "@/app/components/Bubl-App/MeetBubl";
-import KeyFeatures from "@/app/components/Bubl-App/KeyFeatures";
-import HowItWorks from "@/app/components/Bubl-App/HowItWorks";
-import WhatWeStandFor from "@/app/components/Bubl-App/WhatWeStandFor";
-import OtherProducts from "@/app/components/Bubl-App/OtherProducts";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import HeroSection from "@/components/Bubl-App/HeroSection";
+import MeetBubl from "@/components/Bubl-App/MeetBubl";
+import KeyFeatures from "@/components/Bubl-App/KeyFeatures";
+import HowItWorks from "@/components/Bubl-App/HowItWorks";
+import WhatWeStandFor from "@/components/Bubl-App/WhatWeStandFor";
+import OtherProducts from "@/components/Bubl-App/OtherProducts";
 
 const Page = () => {
   return (

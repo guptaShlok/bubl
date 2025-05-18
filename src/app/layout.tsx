@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import localFont from "next/font/local";
 import "./globals.css";
+import { Toaster } from "sonner";
 
 const montserrat = localFont({
   src: [
@@ -66,7 +67,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={montserrat.variable}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Toaster position="top-right" richColors />
+      </body>
     </html>
   );
 }

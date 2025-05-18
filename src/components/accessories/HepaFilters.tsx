@@ -3,10 +3,26 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/lib/store";
+import { toast } from "sonner";
 import ImageOverlay from "../ImageOverlay";
 import MediaCarousel, { MediaItem } from "../MediaCarousel";
 
 export default function HepaFiltersPage() {
+  const router = useRouter();
+  const { addItem } = useCartStore();
+
+  // Define the HEPA filter product
+  const hepaFilterProduct = {
+    id: "hepa-filter",
+    name: "Bubl HEPA Filters",
+    description:
+      "High efficiency filters to guarantee a high level of purification",
+    price: 4999,
+    image: "/backgroundImages/accessories/HepaFilters.png",
+  };
+
   const media: MediaItem[] = [
     {
       type: "image",
@@ -72,8 +88,29 @@ export default function HepaFiltersPage() {
     }
   }, [mounted]);
 
+  // Function to handle adding to cart
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent default link behavior
+
+    // Add the product to cart
+    addItem(hepaFilterProduct);
+
+    // Show toast notification using Sonner
+    toast.success("Added to cart", {
+      description: `${hepaFilterProduct.name} has been added to your cart.`,
+      duration: 3000,
+      action: {
+        label: "View Cart",
+        onClick: () => router.push("/bubl-cart"),
+      },
+    });
+
+    // Optional: Navigate to cart page
+    // router.push("/cart");
+  };
+
   if (!mounted) return null;
-  //TODO add a carousel init and make the video play
+
   return (
     <main className="px-[6vw] pt-[6vh] text-black">
       <ImageOverlay
@@ -166,13 +203,14 @@ export default function HepaFiltersPage() {
             </ul>
 
             <p className="text-xl md:text-2xl font-medium my-10">
-              Price: <span className="font-semibold"> INR 4499</span>
+              Price: <span className="font-semibold"> INR 4999</span>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 mb-5">
               <Link
                 ref={buttonRef1}
                 href="/bubl-cart"
+                onClick={handleAddToCart}
                 className="relative z-20 inline-block px-10 py-4 md:py-6 md:px-16 border-2 border-[#8ad3c3] rounded-full font-semibold text-black text-lg md:text-2xl overflow-hidden text-center"
               >
                 <span className="relative z-10">Add to Cart</span>

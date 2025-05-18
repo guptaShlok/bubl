@@ -1,13 +1,26 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/lib/store";
+import { toast } from "sonner";
+import Image from "next/image";
 
 export default function HeroSection() {
+  const router = useRouter();
+  const { addItem } = useCartStore();
+
   const [mounted, setMounted] = useState(false);
 
+  const babyBublProduct = {
+    id: "babybubl",
+    name: "Babybubl",
+    description: "Advanced air purification system for your baby's room",
+    price: 49000,
+    image: "/backgroundImages/productPage/productLandingPageOverlay.png",
+  };
   // refs for buttons and circles
   const buttonRef1 = useRef<HTMLAnchorElement>(null);
   const circleRef1 = useRef<HTMLDivElement>(null);
@@ -151,7 +164,25 @@ export default function HeroSection() {
       tl.kill();
     };
   }, [mounted]);
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent default link behavior
 
+    // Add the product to cart
+    addItem(babyBublProduct);
+
+    // Show toast notification using Sonner
+    toast.success("Added to cart", {
+      description: `${babyBublProduct.name} has been added to your cart.`,
+      duration: 3000,
+      action: {
+        label: "View Cart",
+        onClick: () => router.push("/bubl-cart"),
+      },
+    });
+
+    // Optional: Navigate to cart page
+    // router.push("/cart");
+  };
   if (!mounted) return null;
 
   return (
@@ -203,7 +234,8 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-6">
               <Link
                 ref={buttonRef1}
-                href="/shop"
+                href="/bubl-cart"
+                onClick={handleAddToCart}
                 className="inline-block px-10 sm:px-12 md:px-[3vw] py-3 sm:py-4 border-2 border-white bg-[#8ad3c3] rounded-full text-white text-lg md:text-xl relative overflow-hidden z-40 font-semibold"
               >
                 <span className="relative z-10">Add to Cart</span>

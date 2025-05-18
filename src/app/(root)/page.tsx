@@ -1,16 +1,16 @@
-import React from "react";
+import Footer from "@/components/footer";
+import Benefit from "@/components/LandingPage/benefitPage";
+import BublApp from "@/components/LandingPage/bublApp";
+import HeroSection from "@/components/LandingPage/heroSection";
+import IndianDescription from "@/components/LandingPage/indianDescription";
+import MissionPhilosophy from "@/components/LandingPage/missionPhilosphy";
+import ScienceBehindProduct from "@/components/LandingPage/scienceBehindProduct";
+import ShopBubl from "@/components/LandingPage/shopBubl";
+import Thinking from "@/components/LandingPage/stillThinking";
+import TestimonialSection from "@/components/LandingPage/testimonials";
+import Navbar from "@/components/navbar";
 
-import Navbar from "@/app/components/navbar";
-import Footer from "../components/footer";
-import MissionPhilosophy from "../components/LandingPage/missionPhilosphy";
-import IndianDescription from "../components/LandingPage/indianDescription";
-import ShopBubl from "../components/LandingPage/shopBubl";
-import Benefit from "../components/LandingPage/benefitPage";
-import ScienceBehindProduct from "../components/LandingPage/scienceBehindProduct";
-import BublApp from "../components/LandingPage/bublApp";
-import TestimonialSection from "../components/LandingPage/testimonials";
-import Thinking from "../components/LandingPage/stillThinking";
-import HeroSection from "../components/LandingPage/heroSection";
+import React from "react";
 
 const Page = () => {
   return (

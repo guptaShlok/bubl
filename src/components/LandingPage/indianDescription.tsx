@@ -7,7 +7,6 @@ import ImageOverlay from "../ImageOverlay";
 const IndianDescription = () => {
   return (
     <>
-      {"India's Shield against India's Polluted Air"}
       <main className="max-h-screen pt-[12vh] px-[6vw] w-full relative">
         {/* Heading section */}
         <div className=" h-fit flex relative">
@@ -101,8 +100,6 @@ const IndianDescription = () => {
           </div>
         </div>
       </main>
-
-      {"Data about india"}
 
       <ImageOverlay
         imageSrc="/circularOverlay.png"
