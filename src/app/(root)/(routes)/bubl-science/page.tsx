@@ -8,20 +8,36 @@ import TriedTested from "@/components/Science/TriedTested";
 import BuiltForIndia from "@/components/Science/BuiltForIndia";
 import BringHomeBubl from "@/components/Science/BringHomeBubl";
 import HeroSection from "@/components/Science/HeroSection";
+import PageTransition from "@/components/page-transition";
+import SectionTransition from "@/components/section-transition";
 
 const Page = () => {
   return (
     <>
-      <section className="science-hero-gradient-background w-full">
-        <Navbar />
-        <HeroSection />
-      </section>
-      <TheTechThatPower />
-      <WorkingOfBabyBubl />
-      <TriedTested />
-      <BuiltForIndia />
-      <BringHomeBubl />
-      <Footer />
+      <PageTransition>
+        <section className="science-hero-gradient-background w-full">
+          <Navbar />
+          <HeroSection />
+        </section>
+        <SectionTransition animation="fade">
+          <TheTechThatPower />
+        </SectionTransition>
+        <SectionTransition animation="fade">
+          <WorkingOfBabyBubl />
+        </SectionTransition>
+        <SectionTransition animation="fade">
+          <TriedTested />
+        </SectionTransition>
+        <SectionTransition animation="fade">
+          <BuiltForIndia />
+        </SectionTransition>
+        <SectionTransition animation="fade">
+          <BringHomeBubl />
+        </SectionTransition>
+        <SectionTransition animation="fade">
+          <Footer />
+        </SectionTransition>
+      </PageTransition>
     </>
   );
 };

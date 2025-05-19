@@ -5,7 +5,7 @@ import { Instagram, Facebook, Youtube, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#8FD9C0] text-white py-16">
+    <footer className="vertical-gradient-background-1 text-white py-16">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Column */}
@@ -57,17 +57,17 @@ export default function Footer() {
             <h3 className="text-2xl font-medium mb-6">Legal</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/terms" className="hover:underline">
+                <Link href="/terms&conditions" className="hover:underline">
                   Terms & Conditions
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:underline">
+                <Link href="/privacypolicy" className="hover:underline">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="hover:underline">
+                <Link href="/cookiespolicy" className="hover:underline">
                   Cookie Policy
                 </Link>
               </li>
@@ -92,30 +92,30 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-            <div className="flex space-x-4">
+            <div className="flex space-x-6">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/get_bubl.in/"
                 aria-label="Instagram"
                 className="hover:opacity-80"
               >
                 <Instagram size={24} />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61574574764797"
                 aria-label="Facebook"
                 className="hover:opacity-80"
               >
                 <Facebook size={24} />
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@bubl.5452"
                 aria-label="YouTube"
                 className="hover:opacity-80"
               >
                 <Youtube size={24} />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/getbubl/"
                 aria-label="LinkedIn"
                 className="hover:opacity-80"
               >
@@ -145,9 +145,12 @@ export default function Footer() {
 
         {/* Logo */}
         <div className="flex justify-end mt-12">
-          <div className="relative w-24 h-24 border-2 border-white rounded-full flex items-center justify-center">
+          <Link
+            className="relative w-24 h-24 border-2 border-white rounded-full flex items-center justify-center"
+            href="/"
+          >
             <span className="text-2xl font-light">bubl.</span>
-          </div>
+          </Link>
         </div>
       </div>
     </footer>
