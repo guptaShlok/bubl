@@ -107,9 +107,9 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/product-babybubl", hasDropdown: true },
     { name: "About", path: "/about-bubl" },
+    { name: "Products", path: "/product-babybubl", hasDropdown: true },
+    { name: "Science Behind", path: "/bubl-science" },
   ];
 
   const productCategories = [

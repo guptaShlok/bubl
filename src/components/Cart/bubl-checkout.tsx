@@ -451,7 +451,7 @@ export default function CheckoutPage() {
                         </p>
                       </div>
                       <div className="text-sm font-bold">
-                        INR {((item.price * item.quantity) / 100).toFixed(2)}
+                        INR {(item.price * item.quantity).toFixed(2)}
                       </div>
                     </div>
                   ))}
@@ -463,15 +463,11 @@ export default function CheckoutPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>Cart Total</span>
-                    <span>INR {(subtotal / 100).toFixed(2)}</span>
+                    <span>INR {subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Shipping</span>
-                    <span>
-                      {shipping === 0
-                        ? "Free"
-                        : `INR ${(shipping / 100).toFixed(2)}`}
-                    </span>
+                    <span>Free</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Coupon Code</span>
