@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import type { Swiper as SwiperType } from "swiper";
 
@@ -95,10 +95,14 @@ export default function FeatureSwiper() {
   return (
     <div className="relative">
       <Swiper
-        modules={[Navigation, Pagination]}
+        modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={20}
         slidesPerView={1}
         initialSlide={0}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
         centeredSlides={false}
         slidesPerGroup={1} // Move one slide at a time
         breakpoints={{

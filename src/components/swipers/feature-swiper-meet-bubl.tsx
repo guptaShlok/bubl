@@ -93,6 +93,7 @@ export default function FeatureSwiperMeetBubl() {
       <Swiper
         modules={[Navigation, Pagination]}
         spaceBetween={10}
+        loop={true}
         slidesPerView={1}
         initialSlide={0}
         centeredSlides={false}

@@ -38,9 +38,9 @@ const infoSlides = [
   },
   {
     id: 5,
-    title: "Smart Home Integration",
+    title: "Silent Operation",
     content:
-      "Seamlessly connects with your smart home ecosystem for convenient control via app, voice commands, or automated schedules.",
+      "Engineered with low-noise technology, it runs quietly to maintain a peaceful environment for the baby — ideal for naps during strolls or travel.",
   },
 ];
 
