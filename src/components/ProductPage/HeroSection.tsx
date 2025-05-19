@@ -15,11 +15,12 @@ export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
 
   const babyBublProduct = {
-    id: "babybubl",
-    name: "Babybubl",
-    description: "Advanced air purification system for your baby's room",
-    price: 49000,
+    id: "babybubl-1",
+    name: "Baby Bubl Air Purifier",
+    description: "Advanced air purification for your baby's room",
+    price: 49999,
     image: "/backgroundImages/productPage/productLandingPageOverlay.png",
+    category: "air-purifiers",
   };
   // refs for buttons and circles
   const buttonRef1 = useRef<HTMLAnchorElement>(null);

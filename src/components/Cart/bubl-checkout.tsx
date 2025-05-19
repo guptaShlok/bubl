@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -11,37 +10,22 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useCartStore } from "@/lib/store";
-import { CustomerDetails, CartItem } from "@/lib/types";
+import { loadRazorpayScript, initializeRazorpay } from "@/lib/razorpay";
+import type { CustomerDetails, OrderData, OrderResult } from "@/lib/types";
 import { createOrder } from "@/lib/action";
-
-// Define proper types for the order data and result
-interface OrderData {
-  customerDetails: CustomerDetails;
-  items: CartItem[];
-  subtotal: number;
-  shipping: number;
-  total: number;
-  paymentMethod: "online" | "cod";
-}
-
-interface OrderResult {
-  success: boolean;
-  orderId?: string;
-  error?: string;
-}
+import type { RazorpayOptions } from "@/lib/types";
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, clearCart } = useCartStore();
-  const [orderComplete, setOrderComplete] = useState(false);
-  const [orderId, setOrderId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">(
-    "online"
-  );
+  const [paymentMethod, setPaymentMethod] = useState<"online">("online");
   const [mounted, setMounted] = useState(false);
+  const [orderComplete, setOrderComplete] = useState(false);
+  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Form state
   const [formData, setFormData] = useState<CustomerDetails>({
@@ -60,6 +44,20 @@ export default function CheckoutPage() {
     Partial<Record<keyof CustomerDetails, string>>
   >({});
 
+  // Load Razorpay script on component mount
+  useEffect(() => {
+    const loadScript = async () => {
+      try {
+        const loaded = await loadRazorpayScript();
+        console.log("Razorpay script loaded:", loaded);
+        setRazorpayLoaded(loaded);
+      } catch (error) {
+        console.error("Error loading Razorpay script:", error);
+      }
+    };
+    loadScript();
+  }, []);
+
   // Fix hydration issues
   useEffect(() => {
     setMounted(true);
@@ -68,21 +66,21 @@ export default function CheckoutPage() {
   // Redirect to cart if cart is empty
   useEffect(() => {
     if (mounted && items.length === 0 && !orderComplete) {
-      router.push("/cart");
+      router.push("/bubl-cart");
     }
-  }, [items, router, orderComplete, mounted]);
+  }, [router, mounted, orderComplete, items.length]);
 
   if (!mounted) {
     return <div className="container mx-auto px-4 py-8">Loading...</div>;
   }
 
-  // Explicitly type the calculations to avoid "never" type issues
-  const subtotal: number = items.reduce(
+  // Calculate totals
+  const subtotal = items.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const shipping: number = 0; // Free shipping
-  const total: number = subtotal + shipping;
+  const shipping = 0; // Free shipping
+  const total = subtotal + shipping;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -113,18 +111,110 @@ export default function CheckoutPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent, method: "online" | "cod") => {
+  // Function to handle Razorpay payment
+  const handleRazorpayPayment = async (
+    orderId: string,
+    orderData: OrderData,
+    customerDetails: CustomerDetails
+  ) => {
+    console.log("Starting Razorpay payment for order:", orderId);
+
+    if (!razorpayLoaded) {
+      console.error("Razorpay not loaded yet");
+      alert("Payment system is still loading. Please try again in a moment.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Get the Razorpay key from environment variables
+      const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
+      // process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_BvRCejha9FdLTh";
+
+      if (!razorpayKey) {
+        throw new Error("Razorpay key not found");
+      }
+
+      console.log(
+        "Using Razorpay key:",
+        razorpayKey.substring(0, 4) +
+          "..." +
+          razorpayKey.substring(razorpayKey.length - 4)
+      );
+
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        console.error("Failed to load Razorpay script");
+        setError("Failed to load payment gateway. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      const options: RazorpayOptions = {
+        key: razorpayKey,
+        amount: orderData.total * 100, // Convert to paise
+        currency: "INR",
+        name: "Bubl Store",
+        description: `Order #${orderId}`,
+        image: "https://your-website.com/logo.png", // Replace with your logo URL
+        prefill: {
+          name: `${customerDetails.firstName} ${customerDetails.lastName}`,
+          email: customerDetails.email,
+          contact: customerDetails.phone,
+        },
+        theme: {
+          color: "#7FDAC0",
+        },
+        handler: function (response) {
+          // Redirect to success page with payment details
+          const successUrl = `/bubl-checkout/success?orderId=${orderId}&paymentId=${
+            response.razorpay_payment_id
+          }&method=online&email=${encodeURIComponent(
+            customerDetails.email
+          )}&total=${orderData.total}`;
+          router.push(successUrl);
+          clearCart();
+          setOrderComplete(true);
+        },
+      };
+
+      // Initialize payment
+      const response = await initializeRazorpay(options);
+      console.log("Payment successful:", response);
+
+      // Redirect to success page with payment details
+      const successUrl = `/bubl-checkout/success?orderId=${orderId}&paymentId=${
+        response.razorpay_payment_id
+      }&method=online&email=${encodeURIComponent(
+        customerDetails.email
+      )}&total=${orderData.total}`;
+      router.push(successUrl);
+
+      // Clear cart and redirect
+      clearCart();
+      setOrderComplete(true);
+    } catch (error) {
+      console.error("Razorpay payment error:", error);
+      alert(
+        "Payment failed. Please try again or choose a different payment method."
+      );
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent, method: "online") => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    setPaymentMethod(method);
+    setPaymentMethod("online");
     setLoading(true);
+    setError(null);
 
     try {
-      // Create order in database with proper typing
+      // Create order in database
       const orderData: OrderData = {
         customerDetails: formData,
         items: items,
@@ -134,68 +224,41 @@ export default function CheckoutPage() {
         paymentMethod: method,
       };
 
-      // Type the result properly
+      console.log(
+        "Creating order with data:",
+        JSON.stringify(orderData, null, 2)
+      );
       const result = (await createOrder(orderData)) as OrderResult;
+      console.log("Order creation result:", result);
 
       if (result.success && result.orderId) {
-        // Ensure orderId exists before setting it
-        setOrderId(result.orderId);
-        setOrderComplete(true);
+        // For COD, redirect to success page directly
         clearCart();
+        setOrderComplete(true);
+        router.push(
+          `/bubl-checkout/success?orderId=${
+            result.orderId
+          }&method=cod&email=${encodeURIComponent(
+            formData.email
+          )}&total=${total}`
+        );
+
+        // For online payment, initialize Razorpay
+        console.log("Initializing online payment for order:", result.orderId);
+        await handleRazorpayPayment(result.orderId, orderData, formData);
       } else {
         throw new Error(result.error || "Failed to create order");
       }
     } catch (error) {
-      console.error("Order error:", error);
+      console.error(
+        "Order error:",
+        error instanceof Error ? error.message : String(error)
+      );
       alert("There was an error processing your order. Please try again.");
-    } finally {
       setLoading(false);
+      setError("There was an error processing your order. Please try again.");
     }
   };
-
-  if (orderComplete) {
-    return (
-      <div className="min-h-screen bg-white">
-        <div className="bg-[#7FDAC0] py-16 mb-8">
-          <h1 className="text-4xl font-light text-white text-center">
-            Order Confirmed
-          </h1>
-        </div>
-
-        <div className="container mx-auto px-4 py-8 max-w-3xl">
-          <Card className="border border-[#e0f5ef] rounded-lg">
-            <div className="p-8">
-              <div className="text-center py-8">
-                <CheckCircle className="h-16 w-16 text-[#7FDAC0] mx-auto mb-4" />
-                <h1 className="text-2xl font-bold mb-2">
-                  Thank You for Your Order!
-                </h1>
-                <p className="text-muted-foreground mb-6">
-                  Your order #{orderId} has been confirmed.
-                </p>
-                <p className="mb-6">
-                  We&#39;ve sent a confirmation email to{" "}
-                  <span className="font-medium">{formData.email}</span> with
-                  your order details.
-                </p>
-                {paymentMethod === "cod" && (
-                  <p className="mb-6 p-4 bg-[#e0f5ef] rounded-lg">
-                    You&#39;ve selected Cash on Delivery. Please have the exact
-                    amount ready when your order arrives.
-                  </p>
-                )}
-                <Link href="/">
-                  <Button className="bg-[#7FDAC0] hover:bg-[#6bc9af] text-white">
-                    Continue Shopping
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -205,7 +268,7 @@ export default function CheckoutPage() {
 
       <div className="container mx-auto px-4 pb-16">
         <div className="flex items-center mb-6">
-          <Link href="/cart">
+          <Link href="/bubl-cart">
             <Button variant="ghost" size="sm" className="text-[#7FDAC0]">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Cart
@@ -388,7 +451,7 @@ export default function CheckoutPage() {
                         </p>
                       </div>
                       <div className="text-sm font-bold">
-                        INR {(item.price * item.quantity).toLocaleString()}
+                        INR {((item.price * item.quantity) / 100).toFixed(2)}
                       </div>
                     </div>
                   ))}
@@ -400,14 +463,14 @@ export default function CheckoutPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>Cart Total</span>
-                    <span>INR {subtotal.toLocaleString()}</span>
+                    <span>INR {(subtotal / 100).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span>Shipping</span>
                     <span>
                       {shipping === 0
                         ? "Free"
-                        : `INR ${shipping.toLocaleString()}`}
+                        : `INR ${(shipping / 100).toFixed(2)}`}
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -417,7 +480,7 @@ export default function CheckoutPage() {
                   <Separator className="bg-[#e0f5ef]" />
                   <div className="flex justify-between font-bold">
                     <span>Subtotal</span>
-                    <span>INR {total.toLocaleString()}</span>
+                    <span>INR {total.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -464,18 +527,8 @@ export default function CheckoutPage() {
                       ? "Processing..."
                       : "Pay Now"}
                   </Button>
-
-                  <Button
-                    onClick={(e) => handleSubmit(e, "cod")}
-                    variant="outline"
-                    className="w-full border-[#7FDAC0] text-[#7FDAC0] hover:bg-[#e0f5ef]"
-                    disabled={loading}
-                  >
-                    {loading && paymentMethod === "cod"
-                      ? "Processing..."
-                      : "Pay on Delivery"}
-                  </Button>
                 </div>
+                {error && <div className="mt-4 text-red-500">{error}</div>}
               </div>
             </Card>
           </div>

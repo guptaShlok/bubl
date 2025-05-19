@@ -1,68 +1,48 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
+import { useCartStore } from "@/lib/store";
 
-import { motion } from "framer-motion";
-import { useCartStore } from "../lib/store";
+interface CartIconWithCountProps {
+  className?: string;
+}
 
-export default function CartIcon() {
+export default function CartIconWithCount({
+  className = "",
+}: CartIconWithCountProps) {
+  const { items } = useCartStore();
   const [mounted, setMounted] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
-  // Get cart items count from the store
-  const getTotalItems = useCartStore((state) => state.getTotalItems);
-
-  // Handle hydration mismatch
+  // Fix hydration issues
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // If not mounted yet, show a placeholder
-  if (!mounted) {
-    return (
-      <div className="relative p-2">
-        <ShoppingCart size={24} className="text-white" />
-        <div className="absolute -top-2 -right-2 bg-white text-[#1a7d6b] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-          0
-        </div>
-      </div>
-    );
-  }
-
-  // Get the actual item count once mounted
-  const itemCount = getTotalItems ? getTotalItems() : 0;
+  // Calculate cart count and total directly
+  const cartCount = mounted
+    ? items.reduce((count, item) => count + item.quantity, 0)
+    : 0;
+  const cartTotal = mounted
+    ? items.reduce((total, item) => total + item.price * item.quantity, 0)
+    : 0;
 
   return (
-    <motion.div
-      className="relative p-2"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      animate={{ y: isHovered ? -3 : 0 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ duration: 0.2 }}
-    >
-      <Link href="/cart">
-        <ShoppingCart
-          size={24}
-          className="text-white transition-transform duration-200"
-        />
-        <div className="absolute -top-2 -right-2 bg-white text-[#1a7d6b] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-          {itemCount}
-        </div>
-      </Link>
-
-      {/* Dot indicator */}
-      {isHovered && (
-        <motion.div
-          className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-white"
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      )}
-    </motion.div>
+    <Link href="/cart">
+      <div className={`relative flex items-center ${className}`}>
+        <ShoppingCart className="h-6 w-6" />
+        {cartCount > 0 && (
+          <div className="absolute -top-2 -right-2 bg-[#7FDAC0] text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+            {cartCount}
+          </div>
+        )}
+        {cartCount > 0 && (
+          <span className="ml-2 text-sm font-medium hidden md:inline-block">
+            INR {cartTotal.toLocaleString()}
+          </span>
+        )}
+      </div>
+    </Link>
   );
 }

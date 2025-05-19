@@ -15,12 +15,12 @@ export default function HepaFiltersPage() {
 
   // Define the HEPA filter product
   const hepaFilterProduct = {
-    id: "hepa-filter",
-    name: "Bubl HEPA Filters",
-    description:
-      "High efficiency filters to guarantee a high level of purification",
+    id: "hepa-filter-1",
+    name: "HEPA Filter Replacement",
+    description: "High-efficiency particulate air filter for Bubl purifiers",
     price: 4999,
     image: "/backgroundImages/accessories/HepaFilters.png",
+    category: "accessories",
   };
 
   const media: MediaItem[] = [

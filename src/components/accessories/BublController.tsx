@@ -15,11 +15,12 @@ export default function BUblController() {
   const { addItem } = useCartStore();
 
   const bublControllerProduct = {
-    id: "bubl-controller",
+    id: "bubl-controller-1",
     name: "Bubl Controller",
-    description: "Bluetooth controller for your Babybubl device",
+    description: "Control your Bubl devices from anywhere",
     price: 5999,
     image: "/backgroundImages/accessories/BublController.png",
+    category: "accessories",
   };
   const media: MediaItem[] = [
     {
