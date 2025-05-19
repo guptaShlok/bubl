@@ -37,14 +37,20 @@ export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
 
+  // Dynamic values based on scroll
   const navBackground = useTransform(
     scrollY,
     [0, 100],
-    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.95)"]
+    ["rgba(255, 255, 255, 0)", "rgba(255, 255, 255, 0.85)"]
   );
   const navHeight = useTransform(scrollY, [0, 100], ["8rem", "4.5rem"]);
   const navWidth = useTransform(scrollY, [0, 100], ["100%", "50%"]);
   const logoScale = useTransform(scrollY, [0, 100], [1, 0.85]);
+  const backdropBlur = useTransform(
+    scrollY,
+    [0, 100],
+    ["blur(0px)", "blur(8px)"]
+  );
 
   // Fix hydration issues
   useEffect(() => {
@@ -109,25 +115,25 @@ export default function Navbar() {
   const navItems = [
     { name: "About", path: "/about-bubl" },
     { name: "Products", path: "/product-babybubl", hasDropdown: true },
-    { name: "Science Behind", path: "/bubl-science" },
+    { name: "Science", path: "/bubl-science" },
   ];
 
   const productCategories = [
     {
       title: "Baby Bubl",
-      description: "Explore our latest premium releases",
+      description: "Shop our revolutionary innovation",
       path: "/product-babybubl",
       imagePath: "/backgroundImages/productPage/productLandingPageOverlay.png",
     },
     {
       title: "Accessories",
-      description: "Our most popular premium items",
+      description: "Baby bubl Filters & Controller",
       path: "/bubl-accessories",
       imagePath: "/backgroundImages/accessories/HepaFilters.png",
     },
     {
       title: "Bubl App",
-      description: "Exclusive designs with limited availability",
+      description: "Explore our App features",
       path: "/bubl-app",
       imagePath: "/backgroundImages/bublApp.png",
     },
@@ -161,6 +167,7 @@ export default function Navbar() {
         style={{
           height: navHeight,
           backgroundColor: navBackground,
+          backdropFilter: backdropBlur,
           width: navWidth,
           left: "50%",
           x: "-50%",
@@ -168,16 +175,16 @@ export default function Navbar() {
           pointerEvents: navVisible ? "auto" : "none",
         }}
         className={cn(
-          "fixed top-0 z-50 flex items-center justify-between rounded-b-2xl px-6 backdrop-blur-md transition-all duration-300 md:px-12",
+          "fixed top-0 z-50 flex items-center justify-between rounded-b-2xl px-6 transition-all duration-300 md:px-12",
           scrolled ? "border-b border-neutral-200/50 shadow-sm" : ""
         )}
       >
         <div className="flex w-full items-center justify-between">
-          {/* Logo */}
+          {/* Logo - Increased size */}
           <motion.div style={{ scale: logoScale }} className="relative z-10">
             <Link href="/" className="flex items-center">
               <motion.div
-                className="relative flex h-22 w-22 items-center justify-center overflow-hidden rounded-full"
+                className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 0 15px rgba(0,0,0,0.1)",
@@ -197,8 +204,8 @@ export default function Navbar() {
                       <Image
                         src="/logo/bublgreen.png"
                         alt="Green Bubl Logo"
-                        width={100}
-                        height={100}
+                        width={120}
+                        height={120}
                         className="h-full w-full object-contain"
                       />
                     </motion.div>
@@ -212,10 +219,10 @@ export default function Navbar() {
                       className="h-full w-full"
                     >
                       <Image
-                        src="/logo/bublLogo.png"
-                        alt="Green Bubl Logo"
-                        width={100}
-                        height={100}
+                        src="/logo/bubllogo.png"
+                        alt="Bubl Logo"
+                        width={120}
+                        height={120}
                         className="h-full w-full object-contain"
                       />
                     </motion.div>
@@ -225,15 +232,15 @@ export default function Navbar() {
             </Link>
           </motion.div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Increased text size */}
           <div className="hidden lg:block">
             <nav className="flex items-center justify-center">
-              <ul className="flex space-x-10">
+              <ul className="flex space-x-4">
                 {navItems.map((item, index) => (
                   <motion.li
                     key={item.name}
                     ref={item.name === "Products" ? productRef : null}
-                    className="relative px-2 text-2xl"
+                    className="relative px-2"
                     onMouseEnter={() => {
                       setActiveIndex(index);
                       if (item.hasDropdown) {
@@ -248,7 +255,7 @@ export default function Navbar() {
                     <Link
                       href={item.path}
                       className={cn(
-                        "group relative flex items-center py-2 px-4 text-lg font-medium transition-colors",
+                        "group relative flex items-center py-2 px-4 text-base font-medium transition-colors",
                         textColorClass
                       )}
                     >
@@ -282,7 +289,7 @@ export default function Navbar() {
                           animate={{ rotate: productDropdownOpen ? 180 : 0 }}
                           transition={{ duration: 0.3 }}
                         >
-                          <ChevronDown className="h-3 w-3" />
+                          <ChevronDown className="h-4 w-4" />
                         </motion.span>
                       )}
                     </Link>
@@ -340,8 +347,9 @@ export default function Navbar() {
                                         <h3 className="flex items-center font-medium text-neutral-900 group-hover:text-black">
                                           {category.title}
                                         </h3>
-
-                                        {category.description}
+                                        <p className="text-sm text-neutral-500">
+                                          {category.description}
+                                        </p>
                                         <motion.span
                                           initial={{ opacity: 0, x: -5 }}
                                           whileHover={{ opacity: 1, x: 0 }}
@@ -366,8 +374,8 @@ export default function Navbar() {
             </nav>
           </div>
 
-          {/* Right Side Icons */}
-          <div className="flex items-center space-x-1">
+          {/* Right Side Icons - Increased size */}
+          <div className="flex items-center space-x-3">
             <motion.button
               whileHover={{
                 scale: 1.1,
@@ -377,23 +385,21 @@ export default function Navbar() {
               }}
               whileTap={{ scale: 0.95 }}
               className={cn(
-                "relative flex h-8 w-8 items-center justify-center rounded-full transition-colors",
+                "relative flex h-12 w-12 items-center justify-center rounded-full transition-colors",
                 scrolled
                   ? "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
                   : "bg-white/10 text-white hover:bg-white/20"
               )}
               onClick={() => setCartOpen(!cartOpen)}
             >
-              <ShoppingBag className="h-10 w-10" />
+              <ShoppingBag className="h-5 w-5" />
               {cartCount > 0 && (
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   className={cn(
-                    "absolute -right-1 -top-1 flex h-14 w-14 items-center justify-center rounded-full text-xs font-medium",
-                    scrolled
-                      ? "bg-[#7FDAC0] text-white"
-                      : "bg-[#7FDAC0] text-white"
+                    "absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium",
+                    "bg-[#7FDAC0] text-white"
                   )}
                 >
                   {cartCount > 99 ? "99+" : cartCount}
@@ -405,7 +411,7 @@ export default function Navbar() {
                   scrolled ? "border-neutral-200" : "border-white/30"
                 )}
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileHover={{ opacity: 1.2, scale: 1.5 }}
+                whileHover={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.2 }}
               />
             </motion.button>
@@ -426,7 +432,7 @@ export default function Navbar() {
               )}
               onClick={() => setIsOpen(!isOpen)}
             >
-              <Menu className="h-4 w-4" />
+              <Menu className="h-5 w-5" />
               <motion.span
                 className={cn(
                   "absolute -inset-1 rounded-full border-2",
@@ -472,10 +478,10 @@ export default function Navbar() {
                   <motion.button
                     whileHover={{ scale: 1.05, rotate: 90 }}
                     whileTap={{ scale: 0.95 }}
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100"
                     onClick={() => setCartOpen(false)}
                   >
-                    <X className="h-4 w-4" />
+                    <X className="h-5 w-5" />
                   </motion.button>
                 </div>
 
@@ -578,7 +584,7 @@ export default function Navbar() {
                       </span>
                     </div>
 
-                    <Link href="/bubl-cart">
+                    <Link href="/cart">
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
@@ -598,7 +604,7 @@ export default function Navbar() {
                       </motion.button>
                     </Link>
 
-                    <Link href="/bubl-checkout">
+                    <Link href="/checkout">
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
@@ -625,7 +631,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Fixed spacing and styling */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -642,29 +648,29 @@ export default function Navbar() {
               clipPath: "circle(0% at calc(100% - 2.5rem) 2.5rem)",
             }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 flex flex-col bg-white pt-24"
+            className="fixed inset-0 z-40 flex flex-col bg-gradient-to-b from-[#83DBC4]/90 to-[#58CDAF]/90 backdrop-blur-md pt-24"
           >
             <div className="container flex-1 px-8">
               <div className="absolute right-6 top-6">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-neutral-800 shadow-md"
                   onClick={() => setIsOpen(false)}
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-5 w-5" />
                 </motion.button>
               </div>
 
-              <nav className="mt-8">
-                <ul className="space-y-6">
+              <nav className="mt-12">
+                <ul className="space-y-8">
                   {navItems.map((item, index) => (
                     <motion.li
                       key={item.name}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 + index * 0.1 }}
-                      className="border-b border-neutral-100 pb-4"
+                      className="border-b border-white/20 pb-6"
                     >
                       {item.hasDropdown ? (
                         <div>
@@ -672,7 +678,7 @@ export default function Navbar() {
                             onClick={() =>
                               setProductDropdownOpen(!productDropdownOpen)
                             }
-                            className="group flex w-full items-center justify-between text-2xl font-medium text-neutral-800"
+                            className="group flex w-full items-center justify-between text-2xl font-medium text-white"
                           >
                             <span>{item.name}</span>
                             <motion.span
@@ -681,7 +687,7 @@ export default function Navbar() {
                               }}
                               transition={{ duration: 0.3 }}
                             >
-                              <ChevronDown className="h-5 w-5" />
+                              <ChevronDown className="h-6 w-6" />
                             </motion.span>
                           </button>
                           <AnimatePresence>
@@ -693,17 +699,22 @@ export default function Navbar() {
                                 transition={{ duration: 0.3 }}
                                 className="overflow-hidden"
                               >
-                                <ul className="mt-4 space-y-3 pl-4">
+                                <ul className="mt-6 space-y-6 pl-4">
                                   {productCategories.map((category, idx) => (
                                     <motion.li
                                       key={category.title}
                                       initial={{ opacity: 0, x: -10 }}
                                       animate={{ opacity: 1, x: 0 }}
                                       transition={{ delay: 0.1 + idx * 0.1 }}
+                                      className="mb-4"
                                     >
-                                      <div className="flex flex-col">
-                                        <div className="flex items-center gap-3 text-lg text-neutral-600">
-                                          <div className="relative h-8 w-8 overflow-hidden rounded-md">
+                                      <Link
+                                        href={category.path}
+                                        className="block"
+                                        onClick={() => setIsOpen(false)}
+                                      >
+                                        <div className="flex items-start gap-4">
+                                          <div className="relative h-12 w-12 overflow-hidden rounded-lg shadow-md">
                                             <Image
                                               src={
                                                 category.imagePath ||
@@ -715,16 +726,16 @@ export default function Navbar() {
                                               className="object-cover"
                                             />
                                           </div>
-                                          <span>{category.title}</span>
+                                          <div>
+                                            <h3 className="text-xl font-medium text-white">
+                                              {category.title}
+                                            </h3>
+                                            <p className="text-sm text-white/80">
+                                              {category.description}
+                                            </p>
+                                          </div>
                                         </div>
-                                        <Link
-                                          href={category.path}
-                                          className="ml-11 mt-1 text-sm text-neutral-500 hover:text-black"
-                                          onClick={() => setIsOpen(false)}
-                                        >
-                                          {category.description}
-                                        </Link>
-                                      </div>
+                                      </Link>
                                     </motion.li>
                                   ))}
                                 </ul>
@@ -735,24 +746,23 @@ export default function Navbar() {
                       ) : (
                         <Link
                           href={item.path}
-                          className="group flex items-center text-2xl font-medium text-neutral-800"
+                          className="group flex items-center justify-between text-2xl font-medium text-white"
                           onClick={() => setIsOpen(false)}
                         >
                           <span className="relative">
                             {item.name}
                             <motion.span
-                              className="absolute bottom-0 left-0 h-[2px] w-0 bg-current"
+                              className="absolute -bottom-1 left-0 h-[2px] w-0 bg-white"
                               whileHover={{ width: "100%" }}
                               transition={{ duration: 0.3 }}
                             />
                           </span>
                           <motion.span
-                            initial={{ opacity: 0, x: -10 }}
-                            whileHover={{ opacity: 1, x: 0 }}
+                            initial={{ opacity: 0.5, x: 0 }}
+                            whileHover={{ opacity: 1, x: 5 }}
                             transition={{ duration: 0.2 }}
-                            className="ml-2"
                           >
-                            <ChevronRight className="h-5 w-5" />
+                            <ChevronRight className="h-6 w-6" />
                           </motion.span>
                         </Link>
                       )}
@@ -766,17 +776,17 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mt-auto border-t border-neutral-100 bg-neutral-50 p-8"
+              className="mt-auto border-t border-white/20 p-8"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-neutral-500">Need help?</p>
-                  <p className="text-lg font-medium">Contact Us</p>
+                  <p className="text-sm text-white/80">Need help?</p>
+                  <p className="text-xl font-medium text-white">Contact Us</p>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-[#58CDAF] shadow-md"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </motion.button>
