@@ -90,8 +90,9 @@ const OurStory = () => {
         {/* Image block */}
         <div className="w-full relative z-10 md:w-1/2 rounded-2xl flex justify-center overflow-hidden pr-0 md:pr-2">
           <Image
-            src="/backgroundImages/aboutUs/OurStory.png"
-            alt="People jogging in India"
+            // src="/backgroundImages/aboutUs/OurStory.png"
+            src="/backgroundImages/aboutUs/ourStory.png"
+            alt="A Healthy Baby"
             width={900}
             height={900}
             className="w-[600px] h-[400px] object-cover rounded-2xl"
