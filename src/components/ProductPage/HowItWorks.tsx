@@ -144,8 +144,8 @@ const HowItWorks = () => {
         <div className="relative z-10 w-full flex justify-end h-auto md:h-[50vh] aspect-video">
           <video
             ref={videoRef}
-            src="/backgroundImages/ProductPage/BublInAction.mp4"
-            // poster="/backgroundImages/ProductPage/HowItWorks.png"
+            src="/backgroundImages/productPage/BublInAction.mp4"
+            // poster="/backgroundImages/productPage/HowItWorks.png"
             className="w-[50vw] h-full object-contain rounded-2xl object-right "
             playsInline
             loop

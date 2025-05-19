@@ -72,7 +72,7 @@ const HowItWorks = () => {
       <div className="relative w-full h-auto pt-0 md:pt-[5vh]">
         <div className="relative top-0 left-0 select-none z-10">
           <Image
-            src="/backgroundImages/Bubl-App/HowItWorks.png"
+            src="/backgroundImages/bubl-app/HowItWorks.png"
             alt="Baby hand holding parent's finger"
             width={1330}
             height={1020}

@@ -195,7 +195,7 @@ export default function HeroSection() {
           <div className="w-full md:w-1/2 lg:w-1/2 order-2 md:order-1 flex justify-center md:justify-start items-center z-10 mb-12 md:mb-0">
             <div className="relative w-full h-[350px] sm:h-[450px] md:h-[950px] md:-translate-y-1/4 md:translate-x-1/6">
               <Image
-                src="/backgroundImages/ProductPage/productLandingPageOverlay.png"
+                src="/backgroundImages/productPage/productLandingPageOverlay.png"
                 alt="BabyBubl Air Purification System"
                 width={1000}
                 height={1000}
@@ -228,7 +228,7 @@ export default function HeroSection() {
             </div>
 
             <p className="text-2xl md:text-3xl font-semibold mb-8">
-              MRP : INR 69,900
+              MRP : INR 49,999
             </p>
 
             {/* CTA Buttons */}

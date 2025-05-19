@@ -82,7 +82,7 @@ const WhatIncluded = () => {
           <div className="w-full md:w-1/2">
             <div className="rounded-2xl overflow-hidden">
               <Image
-                src="/backgroundImages/ProductPage/WhatIncluded.png"
+                src="/backgroundImages/productPage/WhatIncluded.png"
                 alt="Clean mountain landscape"
                 width={600}
                 height={400}

@@ -67,7 +67,7 @@ const MissionVision = () => {
         {/* Image */}
         <div className="w-full md:w-2/3 rounded-2xl relative z-10 overflow-hidden">
           <Image
-            src="/backgroundImages/AboutUs/missionAndVision.png"
+            src="/backgroundImages/aboutUs/missionAndVision.png"
             alt="Baby in stroller with air purification"
             width={900}
             height={500}
