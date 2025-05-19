@@ -66,7 +66,7 @@ const OurStory = () => {
       {/* Content section */}
       <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:mt-6 mt-3 mx-auto">
         {/* Content block */}
-        <div className="w-full md:w-1/2 flex flex-col justify-around text-center md:text-left text-[clamp(1rem,1.6vw,2rem)] font-normal text-black">
+        <div className="w-full md:w-1/2 flex flex-col justify-around text-left text-[clamp(1rem,1.6vw,2rem)] font-normal text-black">
           <p className="mt-0 md:mt-4">
             Bubl. was founded in 2018 in Sweden by physician
             <span className="font-semibold"> Dr. Conny Karlsson</span> and his
