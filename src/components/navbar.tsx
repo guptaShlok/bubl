@@ -219,7 +219,7 @@ export default function Navbar() {
                       className="h-full w-full"
                     >
                       <Image
-                        src="/logo/bubllogo.png"
+                        src="/logo/bublLogo.png"
                         alt="Bubl Logo"
                         width={120}
                         height={120}

@@ -13,17 +13,17 @@ export default function Footer() {
             <h3 className="text-2xl font-medium mb-6">Company</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="/about" className="hover:underline">
+                <Link href="/about-bubl" className="hover:underline">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/endorsements" className="hover:underline">
+                <Link href="/#" className="hover:underline">
                   Endorsements
                 </Link>
               </li>
               <li>
-                <Link href="/partnerships" className="hover:underline">
+                <Link href="/#" className="hover:underline">
                   Partnerships
                 </Link>
               </li>
@@ -40,12 +40,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/accessories" className="hover:underline">
+                <Link href="/bubl-accessories" className="hover:underline">
                   Accessories
                 </Link>
               </li>
               <li>
-                <Link href="/app" className="hover:underline">
+                <Link href="/bubl-app" className="hover:underline">
                   Bubl App
                 </Link>
               </li>
