@@ -115,7 +115,7 @@ export default function Navbar() {
   const navItems = [
     { name: "About", path: "/about-bubl" },
     { name: "Products", path: "/product-babybubl", hasDropdown: true },
-    { name: "Science", path: "/bubl-science" },
+    { name: "Science-Behind", path: "/bubl-science" },
   ];
 
   const productCategories = [
