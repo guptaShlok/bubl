@@ -6,33 +6,18 @@ import gsap from "gsap";
 import ImageOverlay from "../ImageOverlay";
 
 const ShopBubl = () => {
-  /** =========================================================================
-   *  1. Refs for GSAP hover animation on the “Shop BabyBubl” button
-   *  ========================================================================= */
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
 
-  /** =========================================================================
-   *  2. Ref for the custom cursor element
-   *  ========================================================================= */
   const cursorRef = useRef<HTMLDivElement | null>(null);
 
-  /** =========================================================================
-   *  3. Refs to track mouse coordinates (target vs. current) for lerp
-   *  ========================================================================= */
   const targetXRef = useRef<number>(0);
   const targetYRef = useRef<number>(0);
   const currentXRef = useRef<number>(0);
   const currentYRef = useRef<number>(0);
 
-  /** =========================================================================
-   *  4. Ref to the image container so we can bind/unbind listeners
-   *  ========================================================================= */
   const videoTriggerRef = useRef<HTMLDivElement>(null);
 
-  /** =========================================================================
-   *  5. GSAP Hover Animation for “Shop BabyBubl” button (unchanged)
-   *  ========================================================================= */
   useEffect(() => {
     const buttonEl = buttonRef.current;
     const circleEl = circleRef.current;
@@ -68,9 +53,6 @@ const ShopBubl = () => {
     };
   }, []);
 
-  /** =========================================================================
-   *  6. Custom Cursor Logic: only active when hovering the image container
-   *  ========================================================================= */
   useEffect(() => {
     // 6.1 Create and style the custom cursor element (only once)
     const existing = document.querySelector("#custom-cursor");
@@ -174,9 +156,6 @@ const ShopBubl = () => {
   return (
     <>
       <main className="max-h-screen pt-[12vh] overflow-x-clip px-[6vw] mb-[0vh] md:mb-[30vh] lg:mb-[50vh] w-full relative">
-        {/* =========================================================================
-            Heading section (unchanged)
-            ========================================================================= */}
         <ImageOverlay
           imageSrc="/circularOverlay.png"
           exceedViewport={true}
@@ -221,9 +200,6 @@ const ShopBubl = () => {
               </h1>
             </div>
 
-            {/* =========================================================================
-                Shop BabyBubl button with GSAP hover animation
-                ========================================================================= */}
             <div className="self-center md:self-auto">
               <Link
                 ref={buttonRef}
@@ -242,9 +218,6 @@ const ShopBubl = () => {
           </div>
         </div>
 
-        {/* =========================================================================
-            Content block (unchanged)
-            ========================================================================= */}
         <div className="flex flex-col justify-center items-center mx-auto md:flex-row md:justify-start md:items-center gap-8 pt-[2vw]">
           <div className="w-full md:w-1/3 flex flex-col justify-center items-center md:items-start text-left text-[clamp(1rem,1.5vw,2rem)] font-light text-black">
             <p className="mt-4">
@@ -262,10 +235,6 @@ const ShopBubl = () => {
           </div>
         </div>
 
-        {/* =========================================================================
-            Full-width Image – now wrapped in a container that controls cursor
-            and click behavior
-            ========================================================================= */}
         <div
           ref={videoTriggerRef}
           className="relative min-w-[100vw] md:-mt-[25vh] mt-[5vw] mb-0 cursor-none"
