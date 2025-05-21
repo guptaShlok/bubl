@@ -77,21 +77,12 @@ export default function MediaCarousel({ items }: { items: MediaItem[] }) {
         {items.map((item, idx) => (
           <SwiperSlide key={idx}>
             <div className="w-full h-full border-2 border-transparent hover:border-indigo-500 cursor-pointer overflow-hidden">
-              {item.type === "image" ? (
-                <Image
-                  src={item.thumbnailSrc || item.src}
-                  alt={item.alt || ""}
-                  fill
-                  className="object-contain"
-                />
-              ) : (
-                <video
-                  src={item.src}
-                  className="w-full h-full object-cover"
-                  muted
-                  loop
-                />
-              )}
+              <Image
+                src={item.thumbnailSrc || item.src}
+                alt=""
+                fill
+                className="object-contain"
+              />
             </div>
           </SwiperSlide>
         ))}

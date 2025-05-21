@@ -1,32 +1,131 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import ImageOverlay from "../ImageOverlay";
 
 const HowItWorks = () => {
-  const [showModal, setShowModal] = useState(false);
+  const videoTriggerRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
 
-  const handlePlayVideo = () => {
-    setShowModal(true);
-  };
+  const targetXRef = useRef<number>(0);
+  const targetYRef = useRef<number>(0);
+  const currentXRef = useRef<number>(0);
+  const currentYRef = useRef<number>(0);
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  // Prevent background scroll when modal is open
   useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = "hidden";
+    const existing = document.querySelector("#custom-cursor");
+    if (!existing) {
+      const div = document.createElement("div");
+      div.id = "custom-cursor";
+      document.body.appendChild(div);
+      cursorRef.current = div;
+
+      Object.assign(div.style, {
+        position: "fixed",
+        top: "0px",
+        left: "0px",
+        width: "80px",
+        height: "80px",
+        border: "2px solid #8ad3c3",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "#8ad3c3",
+        fontSize: "12px",
+        fontWeight: "600",
+        pointerEvents: "none",
+        userSelect: "none",
+        zIndex: "9999",
+        transform: "translate(-50%, -50%)",
+        opacity: "0",
+        transition: "opacity 0.2s ease",
+      });
+      div.innerText = "Play Video";
     } else {
-      document.body.style.overflow = "";
+      cursorRef.current = existing as HTMLDivElement;
     }
-  }, [showModal]);
+
+    let rafId: number;
+    const lerp = (start: number, end: number, amt: number) =>
+      (1 - amt) * start + amt * end;
+
+    const animateCursor = () => {
+      currentXRef.current = lerp(currentXRef.current, targetXRef.current, 0.1);
+      currentYRef.current = lerp(currentYRef.current, targetYRef.current, 0.1);
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${currentXRef.current}px, ${currentYRef.current}px) translate(-50%, -50%)`;
+      }
+      rafId = requestAnimationFrame(animateCursor);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      targetXRef.current = e.clientX;
+      targetYRef.current = e.clientY;
+    };
+
+    const handleMouseEnter = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = "1";
+      }
+      window.addEventListener("mousemove", handleMouseMove);
+      rafId = requestAnimationFrame(animateCursor);
+    };
+
+    const handleMouseLeave = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = "0";
+      }
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
+
+    const handleClick = () => {
+      window.open(
+        "/backgroundImages/accessories/changingFilters.mp4",
+        "_blank"
+      );
+    };
+
+    const containerEl = videoTriggerRef.current;
+    if (containerEl) {
+      containerEl.addEventListener("mouseenter", handleMouseEnter);
+      containerEl.addEventListener("mouseleave", handleMouseLeave);
+      containerEl.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      const div = cursorRef.current;
+      if (div) {
+        document.body.removeChild(div);
+      }
+      if (containerEl) {
+        containerEl.removeEventListener("mouseenter", handleMouseEnter);
+        containerEl.removeEventListener("mouseleave", handleMouseLeave);
+        containerEl.removeEventListener("click", handleClick);
+      }
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
   return (
-    <main className="max-h-screen pt-[8vh] md:pt-[0vh] px-[6vw] mb-[3vh] md:mb-[30vh] w-full relative">
-      {/* Heading section */}
+    <main className="relative max-h-screen pt-[8vh] md:pt-[0vh] px-[6vw] mb-[3vh] md:mb-[30vh] w-full">
+      <ImageOverlay
+        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
+        exceedViewport={true}
+        scale={1}
+        opacity={1}
+        className="absolute -translate-y-1/4 left-0 pointer-events-none"
+        mobile={{
+          horizontalPosition: "right",
+          verticalPosition: "bottom",
+          width: "80%",
+          height: "100vh",
+        }}
+      />
+
       <div className="mb-0 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">
           <div className="relative">
@@ -37,7 +136,6 @@ const HowItWorks = () => {
                   <span className="text-black">How it </span>
                   <span className="gradient-text-1"> Works?</span>
                 </div>
-
                 <div className="hidden md:block ml-12 transform translate-y-1">
                   <svg
                     width="80"
@@ -61,22 +159,6 @@ const HowItWorks = () => {
         </div>
       </div>
 
-      {/* Background overlay image */}
-      <ImageOverlay
-        imageSrc="/backgroundImages/philosphy/PhilosphyOverlay.png"
-        exceedViewport={true}
-        scale={1}
-        opacity={1}
-        className=" absolute -translate-y-1/4 left-0 pointer-events-none"
-        mobile={{
-          horizontalPosition: "right",
-          verticalPosition: "bottom",
-          width: "80%",
-          height: "100vh",
-        }}
-      />
-
-      {/* Description */}
       <div className="flex flex-col items-center pt-[2vh] justify-start md:flex-row md:justify-between md:items-start gap-4 md:gap-6">
         <div className="w-full md:w-3/5 flex flex-col items-center md:items-stretch text-start md:text-left text-[clamp(0.8rem,1.5vw,2rem)] font-normal text-black">
           <p>
@@ -89,75 +171,20 @@ const HowItWorks = () => {
         </div>
       </div>
 
-      {/* Image with play button */}
-      <div className="relative w-full h-auto pt-0 md:pt-[5vh]">
-        <div className="relative top-0 left-0 select-none z-10 w-full flex justify-center">
+      <div
+        ref={videoTriggerRef}
+        className="relative w-full h-auto pt-[5vh] cursor-none"
+      >
+        <div className="relative top-0 left-0 select-none z-10">
           <Image
             src="/backgroundImages/bubl-app/HowItWorks.png"
-            alt="How It Works"
+            alt="How it works video"
             width={1330}
             height={1020}
             className="w-[100vw] object-contain"
           />
-
-          <button
-            className="absolute inset-0 flex items-center justify-center"
-            onClick={handlePlayVideo}
-            aria-label="Play video"
-          >
-            <div className="bg-white/80 hover:bg-white/90 transition duration-200 rounded-full p-5 shadow-lg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="black"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-          </button>
         </div>
       </div>
-
-      {/* Video Modal */}
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm">
-          <div className="relative w-[90vw] max-w-4xl aspect-video bg-black rounded-lg overflow-hidden shadow-xl">
-            {/* Close button */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-50"
-              aria-label="Close video"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M18 6L6 18M6 6l12 12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </button>
-
-            {/* Replace this iframe with your custom video player if needed */}
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="How It Works Video"
-              frameBorder="0"
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      )}
     </main>
   );
 };

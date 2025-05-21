@@ -59,18 +59,18 @@ export default function CartPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="bg-[#7FDAC0] py-16 mb-8">
-        <h1 className="text-4xl font-light text-white text-center">
-          Your Basket
+      <div className="bg-[#7FDAC0] pt-[15vh] py-[10vh] mb-8">
+        <h1 className="text-7xl font-semibold text-white text-center">
+          Your Cart
         </h1>
       </div>
 
       <div className="container mx-auto px-4 pb-16">
         {items.length === 0 ? (
           <div className="text-center py-12">
-            <h2 className="text-xl mb-4">Your basket is empty</h2>
+            <h2 className="text-xl mb-4">Your Cart is empty</h2>
             <p className="text-sm text-muted-foreground mb-6">
-              Looks like you haven&#39;t added anything to your basket yet.
+              Looks like you haven&#39;t added anything to your Cart yet.
             </p>
             <Link href="/product-babybubl">
               <Button className="bg-[#7FDAC0] hover:bg-[#6bc9af] text-white">
@@ -94,7 +94,7 @@ export default function CartPage() {
                           src={item.image || "/placeholder.svg"}
                           alt={item.name}
                           fill
-                          className="object-cover"
+                          className="object-contain"
                         />
                       </div>
                       <div className="flex-grow">
@@ -169,7 +169,7 @@ export default function CartPage() {
                                 src={product.image || "/placeholder.svg"}
                                 alt={product.name}
                                 fill
-                                className="object-cover"
+                                className="object-contain"
                               />
                             </div>
                             <div>
@@ -185,7 +185,7 @@ export default function CartPage() {
                                 className="mt-2 bg-[#7FDAC0] hover:bg-[#6bc9af] text-white"
                                 size="sm"
                               >
-                                Add to Basket
+                                Add to Cart
                               </Button>
                             </div>
                           </div>

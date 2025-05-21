@@ -4,7 +4,7 @@ import crypto from "crypto"
 // This is a server-side route to verify Razorpay payments
 // In a real app, you would store your Razorpay key and secret securely
 // const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || "rzp_test_YOUR_KEY_ID"
-const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || "YOUR_SECRET"
+const RAZORPAY_KEY_SECRET = "hgY2wImLdqR0TFLoFa7xJYcS"
 
 export async function POST(request: Request) {
   try {

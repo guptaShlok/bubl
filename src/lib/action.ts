@@ -19,32 +19,31 @@ export async function createOrder(data: OrderData): Promise<OrderResult> {
 
     console.log("Order created:", orderId)
 
-    // If it's a COD order, send confirmation email
-    if (data.paymentMethod === "cod") {
-      try {
-        console.log("Sending confirmation email for COD order")
-        const emailResult: EmailResult = await sendOrderConfirmationEmail(
-          data.customerDetails.email,
-          orderId,
-          data.items,
-          data.total,
-        )
+    // Always send confirmation email regardless of payment method
+    try {
+      console.log("Sending order confirmation email to:", data.customerDetails.email)
+      const emailResult: EmailResult = await sendOrderConfirmationEmail(
+        data.customerDetails.email,
+        orderId,
+        data.items,
+        data.total,
+      )
 
-        if (emailResult.success) {
-          console.log("Email sent successfully:", emailResult.messageId)
-          if (emailResult.previewUrl) {
-            console.log("Email preview URL (for test emails):", emailResult.previewUrl)
-          }
-        } else {
-          console.error("Failed to send email:", emailResult.error)
+      if (emailResult.success) {
+        console.log("Email sent successfully:", emailResult.messageId)
+        if (emailResult.previewUrl) {
+          console.log("Email preview URL (for test emails):", emailResult.previewUrl)
         }
-      } catch (emailError) {
-        console.error("Failed to send confirmation email:", emailError)
-        // Continue with order creation even if email fails
+      } else {
+        console.error("Failed to send email:", emailResult.error)
       }
+    } catch (emailError) {
+      console.error("Failed to send confirmation email:", emailError)
+      // Continue with order creation even if email fails
     }
 
-    revalidatePath("/checkout")
+    revalidatePath("/bubl-checkout")
+    revalidatePath("/bubl-checkout")
     return { success: true, orderId }
   } catch (error) {
     console.error("Error creating order:", error)
@@ -80,7 +79,7 @@ export async function updatePaymentStatus(
     // Send appropriate email based on status
     if (status === "paid") {
       try {
-        console.log("Sending confirmation email for successful payment")
+        console.log("Sending confirmation email for successful payment to:", email)
         const emailResult: EmailResult = await sendOrderConfirmationEmail(email, orderId, items, total)
 
         if (emailResult.success) {
@@ -97,7 +96,7 @@ export async function updatePaymentStatus(
       }
     } else if (status === "failed") {
       try {
-        console.log("Sending payment failure email")
+        console.log("Sending payment failure email to:", email)
         const emailResult: EmailResult = await sendPaymentFailureEmail(email, orderId, items, total)
 
         if (emailResult.success) {
@@ -114,7 +113,8 @@ export async function updatePaymentStatus(
       }
     }
 
-    revalidatePath("/checkout")
+    revalidatePath("/bubl-checkout")
+    revalidatePath("/bubl-checkout")
     return { success: true }
   } catch (error) {
     console.error("Error updating payment status:", error)

@@ -12,15 +12,30 @@ export interface CartItem extends Product {
   quantity: number
 }
 
+export interface Address {
+  firstName: string
+  lastName?: string
+  streetAddress1: string
+  streetAddress2?: string
+  city: string
+  state?: string
+  pincode: string
+  country?: string
+}
+
 export interface CustomerDetails {
   email: string
   phone: string
   firstName: string
-  lastName: string
+  lastName?: string
   city: string
   pincode: string
   streetAddress1: string
   streetAddress2?: string
+  state?: string
+  country?: string
+  useSameAddressForBilling?: boolean
+  billingAddress?: Address
 }
 
 export interface Order {
@@ -65,7 +80,7 @@ export interface OrderResult {
 export interface EmailResult {
   success: boolean
   messageId?: string
-  previewUrl?: string | false // Updated to allow false as a return type
+  previewUrl?: string | false
   error?: string
 }
 
@@ -75,26 +90,24 @@ export interface RazorpayOptions {
   amount: number
   currency: string
   name: string
-  description?: string
+  description: string
   image?: string
   order_id?: string
-  handler: (response: RazorpayResponse) => void
   prefill?: {
     name?: string
     email?: string
     contact?: string
     method?: string
   }
-  notes?: Record<string, string>
   theme?: {
     color?: string
-    hide_topbar?: boolean
   }
   modal?: {
     ondismiss?: () => void
     escape?: boolean
     animation?: boolean
   }
+  handler?: (response: RazorpayResponse) => void
 }
 
 export interface RazorpayResponse {
@@ -104,12 +117,20 @@ export interface RazorpayResponse {
 }
 
 export interface RazorpayError {
-  code: string
-  description: string
-  source: string
-  step: string
-  reason: string
+  error?: {
+    code: string
+    description: string
+    source: string
+    step: string
+    reason: string
+    metadata: {
+      order_id: string
+      payment_id: string
+    }
+  }
+  description?: string
 }
+
 
 // Store related types
 export interface CartStore {
@@ -124,5 +145,17 @@ export interface CartStore {
 export interface ApiResponse<T> {
   success: boolean
   data?: T
+  error?: string
+}
+
+export interface CreateOrderResponse {
+  success: boolean
+  orderId?: string
+  error?: string
+}
+
+export interface VerifyPaymentResponse {
+  success: boolean
+  verified?: boolean
   error?: string
 }

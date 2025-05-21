@@ -1,41 +1,69 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextResponse } from "next/server"
 import crypto from "crypto"
 
+// Razorpay test credentials
+const KEY_SECRET = "hgY2wImLdqR0TFLoFa7xJYcS"
+
 interface VerifyPaymentRequest {
-  paymentId: string
-  orderId: string
-  signature: string
+  razorpay_payment_id: string
+  razorpay_order_id: string
+  razorpay_signature: string
 }
 
-interface VerifyPaymentResponse {
-  verified: boolean
-}
-
-export async function POST(request: NextRequest): Promise<NextResponse<VerifyPaymentResponse | { error: string }>> {
+export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as VerifyPaymentRequest
+    console.log("Entering verify-payment API route")
 
-    if (!body.paymentId || !body.orderId || !body.signature) {
-      return NextResponse.json({ error: "Missing required parameters" }, { status: 400 })
+    const body: VerifyPaymentRequest = await request.json()
+    const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = body
+
+    console.log("Verifying payment:", {
+      payment_id: razorpay_payment_id,
+      order_id: razorpay_order_id,
+      signature: razorpay_signature ? "Present" : "Missing",
+    })
+
+    if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
+      return NextResponse.json(
+        {
+          verified: false,
+          error: "Missing required parameters",
+        },
+        { status: 400 },
+      )
     }
 
-    // In a real implementation, you would verify the signature using Razorpay's algorithm
-    // For this example, we'll simulate a successful verification
-    const razorpaySecret = process.env.RAZORPAY_KEY_SECRET 
-    if (!razorpaySecret) {
-      return NextResponse.json({ error: "Razorpay secret key not configured" }, { status: 500 })
+    // Verify the payment signature
+    const payload = `${razorpay_order_id}|${razorpay_payment_id}`
+    const expectedSignature = crypto.createHmac("sha256", KEY_SECRET).update(payload).digest("hex")
+
+    const isValid = expectedSignature === razorpay_signature
+
+    console.log("Signature verification:", isValid ? "Valid" : "Invalid")
+
+    if (!isValid) {
+      return NextResponse.json(
+        {
+          verified: false,
+          error: "Invalid signature",
+        },
+        { status: 400 },
+      )
     }
-
-    const payload = `${body.orderId}|${body.paymentId}`
-    const expectedSignature = crypto.createHmac("sha256", razorpaySecret).update(payload).digest("hex")
-
-    const isValid = crypto.timingSafeEqual(Buffer.from(expectedSignature), Buffer.from(body.signature))
 
     return NextResponse.json({
-      verified: isValid,
+      verified: true,
+      payment_id: razorpay_payment_id,
+      order_id: razorpay_order_id,
     })
   } catch (error) {
-    console.error("Error verifying payment:", error instanceof Error ? error.message : String(error))
-    return NextResponse.json({ error: "Failed to verify payment" }, { status: 500 })
+    console.error("Error verifying payment:", error)
+    return NextResponse.json(
+      {
+        verified: false,
+        error: error instanceof Error ? error.message : "Failed to verify payment",
+      },
+      { status: 500 },
+    )
   }
 }

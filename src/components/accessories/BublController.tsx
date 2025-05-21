@@ -102,7 +102,7 @@ export default function BUblController() {
   if (!mounted) return null;
 
   return (
-    <main className="px-[6vw] pt-[6vh] text-black">
+    <main className="px-[6vw] w-[100vw] overflow-x-hidden pt-[6vh] text-black">
       <ImageOverlay
         imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"
         horizontalPosition="left"

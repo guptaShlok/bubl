@@ -5,6 +5,9 @@ import crypto from "crypto"
 import type { CartItem } from "@/lib/types"
 import { updatePaymentStatus } from "@/lib/action"
 
+// Razorpay test credentials
+const KEY_SECRET = "hgY2wImLdqR0TFLoFa7xJYcS"
+
 interface RazorpayWebhookPayload {
   payload: {
     payment: {
@@ -24,6 +27,8 @@ interface RazorpayWebhookPayload {
 
 export async function POST(request: NextRequest): Promise<NextResponse<{ success: boolean } | { error: string }>> {
   try {
+    console.log("Entering Razorpay webhook handler")
+
     const body = (await request.json()) as RazorpayWebhookPayload
 
     // Extract payment details from the webhook payload
@@ -32,6 +37,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<{ success
         payment: { entity },
       },
     } = body
+
+    console.log("Webhook payload:", JSON.stringify(entity, null, 2))
 
     const { order_id, id: paymentId, razorpay_signature, amount, email, notes } = entity
 
@@ -42,6 +49,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<{ success
     const isValid = verifySignature(order_id, paymentId, razorpay_signature)
 
     if (!isValid) {
+      console.error("Invalid webhook signature")
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 })
     }
 
@@ -55,6 +63,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<{ success
         items = []
       }
     }
+
+    console.log("Updating payment status for order:", orderId)
 
     // Update payment status in your database
     await updatePaymentStatus(
@@ -75,13 +85,9 @@ export async function POST(request: NextRequest): Promise<NextResponse<{ success
 
 // Verify Razorpay signature
 function verifySignature(orderId: string, paymentId: string, signature: string): boolean {
-  const secret = process.env.RAZORPAY_KEY_SECRET
-  if (!secret) {
-    throw new Error("RAZORPAY_KEY_SECRET is not defined in environment variables")
-  }
   // Generate a signature using the same algorithm as Razorpay
   const payload = `${orderId}|${paymentId}`
-  const expectedSignature = crypto.createHmac("sha256", secret).update(payload).digest("hex")
+  const expectedSignature = crypto.createHmac("sha256", KEY_SECRET).update(payload).digest("hex")
 
   return expectedSignature === signature
 }

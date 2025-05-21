@@ -219,7 +219,7 @@ const createPaymentFailureHTML = (orderId: string, items: CartItem[], total: num
         <div style="margin-top: 30px; text-align: center;">
           <a href="${
             process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-          }/checkout" style="display: inline-block; background-color: #7FDAC0; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Try Again</a>
+          }/bubl-checkout" style="display: inline-block; background-color: #7FDAC0; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Try Again</a>
         </div>
         
         <div style="margin-top: 30px;">

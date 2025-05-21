@@ -29,7 +29,7 @@ export default function CartIconWithCount({
     : 0;
 
   return (
-    <Link href="/cart">
+    <Link href="/bubl-cart">
       <div className={`relative flex items-center ${className}`}>
         <ShoppingCart className="h-6 w-6" />
         {cartCount > 0 && (

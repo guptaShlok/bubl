@@ -33,7 +33,7 @@ export default function HepaFiltersPage() {
     {
       type: "video",
       src: "/backgroundImages/accessories/changingFilters.mp4",
-      thumbnailSrc: "/backgroundImages/accessories/changingFilters.png",
+      thumbnailSrc: "/backgroundImages/accessories/ChangingFilters.png",
     },
   ];
 

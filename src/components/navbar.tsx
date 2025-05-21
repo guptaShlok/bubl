@@ -584,7 +584,7 @@ export default function Navbar() {
                       </span>
                     </div>
 
-                    <Link href="/cart">
+                    <Link href="/bubl-cart">
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
@@ -604,7 +604,7 @@ export default function Navbar() {
                       </motion.button>
                     </Link>
 
-                    <Link href="/checkout">
+                    <Link href="/bubl-checkout">
                       <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}

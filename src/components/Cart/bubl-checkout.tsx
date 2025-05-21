@@ -1,6 +1,7 @@
 "use client";
 
 import type React from "react";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -10,21 +11,25 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowLeft, ChevronDown, ChevronUp } from "lucide-react";
 import { useCartStore } from "@/lib/store";
 import { loadRazorpayScript, initializeRazorpay } from "@/lib/razorpay";
 import type { CustomerDetails, OrderData, OrderResult } from "@/lib/types";
 import { createOrder } from "@/lib/action";
-import type { RazorpayOptions } from "@/lib/types";
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, clearCart } = useCartStore();
   const [loading, setLoading] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<"online">("online");
+  const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">(
+    "online"
+  );
   const [mounted, setMounted] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
+  const [showBillingAddress, setShowBillingAddress] = useState(false);
+  const [useSameAddress, setUseSameAddress] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   // Form state
@@ -37,11 +42,24 @@ export default function CheckoutPage() {
     pincode: "",
     streetAddress1: "",
     streetAddress2: "",
+    state: "",
+    country: "India",
+    useSameAddressForBilling: true,
+    billingAddress: {
+      firstName: "",
+      lastName: "",
+      streetAddress1: "",
+      streetAddress2: "",
+      city: "",
+      pincode: "",
+      state: "",
+      country: "India",
+    },
   });
 
   // Form validation
   const [errors, setErrors] = useState<
-    Partial<Record<keyof CustomerDetails, string>>
+    Partial<Record<keyof CustomerDetails | string, string>>
   >({});
 
   // Load Razorpay script on component mount
@@ -51,8 +69,17 @@ export default function CheckoutPage() {
         const loaded = await loadRazorpayScript();
         console.log("Razorpay script loaded:", loaded);
         setRazorpayLoaded(loaded);
+
+        if (!loaded) {
+          setError(
+            "Failed to load payment gateway. Please try again or choose Cash on Delivery."
+          );
+        }
       } catch (error) {
         console.error("Error loading Razorpay script:", error);
+        setError(
+          "Failed to load payment gateway. Please try again or choose Cash on Delivery."
+        );
       }
     };
     loadScript();
@@ -70,6 +97,41 @@ export default function CheckoutPage() {
     }
   }, [router, mounted, orderComplete, items.length]);
 
+  // Update billing address when useSameAddress changes
+  useEffect(() => {
+    if (useSameAddress) {
+      setFormData((prev) => ({
+        ...prev,
+        useSameAddressForBilling: true,
+        billingAddress: {
+          firstName: prev.firstName,
+          lastName: prev.lastName || "",
+          streetAddress1: prev.streetAddress1,
+          streetAddress2: prev.streetAddress2 || "",
+          city: prev.city,
+          pincode: prev.pincode,
+          state: prev.state || "",
+          country: prev.country || "India",
+        },
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        useSameAddressForBilling: false,
+      }));
+    }
+  }, [
+    useSameAddress,
+    formData.firstName,
+    formData.lastName,
+    formData.streetAddress1,
+    formData.streetAddress2,
+    formData.city,
+    formData.pincode,
+    formData.state,
+    formData.country,
+  ]);
+
   if (!mounted) {
     return <div className="container mx-auto px-4 py-8">Loading...</div>;
   }
@@ -84,18 +146,58 @@ export default function CheckoutPage() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // Clear error when user types
-    if (errors[name as keyof CustomerDetails]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
+    // Check if this is a billing address field
+    if (name.startsWith("billing.")) {
+      const billingField = name.replace("billing.", "");
+      setFormData((prev) => ({
+        ...prev,
+        billingAddress: {
+          ...prev.billingAddress!,
+          [billingField]: value,
+        },
+      }));
+
+      // Clear error when user types
+      if (errors[name]) {
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+      }
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      // Clear error when user types
+      if (errors[name]) {
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+      }
+
+      // If using same address for billing, update billing address too
+      if (
+        useSameAddress &&
+        (name === "firstName" ||
+          name === "lastName" ||
+          name === "streetAddress1" ||
+          name === "streetAddress2" ||
+          name === "city" ||
+          name === "pincode" ||
+          name === "state" ||
+          name === "country")
+      ) {
+        setFormData((prev) => ({
+          ...prev,
+          billingAddress: {
+            ...prev.billingAddress!,
+            [name]: value,
+          },
+        }));
+      }
     }
   };
 
   const validateForm = (): boolean => {
-    const newErrors: Partial<Record<keyof CustomerDetails, string>> = {};
+    const newErrors: Partial<Record<keyof CustomerDetails | string, string>> =
+      {};
 
-    // Required fields
+    // Required fields for shipping address
     if (!formData.email) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = "Email is invalid";
@@ -107,116 +209,52 @@ export default function CheckoutPage() {
     if (!formData.streetAddress1)
       newErrors.streetAddress1 = "Address is required";
 
+    // Validate billing address if not using same address
+    if (showBillingAddress && !useSameAddress) {
+      if (!formData.billingAddress?.firstName)
+        newErrors["billing.firstName"] = "First name is required";
+      if (!formData.billingAddress?.city)
+        newErrors["billing.city"] = "City is required";
+      if (!formData.billingAddress?.pincode)
+        newErrors["billing.pincode"] = "Pincode is required";
+      if (!formData.billingAddress?.streetAddress1)
+        newErrors["billing.streetAddress1"] = "Address is required";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  // Function to handle Razorpay payment
-  const handleRazorpayPayment = async (
-    orderId: string,
-    orderData: OrderData,
-    customerDetails: CustomerDetails
-  ) => {
-    console.log("Starting Razorpay payment for order:", orderId);
-
-    if (!razorpayLoaded) {
-      console.error("Razorpay not loaded yet");
-      alert("Payment system is still loading. Please try again in a moment.");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Get the Razorpay key from environment variables
-      const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-      // process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_BvRCejha9FdLTh";
-
-      if (!razorpayKey) {
-        throw new Error("Razorpay key not found");
-      }
-
-      console.log(
-        "Using Razorpay key:",
-        razorpayKey.substring(0, 4) +
-          "..." +
-          razorpayKey.substring(razorpayKey.length - 4)
-      );
-
-      const scriptLoaded = await loadRazorpayScript();
-      if (!scriptLoaded) {
-        console.error("Failed to load Razorpay script");
-        setError("Failed to load payment gateway. Please try again.");
-        setLoading(false);
-        return;
-      }
-
-      const options: RazorpayOptions = {
-        key: razorpayKey,
-        amount: orderData.total * 100, // Convert to paise
-        currency: "INR",
-        name: "Bubl Store",
-        description: `Order #${orderId}`,
-        image: "https://your-website.com/logo.png", // Replace with your logo URL
-        prefill: {
-          name: `${customerDetails.firstName} ${customerDetails.lastName}`,
-          email: customerDetails.email,
-          contact: customerDetails.phone,
-        },
-        theme: {
-          color: "#7FDAC0",
-        },
-        handler: function (response) {
-          // Redirect to success page with payment details
-          const successUrl = `/bubl-checkout/success?orderId=${orderId}&paymentId=${
-            response.razorpay_payment_id
-          }&method=online&email=${encodeURIComponent(
-            customerDetails.email
-          )}&total=${orderData.total}`;
-          router.push(successUrl);
-          clearCart();
-          setOrderComplete(true);
-        },
-      };
-
-      // Initialize payment
-      const response = await initializeRazorpay(options);
-      console.log("Payment successful:", response);
-
-      // Redirect to success page with payment details
-      const successUrl = `/bubl-checkout/success?orderId=${orderId}&paymentId=${
-        response.razorpay_payment_id
-      }&method=online&email=${encodeURIComponent(
-        customerDetails.email
-      )}&total=${orderData.total}`;
-      router.push(successUrl);
-
-      // Clear cart and redirect
-      clearCart();
-      setOrderComplete(true);
-    } catch (error) {
-      console.error("Razorpay payment error:", error);
-      alert(
-        "Payment failed. Please try again or choose a different payment method."
-      );
-      setLoading(false);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent, method: "online") => {
+  const handleSubmit = async (e: React.FormEvent, method: "online" | "cod") => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
 
-    setPaymentMethod("online");
+    // Check if Razorpay is loaded for online payment
+    if (method === "online" && !razorpayLoaded) {
+      setError(
+        "Payment gateway is not loaded. Please try again or choose Cash on Delivery."
+      );
+      return;
+    }
+
+    setPaymentMethod(method);
     setLoading(true);
     setError(null);
 
     try {
       // Create order in database
       const orderData: OrderData = {
-        customerDetails: formData,
+        customerDetails: {
+          ...formData,
+          useSameAddressForBilling: useSameAddress,
+          billingAddress:
+            showBillingAddress && !useSameAddress
+              ? formData.billingAddress
+              : undefined,
+        },
         items: items,
         subtotal,
         shipping,
@@ -232,20 +270,94 @@ export default function CheckoutPage() {
       console.log("Order creation result:", result);
 
       if (result.success && result.orderId) {
-        // For COD, redirect to success page directly
-        clearCart();
-        setOrderComplete(true);
-        router.push(
-          `/bubl-checkout/success?orderId=${
-            result.orderId
-          }&method=cod&email=${encodeURIComponent(
-            formData.email
-          )}&total=${total}`
-        );
+        if (method === "cod") {
+          // For COD, redirect to success page directly
+          clearCart();
+          setOrderComplete(true);
+          router.push(
+            `/bubl-checkout/success?orderId=${
+              result.orderId
+            }&paymentMethod=cod&email=${encodeURIComponent(
+              formData.email
+            )}&total=${total}`
+          );
+        } else {
+          // For online payment, initialize Razorpay
+          console.log("Initializing online payment for order:", result.orderId);
 
-        // For online payment, initialize Razorpay
-        console.log("Initializing online payment for order:", result.orderId);
-        await handleRazorpayPayment(result.orderId, orderData, formData);
+          try {
+            initializeRazorpay(
+              total,
+              formData,
+              (paymentId, orderId, signature) => {
+                // Payment successful
+                console.log("Payment successful with ID:", paymentId);
+                clearCart();
+                setOrderComplete(true);
+
+                // Verify the payment on the server
+                fetch("/api/razorpay/verify-payment", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    razorpay_payment_id: paymentId,
+                    razorpay_order_id: orderId,
+                    razorpay_signature: signature,
+                  }),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    console.log("Payment verification result:", data);
+
+                    // Redirect to success page regardless of verification result
+                    // The verification is just for server-side validation
+                    router.push(
+                      `/bubl-checkout/success?orderId=${
+                        result.orderId
+                      }&paymentId=${paymentId}&paymentMethod=online&email=${encodeURIComponent(
+                        formData.email
+                      )}&total=${total}`
+                    );
+                  })
+                  .catch((error) => {
+                    console.error("Error verifying payment:", error);
+                    // Still redirect to success page as the payment was successful on Razorpay's end
+                    router.push(
+                      `/bubl-checkout/success?orderId=${
+                        result.orderId
+                      }&paymentId=${paymentId}&paymentMethod=online&email=${encodeURIComponent(
+                        formData.email
+                      )}&total=${total}`
+                    );
+                  });
+              },
+              (error) => {
+                // Payment failed
+                console.error("Payment failed:", error);
+                setLoading(false);
+                setError(
+                  `Payment failed: ${
+                    error instanceof Error
+                      ? error.message
+                      : "Please try again or choose a different payment method"
+                  }`
+                );
+              }
+            );
+          } catch (error) {
+            console.error("Error initializing Razorpay:", error);
+            setLoading(false);
+            setError(
+              `Failed to initialize payment: ${
+                error instanceof Error
+                  ? error.message
+                  : "Please try again or choose Cash on Delivery"
+              }`
+            );
+          }
+        }
       } else {
         throw new Error(result.error || "Failed to create order");
       }
@@ -254,16 +366,17 @@ export default function CheckoutPage() {
         "Order error:",
         error instanceof Error ? error.message : String(error)
       );
-      alert("There was an error processing your order. Please try again.");
-      setLoading(false);
       setError("There was an error processing your order. Please try again.");
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="bg-[#7FDAC0] py-16 mb-8">
-        <h1 className="text-4xl font-light text-white text-center">Checkout</h1>
+      <div className="bg-[#7FDAC0] pt-[10vh] py-16 mb-8">
+        <h1 className="text-7xl font-semibold text-white text-center">
+          Checkout
+        </h1>
       </div>
 
       <div className="container mx-auto px-4 pb-16">
@@ -345,51 +458,14 @@ export default function CheckoutPage() {
                       <Input
                         id="lastName"
                         name="lastName"
-                        value={formData.lastName}
+                        value={formData.lastName || ""}
                         onChange={handleInputChange}
                         className="border-[#e0f5ef]"
                       />
                     </div>
                   </div>
 
-                  <h2 className="text-xl font-medium pt-4">Delivery</h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="city">
-                        City<span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="city"
-                        name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.city ? "border-red-500" : ""
-                        }`}
-                      />
-                      {errors.city && (
-                        <p className="text-red-500 text-sm">{errors.city}</p>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="pincode">
-                        Pincode<span className="text-red-500">*</span>
-                      </Label>
-                      <Input
-                        id="pincode"
-                        name="pincode"
-                        value={formData.pincode}
-                        onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.pincode ? "border-red-500" : ""
-                        }`}
-                      />
-                      {errors.pincode && (
-                        <p className="text-red-500 text-sm">{errors.pincode}</p>
-                      )}
-                    </div>
-                  </div>
+                  <h2 className="text-xl font-medium pt-4">Shipping Address</h2>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -422,6 +498,253 @@ export default function CheckoutPage() {
                       />
                     </div>
                   </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="city">
+                        City<span className="text-red-500">*</span>
+                      </Label>
+                      <Input
+                        id="city"
+                        name="city"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        className={`border-[#e0f5ef] ${
+                          errors.city ? "border-red-500" : ""
+                        }`}
+                      />
+                      {errors.city && (
+                        <p className="text-red-500 text-sm">{errors.city}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="state">State</Label>
+                      <Input
+                        id="state"
+                        name="state"
+                        value={formData.state || ""}
+                        onChange={handleInputChange}
+                        className="border-[#e0f5ef]"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="pincode">
+                        Pincode<span className="text-red-500">*</span>
+                      </Label>
+                      <Input
+                        id="pincode"
+                        name="pincode"
+                        value={formData.pincode}
+                        onChange={handleInputChange}
+                        className={`border-[#e0f5ef] ${
+                          errors.pincode ? "border-red-500" : ""
+                        }`}
+                      />
+                      {errors.pincode && (
+                        <p className="text-red-500 text-sm">{errors.pincode}</p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="country">Country</Label>
+                      <Input
+                        id="country"
+                        name="country"
+                        value={formData.country || "India"}
+                        onChange={handleInputChange}
+                        className="border-[#e0f5ef]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Billing Address Toggle */}
+                  <div className="pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setShowBillingAddress(!showBillingAddress)}
+                      className="flex items-center text-[#7FDAC0] hover:text-[#6bc9af] transition-colors"
+                    >
+                      <span className="font-medium">Billing Address</span>
+                      {showBillingAddress ? (
+                        <ChevronUp className="ml-2 h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="ml-2 h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Billing Address Section */}
+                  {showBillingAddress && (
+                    <div className="space-y-6 pt-2 pb-4 border-t border-[#e0f5ef]">
+                      <div className="flex items-center space-x-2 pt-4">
+                        <Checkbox
+                          id="useSameAddress"
+                          checked={useSameAddress}
+                          onCheckedChange={(checked) => {
+                            setUseSameAddress(checked === true);
+                          }}
+                        />
+                        <Label
+                          htmlFor="useSameAddress"
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          Use shipping address as billing address
+                        </Label>
+                      </div>
+
+                      {!useSameAddress && (
+                        <>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.firstName">
+                                First Name
+                                <span className="text-red-500">*</span>
+                              </Label>
+                              <Input
+                                id="billing.firstName"
+                                name="billing.firstName"
+                                value={formData.billingAddress?.firstName || ""}
+                                onChange={handleInputChange}
+                                className={`border-[#e0f5ef] ${
+                                  errors["billing.firstName"]
+                                    ? "border-red-500"
+                                    : ""
+                                }`}
+                              />
+                              {errors["billing.firstName"] && (
+                                <p className="text-red-500 text-sm">
+                                  {errors["billing.firstName"]}
+                                </p>
+                              )}
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.lastName">
+                                Last Name
+                              </Label>
+                              <Input
+                                id="billing.lastName"
+                                name="billing.lastName"
+                                value={formData.billingAddress?.lastName || ""}
+                                onChange={handleInputChange}
+                                className="border-[#e0f5ef]"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.streetAddress1">
+                                Street Address 1
+                                <span className="text-red-500">*</span>
+                              </Label>
+                              <Input
+                                id="billing.streetAddress1"
+                                name="billing.streetAddress1"
+                                value={
+                                  formData.billingAddress?.streetAddress1 || ""
+                                }
+                                onChange={handleInputChange}
+                                className={`border-[#e0f5ef] ${
+                                  errors["billing.streetAddress1"]
+                                    ? "border-red-500"
+                                    : ""
+                                }`}
+                              />
+                              {errors["billing.streetAddress1"] && (
+                                <p className="text-red-500 text-sm">
+                                  {errors["billing.streetAddress1"]}
+                                </p>
+                              )}
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.streetAddress2">
+                                Street Address 2
+                              </Label>
+                              <Input
+                                id="billing.streetAddress2"
+                                name="billing.streetAddress2"
+                                value={
+                                  formData.billingAddress?.streetAddress2 || ""
+                                }
+                                onChange={handleInputChange}
+                                className="border-[#e0f5ef]"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.city">
+                                City<span className="text-red-500">*</span>
+                              </Label>
+                              <Input
+                                id="billing.city"
+                                name="billing.city"
+                                value={formData.billingAddress?.city || ""}
+                                onChange={handleInputChange}
+                                className={`border-[#e0f5ef] ${
+                                  errors["billing.city"] ? "border-red-500" : ""
+                                }`}
+                              />
+                              {errors["billing.city"] && (
+                                <p className="text-red-500 text-sm">
+                                  {errors["billing.city"]}
+                                </p>
+                              )}
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.state">State</Label>
+                              <Input
+                                id="billing.state"
+                                name="billing.state"
+                                value={formData.billingAddress?.state || ""}
+                                onChange={handleInputChange}
+                                className="border-[#e0f5ef]"
+                              />
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.pincode">
+                                Pincode<span className="text-red-500">*</span>
+                              </Label>
+                              <Input
+                                id="billing.pincode"
+                                name="billing.pincode"
+                                value={formData.billingAddress?.pincode || ""}
+                                onChange={handleInputChange}
+                                className={`border-[#e0f5ef] ${
+                                  errors["billing.pincode"]
+                                    ? "border-red-500"
+                                    : ""
+                                }`}
+                              />
+                              {errors["billing.pincode"] && (
+                                <p className="text-red-500 text-sm">
+                                  {errors["billing.pincode"]}
+                                </p>
+                              )}
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="billing.country">Country</Label>
+                              <Input
+                                id="billing.country"
+                                name="billing.country"
+                                value={
+                                  formData.billingAddress?.country || "India"
+                                }
+                                onChange={handleInputChange}
+                                className="border-[#e0f5ef]"
+                              />
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
                 </form>
               </div>
             </Card>
@@ -517,14 +840,30 @@ export default function CheckoutPage() {
                   <Button
                     onClick={(e) => handleSubmit(e, "online")}
                     className="w-full bg-[#7FDAC0] hover:bg-[#6bc9af] text-white mb-3"
-                    disabled={loading}
+                    disabled={loading || !razorpayLoaded}
                   >
                     {loading && paymentMethod === "online"
                       ? "Processing..."
                       : "Pay Now"}
                   </Button>
+
+                  <Button
+                    onClick={(e) => handleSubmit(e, "cod")}
+                    variant="outline"
+                    className="w-full border-[#7FDAC0] text-[#7FDAC0] hover:bg-[#e0f5ef]"
+                    disabled={loading}
+                  >
+                    {loading && paymentMethod === "cod"
+                      ? "Processing..."
+                      : "Pay on Delivery"}
+                  </Button>
                 </div>
-                {error && <div className="mt-4 text-red-500">{error}</div>}
+
+                {error && (
+                  <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md text-red-600 text-sm">
+                    {error}
+                  </div>
+                )}
               </div>
             </Card>
           </div>

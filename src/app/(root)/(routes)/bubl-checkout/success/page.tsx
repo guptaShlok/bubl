@@ -1,21 +1,19 @@
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import OrderSuccessContent from "@/components/Cart/order-success-content";
+// app/(root)/(routes)/bubl-checkout/success/page.js
 
-export default function OrderSuccessPage() {
+import { Suspense } from "react";
+import SuccessClient from "./SuccessClient";
+
+// Force Next.js to treat this route as fully dynamic (no build‐time prerender).
+export const dynamic = "force-dynamic";
+
+export default function SuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-white flex items-center justify-center">
-          <div className="flex flex-col items-center">
-            <Skeleton className="h-16 w-16 rounded-full mb-4" />
-            <Skeleton className="h-6 w-48 rounded mb-2" />
-            <Skeleton className="h-4 w-64 rounded" />
-          </div>
-        </div>
+        <div className="h-64 flex items-center justify-center">Loading…</div>
       }
     >
-      <OrderSuccessContent />
+      <SuccessClient />
     </Suspense>
   );
 }
