@@ -139,7 +139,7 @@ const MissionPhilosophy = () => {
           <div className="self-center md:self-auto">
             <Link
               ref={buttonRef}
-              href="/about"
+              href="/about-bubl"
               className="gsap-button inline-block px-12 md:px-22 py-3 md:py-6 border-2 border-[#1ee3af] rounded-full text-black font-normal text-2xl md:text-4xl relative overflow-hidden z-10"
             >
               <span className="relative z-10 font-semibold">About Us</span>

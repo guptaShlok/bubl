@@ -846,17 +846,6 @@ export default function CheckoutPage() {
                       ? "Processing..."
                       : "Pay Now"}
                   </Button>
-
-                  <Button
-                    onClick={(e) => handleSubmit(e, "cod")}
-                    variant="outline"
-                    className="w-full border-[#7FDAC0] text-[#7FDAC0] hover:bg-[#e0f5ef]"
-                    disabled={loading}
-                  >
-                    {loading && paymentMethod === "cod"
-                      ? "Processing..."
-                      : "Pay on Delivery"}
-                  </Button>
                 </div>
 
                 {error && (
