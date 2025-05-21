@@ -84,8 +84,8 @@ export default function SuccessClient() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="bg-[#7FDAC0] py-16 mb-8">
-        <h1 className="text-4xl font-light text-white text-center">
+      <div className="bg-[#7FDAC0] pt-[10vh] py-16 mb-8">
+        <h1 className="text-7xl font-semibold text-white text-center">
           Order Confirmation
         </h1>
       </div>

@@ -86,11 +86,14 @@ const Leadership = () => {
 
             {/* Content */}
             <div className="w-full pl-[3vw] text-center md:text-left text-black">
-              <h2 className="text-5xl md:text-6xl lg:text-9xl font-semibold mb-4 leading-[1.3]">
+              <h2 className="text-5xl md:text-6xl lg:text-8xl font-semibold mb-4 leading-[1.3]">
                 <p className=" w-full md:w-1/2">Conny Karlsson</p>
               </h2>
               <h3 className="text-xl md:text-3xl font-semibold mb-1">
                 Founder & CEO
+              </h3>
+              <h3 className="text-xl md:text-3xl font-semibold mb-1">
+                Bubl. AB, Sweden
               </h3>
               <p className="text-lg md:text-2xl max-w-3xl pt-2 font-normal w-full md:mx-0">
                 A physician with years of research in pathophysiology and air
@@ -141,15 +144,25 @@ const Leadership = () => {
             </div>
             {/* Content */}
             <div className="w-full  text-center md:text-left text-black">
-              <h2 className="text-5xl md:text-6xl lg:text-9xl font-semibold mb-4 leading-[1.3]">
+              <h2 className="text-5xl md:text-6xl lg:text-8xl font-semibold mb-4 leading-[1.3]">
                 Rajeev Singh Rathore
               </h2>
               <h3 className="text-xl md:text-2xl font-semibold mb-1">
-                CEO / Director, Bubl. Technologies India
+                CEO / Director,
               </h3>
+
+              <h3 className="text-xl md:text-2xl font-semibold mb-1">
+                Bubl. Technologies India
+              </h3>
+
               <p className="text-lg md:text-2xl max-w-3xl pt-2 font-normal w-full md:mx-0">
-                With deep experience and leadership in Indian markets, Rajeev is
-                steering Bubl&#39;s vision across the subcontinent.
+                Spearheading the company&#39;s vision to revolutionize
+                respiratory wellness for children and elderly populations in
+                India and South Asia. A seasoned business leader with over two
+                decades of global experience across the Telecom and IT sectors,
+                he brings a unique blend of strategic foresight, innovation
+                focus, and operational excellence to drive sustainable growth
+                and societal impact.
               </p>
             </div>
           </div>
