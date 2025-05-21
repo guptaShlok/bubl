@@ -218,7 +218,8 @@ export const initializeRazorpay = (
           modal: {
             ondismiss: () => {
               console.log("Payment modal dismissed")
-              onError(new Error("Payment cancelled by user"))
+              // Redirect to /bubl-checkout on cancellation
+              window.location.href = "/bubl-checkout"
             },
             escape: true,
             animation: true,
