@@ -6,7 +6,7 @@ export const products: Product[] = [
     id: "babybubl-1",
     name: "Baby Bubl Air Purifier",
     description: "Advanced air purification for your baby's room",
-    price: 49999,
+    price: 49968,
     image: "/backgroundImages/productPage/productLandingPageOverlay.png",
     category: "air-purifiers",
   },

@@ -18,7 +18,7 @@ export default function HeroSection() {
     id: "babybubl-1",
     name: "Baby Bubl Air Purifier",
     description: "Advanced air purification for your baby's room",
-    price: 49999,
+    price: 49968,
     image: "/backgroundImages/productPage/productLandingPageOverlay.png",
     category: "air-purifiers",
   };
@@ -228,7 +228,7 @@ export default function HeroSection() {
             </div>
 
             <p className="text-2xl md:text-3xl font-semibold mb-8">
-              MRP : INR 49,999
+              MRP : INR 49,968
             </p>
 
             {/* CTA Buttons */}
