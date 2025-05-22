@@ -1,104 +1,14 @@
 "use server"
 
-import nodemailer from "nodemailer"
-import type { CartItem, EmailResult } from "./types"
+import { Resend } from "resend"
+import type { CartItem, CustomerDetails, EmailResult } from "./types"
+
+// Initialize Resend with your API key
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // Create a debug logger for email operations
 const logEmailDebug = (message: string, data?: unknown): void => {
   console.log(`[EMAIL DEBUG] ${message}`, data ? JSON.stringify(data, null, 2) : "")
-}
-
-/**
- * Create a nodemailer transporter with fallback options
- * @returns Promise with configured transporter
- */
-const createTransporter = async (): Promise<nodemailer.Transporter> => {
-  try {
-    // Log environment variables (without sensitive data)
-    logEmailDebug("Email configuration:", {
-      host: process.env.EMAIL_SERVER,
-      port: process.env.EMAIL_PORT,
-      secure: process.env.EMAIL_PORT === "465",
-      hasUser: !!process.env.EMAIL_USER,
-      hasPassword: !!process.env.EMAIL_PASSWORD,
-    })
-
-    // Check if all required email environment variables are set
-    if (
-      !process.env.EMAIL_SERVER ||
-      !process.env.EMAIL_PORT ||
-      !process.env.EMAIL_USER ||
-      !process.env.EMAIL_PASSWORD
-    ) {
-      logEmailDebug("Email configuration is incomplete. Using test account fallback.")
-
-      // Create a test account using ethereal.email for testing
-      const testAccount = await nodemailer.createTestAccount()
-      logEmailDebug("Created test email account:", {
-        user: testAccount.user,
-        server: "smtp.ethereal.email",
-      })
-
-      return nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      })
-    }
-
-    // Create the real transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_SERVER,
-      port: Number(process.env.EMAIL_PORT),
-      secure: process.env.EMAIL_PORT === "465", // true for 465, false for other ports
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-      },
-      // Add additional options for better reliability
-      tls: {
-        // Do not fail on invalid certificates
-        rejectUnauthorized: false,
-      },
-      // Set timeout to 30 seconds
-      connectionTimeout: 30000,
-      // Set greeting timeout to 30 seconds
-      greetingTimeout: 30000,
-      // Set socket timeout to 30 seconds
-      socketTimeout: 30000,
-    })
-
-    // Verify the connection
-    await transporter.verify()
-    logEmailDebug("SMTP connection verified successfully")
-
-    return transporter
-  } catch (error) {
-    logEmailDebug("Error creating email transporter:", error)
-
-    // Create a fallback test account if the main transporter fails
-    try {
-      logEmailDebug("Creating fallback test account")
-      const testAccount = await nodemailer.createTestAccount()
-
-      return nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      })
-    } catch (fallbackError) {
-      logEmailDebug("Failed to create fallback transporter:", fallbackError)
-      throw new Error(`Failed to create email transporter: ${error instanceof Error ? error.message : String(error)}`)
-    }
-  }
 }
 
 /**
@@ -107,7 +17,7 @@ const createTransporter = async (): Promise<nodemailer.Transporter> => {
  * @returns Formatted currency string
  */
 const formatCurrency = (amount: number): string => {
-  return `INR ${(amount / 100).toFixed(2)}`
+  return `INR ${(amount).toFixed(2)}`
 }
 
 /**
@@ -170,6 +80,90 @@ const createOrderConfirmationHTML = (orderId: string, items: CartItem[], total: 
 }
 
 /**
+ * Create HTML for owner notification email
+ * @param orderId - The order ID
+ * @param items - The order items
+ * @param total - The order total
+ * @param customerDetails - Customer details
+ * @returns HTML string for the email
+ */
+const createOwnerNotificationHTML = (
+  orderId: string,
+  items: CartItem[],
+  total: number,
+  customerDetails: CustomerDetails,
+): string => {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+      <div style="background-color: #7FDAC0; padding: 20px; text-align: center; color: white;">
+        <h1>New Order Received</h1>
+      </div>
+      <div style="padding: 20px;">
+        <p>A new order <strong>#${orderId}</strong> has been received.</p>
+        
+        <h2>Customer Information</h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+          <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd; width: 30%;"><strong>Name:</strong></td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${customerDetails.firstName} ${customerDetails.lastName || ""}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${customerDetails.email}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Phone:</strong></td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${customerDetails.phone}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Address:</strong></td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">
+              ${customerDetails.streetAddress1}<br>
+              ${customerDetails.streetAddress2 ? customerDetails.streetAddress2 + "<br>" : ""}
+              ${customerDetails.city}, ${customerDetails.state || ""} ${customerDetails.pincode}<br>
+              ${customerDetails.country}
+            </td>
+          </tr>
+        </table>
+        
+        <h2>Order Summary</h2>
+        <table style="width: 100%; border-collapse: collapse;">
+          <thead>
+            <tr style="background-color: #f3f3f3;">
+              <th style="padding: 10px; text-align: left; border-bottom: 1px solid #ddd;">Product</th>
+              <th style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">Quantity</th>
+              <th style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${items
+              .map(
+                (item) => `
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.name}</td>
+                <td style="padding: 10px; text-align: center; border-bottom: 1px solid #ddd;">${item.quantity}</td>
+                <td style="padding: 10px; text-align: right; border-bottom: 1px solid #ddd;">${formatCurrency(
+                  item.price * item.quantity,
+                )}</td>
+              </tr>
+            `,
+              )
+              .join("")}
+            <tr>
+              <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold;">Total:</td>
+              <td style="padding: 10px; text-align: right; font-weight: bold;">${formatCurrency(total)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background-color: #f3f3f3; padding: 15px; text-align: center; font-size: 12px; color: #666;">
+        <p>&copy; ${new Date().getFullYear()} Bubl Store. All rights reserved.</p>
+      </div>
+    </div>
+  `
+}
+
+/**
  * Create HTML for payment failure email
  * @param orderId - The order ID
  * @param items - The order items
@@ -219,7 +213,7 @@ const createPaymentFailureHTML = (orderId: string, items: CartItem[], total: num
         <div style="margin-top: 30px; text-align: center;">
           <a href="${
             process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-          }/bubl-checkout" style="display: inline-block; background-color: #7FDAC0; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Try Again</a>
+          }/checkout" style="display: inline-block; background-color: #7FDAC0; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Try Again</a>
         </div>
         
         <div style="margin-top: 30px;">
@@ -234,7 +228,7 @@ const createPaymentFailureHTML = (orderId: string, items: CartItem[], total: num
 }
 
 /**
- * Send order confirmation email with robust error handling
+ * Send order confirmation email to customer
  * @param email - Recipient email address
  * @param orderId - The order ID
  * @param items - The order items
@@ -255,93 +249,93 @@ export async function sendOrderConfirmationEmail(
       throw new Error("Email address is required")
     }
 
-    // Create transporter
-    const transporter = await createTransporter()
-
     // Determine the from address
-    const emailFrom = process.env.EMAIL_FROM || `"Bubl Store" <${process.env.EMAIL_USER || "noreply@bublstore.com"}>`
+    const emailFrom = process.env.EMAIL_FROM || "Bubl Store <onboarding@resend.dev>"
 
-    // Send the email
-    const info = await transporter.sendMail({
+    // Send the email using Resend
+    const { data, error } = await resend.emails.send({
       from: emailFrom,
       to: email,
       subject: `Order Confirmation #${orderId}`,
       html: createOrderConfirmationHTML(orderId, items, total),
+      tags: [{ name: "type", value: "order_confirmation" }],
     })
 
-    logEmailDebug(`Order confirmation email sent to ${email}. Message ID: ${info.messageId}`)
-
-    // If using ethereal.email, provide the preview URL
-    if (info.messageId && info.messageId.includes("ethereal")) {
-      const previewUrl = nodemailer.getTestMessageUrl(info)
-      if (previewUrl) {
-        logEmailDebug(`Preview URL for test email: ${previewUrl}`)
-        return { success: true, messageId: info.messageId, previewUrl }
-      } else {
-        logEmailDebug(`No preview URL available for test email`)
-        return { success: true, messageId: info.messageId }
-      }
+    if (error) {
+      logEmailDebug(`Error sending email: ${error.message}`)
+      return { success: false, error: error.message }
     }
 
-    return { success: true, messageId: info.messageId }
+    logEmailDebug(`Order confirmation email sent to ${email}. Message ID: ${data?.id}`)
+    return { success: true, messageId: data?.id }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     logEmailDebug("Error sending order confirmation email:", errorMessage)
+    return { success: false, error: errorMessage }
+  }
+}
 
-    // Try to send using a fallback method if the main method fails
-    try {
-      logEmailDebug("Attempting to send email using fallback method")
+/**
+ * Send order notification email to store owner
+ * @param ownerEmail - Owner's email address
+ * @param orderId - The order ID
+ * @param items - The order items
+ * @param total - The order total
+ * @param customerDetails - Customer details
+ * @returns Promise with email result
+ */
+export async function sendOwnerNotificationEmail(
+  ownerEmail: string,
+  orderId: string,
+  items: CartItem[],
+  total: number,
+  customerDetails: CustomerDetails,
+): Promise<EmailResult> {
+  try {
+    logEmailDebug(`Attempting to send order notification email to owner: ${ownerEmail}`)
 
-      // Create a test account
-      const testAccount = await nodemailer.createTestAccount()
-
-      // Create fallback transporter
-      const fallbackTransporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      })
-
-      // Send the email using the fallback
-      const info = await fallbackTransporter.sendMail({
-        from: '"Bubl Store Fallback" <fallback@bublstore.com>',
-        to: email,
-        subject: `Order Confirmation #${orderId}`,
-        html: createOrderConfirmationHTML(orderId, items, total),
-      })
-
-      // Get the preview URL
-      const previewUrl = nodemailer.getTestMessageUrl(info)
-      if (previewUrl) {
-        logEmailDebug(`Fallback email sent. Preview URL: ${previewUrl}`)
-        return {
-          success: true,
-          messageId: info.messageId,
-          previewUrl,
-          error: `Original error: ${errorMessage}. Used fallback method.`,
-        }
-      } else {
-        logEmailDebug(`Fallback email sent, but no preview URL available`)
-        return {
-          success: true,
-          messageId: info.messageId,
-          error: `Original error: ${errorMessage}. Used fallback method. No preview URL available.`,
-        }
-      }
-    } catch (fallbackError) {
-      const fallbackErrorMessage = fallbackError instanceof Error ? fallbackError.message : String(fallbackError)
-
-      logEmailDebug("Fallback email method also failed:", fallbackErrorMessage)
-
-      return {
-        success: false,
-        error: `Failed to send email: ${errorMessage}. Fallback also failed: ${fallbackErrorMessage}`,
-      }
+    // Check if email is provided
+    if (!ownerEmail) {
+      throw new Error("Owner email address is required")
     }
+
+    // Log all environment variables for debugging (without sensitive values)
+    logEmailDebug("Environment variables:", {
+      RESEND_API_KEY: process.env.RESEND_API_KEY ? "Set" : "Not set",
+      OWNER_EMAIL: process.env.OWNER_EMAIL || "Not set",
+      EMAIL_FROM: process.env.EMAIL_FROM || "Not set",
+    })
+
+    // Determine the from address
+    const emailFrom = process.env.EMAIL_FROM || "Bubl Store <onboarding@resend.dev>"
+
+    // Log the email details
+    logEmailDebug("Sending owner email with details:", {
+      from: emailFrom,
+      to: ownerEmail,
+      subject: `New Order Received #${orderId}`,
+    })
+
+    // Send the email using Resend
+    const { data, error } = await resend.emails.send({
+      from: emailFrom,
+      to: ownerEmail,
+      subject: `New Order Received #${orderId}`,
+      html: createOwnerNotificationHTML(orderId, items, total, customerDetails),
+      tags: [{ name: "type", value: "owner_notification" }],
+    })
+
+    if (error) {
+      logEmailDebug(`Error sending email to owner: ${error.message}`)
+      return { success: false, error: error.message }
+    }
+
+    logEmailDebug(`Order notification email sent to owner ${ownerEmail}. Message ID: ${data?.id}`)
+    return { success: true, messageId: data?.id }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error)
+    logEmailDebug("Error sending order notification email to owner:", errorMessage)
+    return { success: false, error: errorMessage }
   }
 }
 
@@ -367,93 +361,29 @@ export async function sendPaymentFailureEmail(
       throw new Error("Email address is required")
     }
 
-    // Create transporter
-    const transporter = await createTransporter()
-
     // Determine the from address
-    const emailFrom = process.env.EMAIL_FROM || `"Bubl Store" <${process.env.EMAIL_USER || "noreply@bublstore.com"}>`
+    const emailFrom = process.env.EMAIL_FROM || "Bubl Store <onboarding@resend.dev>"
 
-    // Send the email
-    const info = await transporter.sendMail({
+    // Send the email using Resend
+    const { data, error } = await resend.emails.send({
       from: emailFrom,
       to: email,
       subject: `Payment Failed for Order #${orderId}`,
       html: createPaymentFailureHTML(orderId, items, total),
+      tags: [{ name: "type", value: "payment_failure" }],
     })
 
-    logEmailDebug(`Payment failure email sent to ${email}. Message ID: ${info.messageId}`)
-
-    // If using ethereal.email, provide the preview URL
-    if (info.messageId && info.messageId.includes("ethereal")) {
-      const previewUrl = nodemailer.getTestMessageUrl(info)
-      if (previewUrl) {
-        logEmailDebug(`Preview URL for test email: ${previewUrl}`)
-        return { success: true, messageId: info.messageId, previewUrl }
-      } else {
-        logEmailDebug(`No preview URL available for test email`)
-        return { success: true, messageId: info.messageId }
-      }
+    if (error) {
+      logEmailDebug(`Error sending email: ${error.message}`)
+      return { success: false, error: error.message }
     }
 
-    return { success: true, messageId: info.messageId }
+    logEmailDebug(`Payment failure email sent to ${email}. Message ID: ${data?.id}`)
+    return { success: true, messageId: data?.id }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     logEmailDebug("Error sending payment failure email:", errorMessage)
-
-    // Try to send using a fallback method if the main method fails
-    try {
-      logEmailDebug("Attempting to send email using fallback method")
-
-      // Create a test account
-      const testAccount = await nodemailer.createTestAccount()
-
-      // Create fallback transporter
-      const fallbackTransporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
-        port: 587,
-        secure: false,
-        auth: {
-          user: testAccount.user,
-          pass: testAccount.pass,
-        },
-      })
-
-      // Send the email using the fallback
-      const info = await fallbackTransporter.sendMail({
-        from: '"Bubl Store Fallback" <fallback@bublstore.com>',
-        to: email,
-        subject: `Payment Failed for Order #${orderId}`,
-        html: createPaymentFailureHTML(orderId, items, total),
-      })
-
-      // Get the preview URL
-      const previewUrl = nodemailer.getTestMessageUrl(info)
-      if (previewUrl) {
-        logEmailDebug(`Fallback email sent. Preview URL: ${previewUrl}`)
-        return {
-          success: true,
-          messageId: info.messageId,
-          previewUrl,
-          error: `Original error: ${errorMessage}. Used fallback method.`,
-        }
-      } else {
-        logEmailDebug(`Fallback email sent, but no preview URL available`)
-        return {
-          success: true,
-          messageId: info.messageId,
-          error: `Original error: ${errorMessage}. Used fallback method. No preview URL available.`,
-        }
-      }
-    } catch (fallbackError) {
-      const fallbackErrorMessage = fallbackError instanceof Error ? fallbackError.message : String(fallbackError)
-
-      logEmailDebug("Fallback email method also failed:", fallbackErrorMessage)
-
-      return {
-        success: false,
-        error: `Failed to send email: ${errorMessage}. Fallback also failed: ${fallbackErrorMessage}`,
-      }
-    }
+    return { success: false, error: errorMessage }
   }
 }
 

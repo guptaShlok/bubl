@@ -1,4 +1,3 @@
-// app/(root)/(routes)/bubl-checkout/success/SuccessClient.js
 "use client";
 
 import { useEffect, useState } from "react";
@@ -8,84 +7,94 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import { updatePaymentStatus } from "@/lib/action";
-import { verifyRazorpayPayment } from "@/lib/razorpay";
 
-export default function SuccessClient() {
+// Flag to track if we've already processed this order
+let processedOrder = false;
+
+export default function SuccessPage() {
   const searchParams = useSearchParams();
-  const [isVerifying, setIsVerifying] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const orderId = searchParams.get("orderId") || "";
-  const paymentId = searchParams.get("paymentId") || "";
-  const signature = searchParams.get("signature") || "";
-  const paymentMethod = searchParams.get("paymentMethod") || "cod";
-  const email = searchParams.get("email") || "";
-  const total = Number.parseFloat(searchParams.get("total") || "0");
-
   useEffect(() => {
-    const verifyPayment = async () => {
+    const updateOrder = async () => {
       try {
+        // If we've already processed this order, don't do it again
+        if (processedOrder) {
+          setIsUpdating(false);
+          return;
+        }
+
+        setIsUpdating(true);
+
+        const orderId = searchParams.get("orderId") || "";
+        const paymentId = searchParams.get("paymentId") || "";
+        const paymentMethod = searchParams.get("paymentMethod") || "online";
+        const email = searchParams.get("email") || "";
+        const total = Number(searchParams.get("total") || "0");
+
+        console.log("Processing order on success page:", {
+          orderId,
+          paymentId,
+          paymentMethod,
+        });
+
+        // For online payments, we need to update the payment status
         if (paymentMethod === "online" && paymentId) {
-          setIsVerifying(true);
+          // Create dummy items for the email
+          // In a real app, you would retrieve the actual items from your database
+          const items = [
+            {
+              id: "baby-bubl-1",
+              name: "Baby Bubl Air Purifier",
+              description: "Advanced air purification for your home",
+              price: total,
+              image:
+                "/backgroundImages/productPage/productLandingPageOverlay.png",
+              category: "air-purifiers",
+              quantity: 1,
+            },
+          ];
 
-          let verified = true;
-          if (paymentId && orderId && signature) {
-            verified = await verifyRazorpayPayment(
-              paymentId,
-              orderId,
-              signature
-            );
-          }
-
-          if (verified) {
-            await updatePaymentStatus(
-              orderId,
-              paymentId,
-              "paid",
-              email,
-              [],
-              total
-            );
-          } else {
-            await updatePaymentStatus(
-              orderId,
-              paymentId,
-              "failed",
-              email,
-              [],
-              total
-            );
-            setError(
-              "Payment verification failed. Please contact customer support."
-            );
-          }
-        } else if (paymentMethod === "cod") {
-          await updatePaymentStatus(
+          // Update payment status to trigger emails - only once
+          const result = await updatePaymentStatus(
             orderId,
-            "cod_" + orderId,
-            "pending",
+            paymentId,
+            "paid",
             email,
-            [],
+            items,
             total
           );
+
+          // Mark this order as processed
+          processedOrder = true;
+
+          if (!result.success) {
+            throw new Error(result.error || "Failed to update payment status");
+          }
         }
+
+        setIsUpdating(false);
       } catch (err) {
-        console.error("Error verifying payment:", err);
-        setError(
-          "An error occurred while verifying your payment. Please contact customer support."
-        );
-      } finally {
-        setIsVerifying(false);
+        console.error("Error updating order:", err);
+        setError(err instanceof Error ? err.message : "An error occurred");
+        setIsUpdating(false);
       }
     };
 
-    verifyPayment();
-  }, [orderId, paymentId, signature, paymentMethod, email, total]);
+    updateOrder();
+  }, [searchParams]);
+
+  const orderId = searchParams.get("orderId") || "Unknown";
+  const paymentId = searchParams.get("paymentId") || "";
+  const paymentMethod = searchParams.get("paymentMethod") || "online";
+  const email = searchParams.get("email") || "";
+  const total = Number(searchParams.get("total") || "0");
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="bg-[#7FDAC0] pt-[10vh] py-16 mb-8">
-        <h1 className="text-7xl font-semibold text-white text-center">
+      <div className="bg-[#7FDAC0] py-16 mb-8">
+        <h1 className="text-4xl font-light text-white text-center">
           Order Confirmation
         </h1>
       </div>
@@ -93,10 +102,10 @@ export default function SuccessClient() {
       <div className="container mx-auto px-4 pb-16">
         <Card className="max-w-2xl mx-auto border border-[#e0f5ef] rounded-lg overflow-hidden">
           <div className="p-8 text-center">
-            {isVerifying ? (
+            {isUpdating ? (
               <div className="flex flex-col items-center justify-center py-8">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7FDAC0]" />
-                <p className="mt-4 text-lg">Verifying your payment...</p>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#7FDAC0]"></div>
+                <p className="mt-4 text-lg">Processing your order...</p>
               </div>
             ) : error ? (
               <div className="flex flex-col items-center justify-center py-8">
@@ -144,17 +153,21 @@ export default function SuccessClient() {
                         : "Cash on Delivery"}
                     </span>
                   </p>
-                  {paymentMethod === "online" && (
+                  {paymentMethod === "online" && paymentId && (
                     <p className="text-neutral-600">
                       Payment ID:{" "}
                       <span className="font-medium">{paymentId}</span>
                     </p>
                   )}
+                  <p className="text-neutral-600">
+                    Amount:{" "}
+                    <span className="font-medium">₹{total.toFixed(2)}</span>
+                  </p>
                 </div>
                 <p className="text-neutral-600 mb-8">
-                  We’ve sent a confirmation email to{" "}
+                  We&#39;ve sent a confirmation email to{" "}
                   <span className="font-medium">{email}</span> with all the
-                  details.
+                  details of your order.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link href="/" passHref>
