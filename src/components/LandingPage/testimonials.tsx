@@ -48,7 +48,10 @@ export default function TestimonialSection() {
   if (!mounted) return <div className="h-[500px]"></div>;
 
   return (
-    <main className="max-h-screen pt-[12vh] mb-[20vh] md:mb-0 px-[6vw] w-full relative">
+    <main
+      id="endorsements"
+      className="max-h-screen pt-[12vh] mb-[20vh] md:mb-0 px-[6vw] w-full relative"
+    >
       {/* Heading section */}
       <ImageOverlay
         imageSrc="/backgroundImages/indianDesc/IndianDescOverlay.png"

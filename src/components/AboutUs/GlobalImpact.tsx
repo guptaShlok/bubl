@@ -5,7 +5,7 @@ import ImageOverlay from "../ImageOverlay";
 
 const GlobalImpact = () => {
   return (
-    <main className="h-auto px-[6vw] pt-[8vh] w-full relative">
+    <main id="partnership" className="h-auto px-[6vw] pt-[8vh] w-full relative">
       {/* Heading section */}
       <div className="mb-8 md:mb-12 relative">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between">

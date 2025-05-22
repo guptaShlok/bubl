@@ -22,28 +22,28 @@ const Page = () => {
           <Navbar />
           <HeroSection />
         </section>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <OurStory />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <MissionVision />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <WhatWeStandFor />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <Leadership />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <GlobalImpact />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <OurImpact />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <StepInto />
         </SectionTransition>
-        <SectionTransition animation="slide-left">
+        <SectionTransition animation="fade">
           <Footer />
         </SectionTransition>
       </PageTransition>

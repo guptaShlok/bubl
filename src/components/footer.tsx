@@ -18,12 +18,15 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/about-bubl" className="hover:underline">
+                <Link href="/#endorsements" className="hover:underline">
                   Endorsements
                 </Link>
               </li>
               <li>
-                <Link href="/about-bubl" className="hover:underline">
+                <Link
+                  href="/about-bubl/#partnership"
+                  className="hover:underline"
+                >
                   Partnerships
                 </Link>
               </li>
