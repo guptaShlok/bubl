@@ -87,8 +87,19 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="tel:+919810654379" className="hover:underline">
+                <a
+                  href="tel:+919810654379"
+                  className="hover:underline -mb-4 text-sm"
+                >
                   +91-9810654379
+                </a>
+              </li>
+              <li>
+                <a
+                  href="tel:+919810654379"
+                  className="hover:underline text-sm "
+                >
+                  +91-9322597664
                 </a>
               </li>
             </ul>
