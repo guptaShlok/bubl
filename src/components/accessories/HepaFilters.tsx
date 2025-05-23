@@ -106,7 +106,7 @@ export default function HepaFiltersPage() {
     });
 
     // Optional: Navigate to cart page
-    // router.push("/cart");
+    // router.push("/bubl-cart");
   };
 
   if (!mounted) return null;

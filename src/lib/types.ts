@@ -38,6 +38,17 @@ export interface CustomerDetails {
   billingAddress?: Address
 }
 
+// Add validation interface for customer details
+export interface ValidatedCustomerDetails extends CustomerDetails {
+  firstName: string
+  email: string
+  phone: string
+  city: string
+  pincode: string
+  streetAddress1: string
+  country: string
+}
+
 export interface Order {
   id: string
   customerDetails: CustomerDetails
@@ -82,6 +93,24 @@ export interface EmailResult {
   messageId?: string
   previewUrl?: string | false
   error?: string
+}
+
+// URL parameters interface for success page
+export interface SuccessPageParams {
+  orderId: string
+  paymentId?: string
+  paymentMethod: string
+  email: string
+  total: string
+  firstName?: string
+  lastName?: string
+  phone?: string
+  streetAddress1?: string
+  streetAddress2?: string
+  city?: string
+  state?: string
+  pincode?: string
+  country?: string
 }
 
 // Razorpay related types
@@ -130,7 +159,6 @@ export interface RazorpayError {
   }
   description?: string
 }
-
 
 // Store related types
 export interface CartStore {

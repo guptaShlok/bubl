@@ -1,7 +1,7 @@
 "use server"
 
 import { Resend } from "resend"
-import type { CartItem, CustomerDetails, EmailResult } from "./types"
+import type { CartItem, CustomerDetails, EmailResult, ValidatedCustomerDetails } from "./types"
 
 // Initialize Resend with your API key
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -17,7 +17,38 @@ const logEmailDebug = (message: string, data?: unknown): void => {
  * @returns Formatted currency string
  */
 const formatCurrency = (amount: number): string => {
-  return `INR ${(amount).toFixed(2)}`
+  return `INR ${(amount ).toFixed(2)}`
+}
+
+/**
+ * Validate customer details for email display
+ * @param customerDetails - Customer details to validate
+ * @returns Validated customer details with fallbacks
+ */
+const validateCustomerDetailsForEmail = (customerDetails: CustomerDetails): ValidatedCustomerDetails => {
+  return {
+    firstName: customerDetails.firstName?.trim() || "Customer",
+    lastName: customerDetails.lastName?.trim() || "",
+    email: customerDetails.email?.trim() || "Not provided",
+    phone: customerDetails.phone?.trim() || "Not provided",
+    city: customerDetails.city?.trim() || "Not provided",
+    pincode: customerDetails.pincode?.trim() || "Not provided",
+    streetAddress1: customerDetails.streetAddress1?.trim() || "Not provided",
+    streetAddress2: customerDetails.streetAddress2?.trim() || "",
+    state: customerDetails.state?.trim() || "",
+    country: customerDetails.country?.trim() || "India",
+    useSameAddressForBilling: customerDetails.useSameAddressForBilling ?? true,
+    billingAddress: customerDetails.billingAddress || {
+      firstName: customerDetails.firstName?.trim() || "Customer",
+      lastName: customerDetails.lastName?.trim() || "",
+      streetAddress1: customerDetails.streetAddress1?.trim() || "Not provided",
+      streetAddress2: customerDetails.streetAddress2?.trim() || "",
+      city: customerDetails.city?.trim() || "Not provided",
+      state: customerDetails.state?.trim() || "",
+      pincode: customerDetails.pincode?.trim() || "Not provided",
+      country: customerDetails.country?.trim() || "India",
+    },
+  }
 }
 
 /**
@@ -93,6 +124,8 @@ const createOwnerNotificationHTML = (
   total: number,
   customerDetails: CustomerDetails,
 ): string => {
+  const validatedDetails = validateCustomerDetailsForEmail(customerDetails)
+
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
       <div style="background-color: #7FDAC0; padding: 20px; text-align: center; color: white;">
@@ -105,23 +138,23 @@ const createOwnerNotificationHTML = (
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
           <tr>
             <td style="padding: 10px; border-bottom: 1px solid #ddd; width: 30%;"><strong>Name:</strong></td>
-            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${customerDetails.firstName} ${customerDetails.lastName || ""}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${validatedDetails.firstName} ${validatedDetails.lastName}</td>
           </tr>
           <tr>
             <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td>
-            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${customerDetails.email}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${validatedDetails.email}</td>
           </tr>
           <tr>
             <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Phone:</strong></td>
-            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${customerDetails.phone}</td>
+            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${validatedDetails.phone}</td>
           </tr>
           <tr>
             <td style="padding: 10px; border-bottom: 1px solid #ddd;"><strong>Address:</strong></td>
             <td style="padding: 10px; border-bottom: 1px solid #ddd;">
-              ${customerDetails.streetAddress1}<br>
-              ${customerDetails.streetAddress2 ? customerDetails.streetAddress2 + "<br>" : ""}
-              ${customerDetails.city}, ${customerDetails.state || ""} ${customerDetails.pincode}<br>
-              ${customerDetails.country}
+              ${validatedDetails.streetAddress1}<br>
+              ${validatedDetails.streetAddress2 ? validatedDetails.streetAddress2 + "<br>" : ""}
+              ${validatedDetails.city}, ${validatedDetails.state} ${validatedDetails.pincode}<br>
+              ${validatedDetails.country}
             </td>
           </tr>
         </table>
@@ -249,6 +282,15 @@ export async function sendOrderConfirmationEmail(
       throw new Error("Email address is required")
     }
 
+    // For testing mode, only send to verified email
+    const isTestingMode = !process.env.EMAIL_FROM || process.env.EMAIL_FROM.includes("onboarding@resend.dev")
+    const verifiedEmail = "shlok.official01@gmail.com"
+
+    if (isTestingMode && email !== verifiedEmail) {
+      logEmailDebug(`Testing mode: Redirecting email from ${email} to ${verifiedEmail}`)
+      email = verifiedEmail
+    }
+
     // Determine the from address
     const emailFrom = process.env.EMAIL_FROM || "Bubl Store <onboarding@resend.dev>"
 
@@ -294,9 +336,22 @@ export async function sendOwnerNotificationEmail(
   try {
     logEmailDebug(`Attempting to send order notification email to owner: ${ownerEmail}`)
 
+    // Validate customer details before using them
+    const validatedDetails = validateCustomerDetailsForEmail(customerDetails)
+    logEmailDebug("Validated customer details for owner email:", validatedDetails)
+
     // Check if email is provided
     if (!ownerEmail) {
       throw new Error("Owner email address is required")
+    }
+
+    // For testing mode, only send to verified email
+    const isTestingMode = !process.env.EMAIL_FROM || process.env.EMAIL_FROM.includes("onboarding@resend.dev")
+    const verifiedEmail = "shlok.official01@gmail.com"
+
+    if (isTestingMode && ownerEmail !== verifiedEmail) {
+      logEmailDebug(`Testing mode: Redirecting owner email from ${ownerEmail} to ${verifiedEmail}`)
+      ownerEmail = verifiedEmail
     }
 
     // Log all environment variables for debugging (without sensitive values)
@@ -314,6 +369,7 @@ export async function sendOwnerNotificationEmail(
       from: emailFrom,
       to: ownerEmail,
       subject: `New Order Received #${orderId}`,
+      customerDetails: validatedDetails,
     })
 
     // Send the email using Resend
@@ -321,7 +377,7 @@ export async function sendOwnerNotificationEmail(
       from: emailFrom,
       to: ownerEmail,
       subject: `New Order Received #${orderId}`,
-      html: createOwnerNotificationHTML(orderId, items, total, customerDetails),
+      html: createOwnerNotificationHTML(orderId, items, total, validatedDetails),
       tags: [{ name: "type", value: "owner_notification" }],
     })
 
@@ -359,6 +415,15 @@ export async function sendPaymentFailureEmail(
     // Check if email is provided
     if (!email) {
       throw new Error("Email address is required")
+    }
+
+    // For testing mode, only send to verified email
+    const isTestingMode = !process.env.EMAIL_FROM || process.env.EMAIL_FROM.includes("onboarding@resend.dev")
+    const verifiedEmail = "shlok.official01@gmail.com"
+
+    if (isTestingMode && email !== verifiedEmail) {
+      logEmailDebug(`Testing mode: Redirecting email from ${email} to ${verifiedEmail}`)
+      email = verifiedEmail
     }
 
     // Determine the from address

@@ -96,7 +96,7 @@ export default function BUblController() {
     });
 
     // Optional: Navigate to cart page
-    // router.push("/cart");
+    // router.push("/bubl-cart");
   };
 
   if (!mounted) return null;

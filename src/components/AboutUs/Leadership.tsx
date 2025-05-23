@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
 import ImageOverlay from "../ImageOverlay";
+import Link from "next/link";
 
 const Leadership = () => {
   return (
@@ -47,16 +47,25 @@ const Leadership = () => {
           {/* Conny Karlsson */}
           <div className="flex flex-col md:flex-row md:justify-start">
             {/* Image */}
-            <div className="w-full md:max-w-[500px] mb-2 md:mb-0">
+            <div className="w-full md:max-w-[500px] mb-2 md:mb-0 relative">
               <div className="relative p-1 rounded-3xl max-w-[500px]">
                 <div className="rounded-2xl relative z-10 overflow-hidden ">
-                  <Image
-                    src="/backgroundImages/aboutUs/team/Conny.png"
-                    alt="Conny Karlsson"
-                    width={450}
-                    height={450}
-                    className="w-full h-auto object-cover aspect-square"
-                  />
+                  <Link
+                    href="https://www.linkedin.com/in/conny-karlsson-6aab83110/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    <div className="relative">
+                      <Image
+                        src="/backgroundImages/aboutUs/team/Conny.png"
+                        alt="Conny Karlsson"
+                        width={450}
+                        height={450}
+                        className="w-full h-auto object-cover aspect-square transition-opacity group-hover:opacity-90"
+                      />
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -86,14 +95,11 @@ const Leadership = () => {
 
             {/* Content */}
             <div className="w-full pl-[3vw] text-center md:text-left text-black">
-              <h2 className="text-5xl md:text-6xl lg:text-8xl font-semibold mb-4 leading-[1.3]">
+              <h2 className="text-5xl md:text-6xl lg:text-9xl font-semibold mb-4 leading-[1.3]">
                 <p className=" w-full md:w-1/2">Conny Karlsson</p>
               </h2>
               <h3 className="text-xl md:text-3xl font-semibold mb-1">
                 Founder & CEO
-              </h3>
-              <h3 className="text-xl md:text-3xl font-semibold mb-1">
-                Bubl. AB, Sweden
               </h3>
               <p className="text-lg md:text-2xl max-w-3xl pt-2 font-normal w-full md:mx-0">
                 A physician with years of research in pathophysiology and air
@@ -129,30 +135,35 @@ const Leadership = () => {
           {/* Rajeev Singh Rathore */}
           <div className="flex flex-col mt-12 md:flex-row-reverse items-center">
             {/* Image */}
-            <div className="w-full md:max-w-[500px] mb-2 md:mb-0">
+            <div className="w-full md:max-w-[500px] mb-2 md:mb-0 relative">
               <div className="relative p-1 rounded-3xl max-w-[500px]">
                 <div className="rounded-2xl overflow-hidden ">
-                  <Image
-                    src="/backgroundImages/aboutUs/team/Rajeev.png"
-                    alt="Rajeev Singh Rathore"
-                    width={450}
-                    height={450}
-                    className="w-full h-auto object-cover aspect-square"
-                  />
+                  <Link
+                    href="https://www.linkedin.com/in/rajeevsinghrathore/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group"
+                  >
+                    <div className="relative">
+                      <Image
+                        src="/backgroundImages/aboutUs/team/Rajeev.png"
+                        alt="Rajeev Singh Rathore"
+                        width={450}
+                        height={450}
+                        className="w-full h-auto object-cover aspect-square transition-opacity group-hover:opacity-90"
+                      />
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>
             {/* Content */}
             <div className="w-full  text-center md:text-left text-black">
-              <h2 className="text-5xl md:text-6xl lg:text-8xl font-semibold mb-4 leading-[1.3]">
+              <h2 className="text-5xl md:text-6xl lg:text-9xl font-semibold mb-4 leading-[1.3]">
                 Rajeev Singh Rathore
               </h2>
               <h3 className="text-xl md:text-2xl font-semibold mb-1">
-                CEO / Director,
-              </h3>
-
-              <h3 className="text-xl md:text-2xl font-semibold mb-1">
-                Bubl. Technologies India
+                CEO / Director, Bubl. Technologies India
               </h3>
 
               <p className="text-lg md:text-2xl max-w-3xl pt-2 font-normal w-full md:mx-0">

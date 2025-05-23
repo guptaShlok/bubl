@@ -1,12 +1,15 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import type { CartItem, OrderData, OrderResult, PaymentStatus, EmailResult } from "@/lib/types"
+import type { CartItem, OrderData, OrderResult, PaymentStatus, EmailResult, CustomerDetails } from "@/lib/types"
 import { sendOrderConfirmationEmail, sendPaymentFailureEmail, sendOwnerNotificationEmail } from "@/lib/email"
 
 // Store to track which orders have already had emails sent
 // This prevents duplicate emails if updatePaymentStatus is called multiple times
 const emailSentOrders = new Set<string>()
+
+// Store customer details for orders to use when sending emails
+const orderCustomerDetails = new Map<string, CustomerDetails>()
 
 /**
  * Create a new order
@@ -20,6 +23,10 @@ export async function createOrder(data: OrderData): Promise<OrderResult> {
     // In a real app, you would save the order to a database
     // For this example, we'll simulate it with a mock order ID
     const orderId = `order_${Date.now()}`
+
+    // Store customer details for this order
+    orderCustomerDetails.set(orderId, data.customerDetails)
+    console.log(`Stored customer details for order ${orderId}:`, data.customerDetails)
 
     console.log("Order created:", orderId)
 
@@ -89,6 +96,7 @@ export async function createOrder(data: OrderData): Promise<OrderResult> {
  * @param email - Customer email
  * @param items - Order items
  * @param total - Order total
+ * @param customerDetails - Optional customer details from the checkout form
  * @returns Promise with success status
  */
 export async function updatePaymentStatus(
@@ -98,6 +106,7 @@ export async function updatePaymentStatus(
   email: string,
   items: CartItem[],
   total: number,
+  customerDetails?: CustomerDetails,
 ): Promise<{ success: boolean; error?: string }> {
   try {
     // In a real app, you would update the payment status in your database
@@ -109,9 +118,47 @@ export async function updatePaymentStatus(
       return { success: true }
     }
 
+    // Get stored customer details or use provided ones
+    let details: CustomerDetails | undefined = customerDetails
+    if (!details) {
+      details = orderCustomerDetails.get(orderId)
+      console.log(`Retrieved stored customer details for order ${orderId}:`, details)
+    }
+
+    // If still no details, create default ones
+    if (!details) {
+      details = {
+        firstName: "Customer",
+        lastName: "",
+        email: email,
+        phone: "Not provided",
+        streetAddress1: "Not provided",
+        streetAddress2: "",
+        city: "Not provided",
+        state: "",
+        pincode: "Not provided",
+        country: "Not provided",
+        useSameAddressForBilling: true,
+        billingAddress: {
+          firstName: "Customer",
+          lastName: "",
+          streetAddress1: "Not provided",
+          streetAddress2: "",
+          city: "Not provided",
+          state: "",
+          pincode: "Not provided",
+          country: "Not provided",
+        },
+      }
+      console.log(`Using default customer details for order ${orderId}:`, details)
+    }
+
     // Send appropriate emails based on payment status
     if (status === "paid") {
       try {
+        // Add delay to prevent rate limiting
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+
         // Send confirmation email to customer
         console.log("Payment successful - Sending order confirmation email to:", email)
         const emailResult: EmailResult = await sendOrderConfirmationEmail(email, orderId, items, total)
@@ -125,32 +172,21 @@ export async function updatePaymentStatus(
           console.error("Failed to send email to customer:", emailResult.error)
         }
 
+        // Add another delay before sending owner email
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+
         // Send notification email to owner
         const ownerEmail = process.env.OWNER_EMAIL
         if (ownerEmail) {
           console.log("Payment successful - Sending order notification email to owner:", ownerEmail)
-
-          // Create dummy customer details for the owner email
-          // In a real app, you would pass the actual customer details from your database
-          const customerDetails = {
-            firstName: "Customer",
-            lastName: "",
-            email: email,
-            phone: "",
-            streetAddress1: "",
-            streetAddress2: "",
-            city: "",
-            state: "",
-            pincode: "",
-            country: "",
-          }
+          console.log("Using customer details for owner email:", details)
 
           const ownerEmailResult: EmailResult = await sendOwnerNotificationEmail(
             ownerEmail,
             orderId,
             items,
             total,
-            customerDetails,
+            details,
           )
 
           if (ownerEmailResult.success) {

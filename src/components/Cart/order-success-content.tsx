@@ -145,8 +145,8 @@ export default function OrderSuccessContent() {
                   <p className="font-medium">Cash on Delivery</p>
                   <p className="text-sm text-muted-foreground">
                     Please have the exact amount of INR{" "}
-                    {(orderDetails.total / 100).toFixed(2)} ready when your
-                    order arrives.
+                    {orderDetails.total.toFixed(2)} ready when your order
+                    arrives.
                   </p>
                 </div>
               ) : (
@@ -156,7 +156,7 @@ export default function OrderSuccessContent() {
                     Payment ID: {orderDetails.paymentId}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Amount: INR {(orderDetails.total / 100).toFixed(2)}
+                    Amount: INR {orderDetails.total.toFixed(2)}
                   </p>
                 </div>
               )}

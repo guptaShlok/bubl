@@ -73,7 +73,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<{ success
       "paid",
       email,
       items,
-      amount / 100, // Convert from paise to rupees
+      amount, // Convert from paise to rupees
     )
 
     return NextResponse.json({ success: true })

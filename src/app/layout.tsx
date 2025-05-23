@@ -57,7 +57,10 @@ const montserrat = localFont({
 
 export const metadata: Metadata = {
   title: "Bubl",
-  description: "Bubl- now in India",
+  description: "Bubl-now in India",
+  icons: {
+    icon: "/logo/bublgreen.png",
+  },
 };
 
 export default function RootLayout({

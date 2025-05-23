@@ -274,12 +274,22 @@ export default function CheckoutPage() {
           // For COD, redirect to success page directly
           clearCart();
           setOrderComplete(true);
+          const customerParams = new URLSearchParams({
+            firstName: formData.firstName,
+            lastName: formData.lastName || "",
+            phone: formData.phone,
+            streetAddress1: formData.streetAddress1,
+            streetAddress2: formData.streetAddress2 || "",
+            city: formData.city,
+            state: formData.state || "",
+            pincode: formData.pincode,
+            country: formData.country || "India",
+          }).toString();
+
           router.push(
-            `/bubl-checkout/success?orderId=${
-              result.orderId
-            }&paymentMethod=cod&email=${encodeURIComponent(
+            `/bubl-checkout/success?orderId=${result.orderId}&paymentMethod=cod&email=${encodeURIComponent(
               formData.email
-            )}&total=${total}`
+            )}&total=${total}&${customerParams}`
           );
         } else {
           // For online payment, initialize Razorpay
@@ -313,23 +323,47 @@ export default function CheckoutPage() {
 
                     // Redirect to success page regardless of verification result
                     // The verification is just for server-side validation
+                    const customerParams = new URLSearchParams({
+                      firstName: formData.firstName,
+                      lastName: formData.lastName || "",
+                      phone: formData.phone,
+                      streetAddress1: formData.streetAddress1,
+                      streetAddress2: formData.streetAddress2 || "",
+                      city: formData.city,
+                      state: formData.state || "",
+                      pincode: formData.pincode,
+                      country: formData.country || "India",
+                    }).toString();
+
                     router.push(
                       `/bubl-checkout/success?orderId=${
                         result.orderId
                       }&paymentId=${paymentId}&paymentMethod=online&email=${encodeURIComponent(
                         formData.email
-                      )}&total=${total}`
+                      )}&total=${total}&${customerParams}`
                     );
                   })
                   .catch((error) => {
                     console.error("Error verifying payment:", error);
                     // Still redirect to success page as the payment was successful on Razorpay's end
+                    const customerParams = new URLSearchParams({
+                      firstName: formData.firstName,
+                      lastName: formData.lastName || "",
+                      phone: formData.phone,
+                      streetAddress1: formData.streetAddress1,
+                      streetAddress2: formData.streetAddress2 || "",
+                      city: formData.city,
+                      state: formData.state || "",
+                      pincode: formData.pincode,
+                      country: formData.country || "India",
+                    }).toString();
+
                     router.push(
                       `/bubl-checkout/success?orderId=${
                         result.orderId
                       }&paymentId=${paymentId}&paymentMethod=online&email=${encodeURIComponent(
                         formData.email
-                      )}&total=${total}`
+                      )}&total=${total}&${customerParams}`
                     );
                   });
               },
@@ -373,7 +407,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="bg-[#7FDAC0] pt-[10vh] py-16 mb-8">
+      <div className="bg-[#7FDAC0] pt-[15vh] py-16 mb-8">
         <h1 className="text-7xl font-semibold text-white text-center">
           Checkout
         </h1>
@@ -406,9 +440,7 @@ export default function CheckoutPage() {
                         type="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.email ? "border-red-500" : ""
-                        }`}
+                        className={`border-[#e0f5ef] ${errors.email ? "border-red-500" : ""}`}
                       />
                       {errors.email && (
                         <p className="text-red-500 text-sm">{errors.email}</p>
@@ -423,9 +455,7 @@ export default function CheckoutPage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.phone ? "border-red-500" : ""
-                        }`}
+                        className={`border-[#e0f5ef] ${errors.phone ? "border-red-500" : ""}`}
                       />
                       {errors.phone && (
                         <p className="text-red-500 text-sm">{errors.phone}</p>
@@ -443,9 +473,7 @@ export default function CheckoutPage() {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.firstName ? "border-red-500" : ""
-                        }`}
+                        className={`border-[#e0f5ef] ${errors.firstName ? "border-red-500" : ""}`}
                       />
                       {errors.firstName && (
                         <p className="text-red-500 text-sm">
@@ -477,9 +505,7 @@ export default function CheckoutPage() {
                         name="streetAddress1"
                         value={formData.streetAddress1}
                         onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.streetAddress1 ? "border-red-500" : ""
-                        }`}
+                        className={`border-[#e0f5ef] ${errors.streetAddress1 ? "border-red-500" : ""}`}
                       />
                       {errors.streetAddress1 && (
                         <p className="text-red-500 text-sm">
@@ -509,9 +535,7 @@ export default function CheckoutPage() {
                         name="city"
                         value={formData.city}
                         onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.city ? "border-red-500" : ""
-                        }`}
+                        className={`border-[#e0f5ef] ${errors.city ? "border-red-500" : ""}`}
                       />
                       {errors.city && (
                         <p className="text-red-500 text-sm">{errors.city}</p>
@@ -539,9 +563,7 @@ export default function CheckoutPage() {
                         name="pincode"
                         value={formData.pincode}
                         onChange={handleInputChange}
-                        className={`border-[#e0f5ef] ${
-                          errors.pincode ? "border-red-500" : ""
-                        }`}
+                        className={`border-[#e0f5ef] ${errors.pincode ? "border-red-500" : ""}`}
                       />
                       {errors.pincode && (
                         <p className="text-red-500 text-sm">{errors.pincode}</p>
@@ -607,11 +629,7 @@ export default function CheckoutPage() {
                                 name="billing.firstName"
                                 value={formData.billingAddress?.firstName || ""}
                                 onChange={handleInputChange}
-                                className={`border-[#e0f5ef] ${
-                                  errors["billing.firstName"]
-                                    ? "border-red-500"
-                                    : ""
-                                }`}
+                                className={`border-[#e0f5ef] ${errors["billing.firstName"] ? "border-red-500" : ""}`}
                               />
                               {errors["billing.firstName"] && (
                                 <p className="text-red-500 text-sm">
@@ -684,9 +702,7 @@ export default function CheckoutPage() {
                                 name="billing.city"
                                 value={formData.billingAddress?.city || ""}
                                 onChange={handleInputChange}
-                                className={`border-[#e0f5ef] ${
-                                  errors["billing.city"] ? "border-red-500" : ""
-                                }`}
+                                className={`border-[#e0f5ef] ${errors["billing.city"] ? "border-red-500" : ""}`}
                               />
                               {errors["billing.city"] && (
                                 <p className="text-red-500 text-sm">
@@ -716,11 +732,7 @@ export default function CheckoutPage() {
                                 name="billing.pincode"
                                 value={formData.billingAddress?.pincode || ""}
                                 onChange={handleInputChange}
-                                className={`border-[#e0f5ef] ${
-                                  errors["billing.pincode"]
-                                    ? "border-red-500"
-                                    : ""
-                                }`}
+                                className={`border-[#e0f5ef] ${errors["billing.pincode"] ? "border-red-500" : ""}`}
                               />
                               {errors["billing.pincode"] && (
                                 <p className="text-red-500 text-sm">

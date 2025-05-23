@@ -95,7 +95,7 @@ const OurStory = () => {
             alt="A Healthy Baby"
             width={900}
             height={900}
-            className="w-[600px] h-[400px] object-cover rounded-2xl"
+            className="w-[600px] h-[400px] object-contain rounded-2xl"
           />
         </div>
       </div>

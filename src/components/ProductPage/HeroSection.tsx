@@ -182,7 +182,7 @@ export default function HeroSection() {
     });
 
     // Optional: Navigate to cart page
-    // router.push("/cart");
+    // router.push("/bubl-cart");
   };
   if (!mounted) return null;
 
