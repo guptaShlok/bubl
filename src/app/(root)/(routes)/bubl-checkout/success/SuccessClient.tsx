@@ -244,7 +244,7 @@ export default function SuccessPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Amount:</span>
-                <span className="font-medium">₹{(total / 100).toFixed(2)}</span>
+                <span className="font-medium">₹{total.toFixed(2)}</span>
               </div>
               <div className="pt-2 text-sm text-gray-500">
                 A confirmation email has been sent to {params.email}
